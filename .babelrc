@@ -1,0 +1,102 @@
+{
+  "env": {
+    "production": {
+      "presets": [
+        ["@babel/env", { "loose": true }],
+        "@babel/preset-react",
+        "react-app"
+      ],
+      "plugins": [
+        ["reflective-bind/babel", { "log": "debug" }],
+        [
+          "babel-plugin-import",
+          {
+            "libraryName": "@material-ui/core",
+            // Use ""libraryDirectory": ""," if your bundler does not support ES modules
+            "libraryDirectory": "esm",
+            "camel2DashComponentName": false
+          },
+          "core"
+        ],
+        [
+          "babel-plugin-import",
+          {
+            "libraryName": "@material-ui/icons",
+            // Use ""libraryDirectory": ""," if your bundler does not support ES modules
+            "libraryDirectory": "esm",
+            "camel2DashComponentName": false
+          },
+          "icons"
+        ],
+        [
+          "babel-plugin-hoist-facc",
+          {
+            "loose": true,
+            "unsafeHoistInClass": true,
+            "warnIfCantHoist": false
+          }
+        ],
+        [
+          "@babel/plugin-transform-react-jsx",
+          {
+            "runtime": "automatic" // defaults to classic
+          }
+        ],
+        [
+          "babel-plugin-transform-optimize-object-literal",
+          {
+            "skipArrayOptimizationIfLengthIsBelow": 0,
+            "skipObjectOptimizationIfLengthIsBelow": 0
+          }
+        ],
+        [
+          "formatjs",
+          {
+            "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+            "ast": true
+          }
+        ],
+        "macros",
+        // "module:fast-async",
+        "babel-plugin-optimize-react",
+        "minify-flip-comparisons",
+        "transform-inline-environment-variables",
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-transform-destructuring",
+        "@babel/plugin-transform-object-assign",
+        "@babel/transform-react-inline-elements",
+        "@babel/plugin-transform-react-pure-annotations",
+        "@babel/plugin-transform-runtime",
+        "tailcall-optimization",
+        "babel-plugin-groundskeeper-willie",
+        "module:faster.js",
+        "object-to-json-parse",
+        "closure-elimination",
+        "inline-react-svg"
+      ]
+    },
+    "development": {
+      "presets": [
+        [
+          "@babel/preset-react",
+          {
+            "runtime": "automatic",
+            "development": true,
+            "importSource": "@welldone-software/why-did-you-render"
+          }
+        ],
+        "react-app"
+      ],
+      "plugins": [
+        "macros",
+        [
+          "formatjs",
+          {
+            "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+            "ast": true
+          }
+        ]
+      ]
+    }
+  }
+}
