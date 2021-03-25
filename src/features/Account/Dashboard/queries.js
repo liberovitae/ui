@@ -26,6 +26,19 @@ export const GET_ME_VENUES = gql`
   }
 `;
 
+export const GET_ME_EVENTS = gql`
+  query {
+    meEvents {
+      id
+      title
+      types
+      slug
+      status
+      createdAt
+    }
+  }
+`;
+
 export const DELETE_VENUE = gql`
   mutation($id: ID!) {
     deleteVenue(id: $id)

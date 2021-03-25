@@ -16,6 +16,7 @@ import {
   SAVED,
   ADMIN,
   VENUE_POST,
+  EVENT_POST,
 } from '../../constants/routes';
 
 const NavLinks = (session) => {
@@ -74,6 +75,45 @@ const NavLinks = (session) => {
       {
         title: <FormattedMessage id="navbar.post_venue_button" />,
         path: VENUE_POST,
+        icon: <PostAddOutlined />,
+      },
+
+      session?.me
+        ? {
+            title: <FormattedMessage id="navbar.account_button" />,
+            path: ACCOUNT,
+            icon: <AccountCircleOutlined />,
+          }
+        : {
+            title: <FormattedMessage id="common.login" />,
+            path: LOGIN,
+            icon: <AccountCircleOutlined />,
+          },
+      session?.me?.role === 'ADMIN'
+        ? {
+            title: <FormattedMessage id="navbar.admin_button" />,
+            path: ADMIN,
+            icon: <SettingsOutlined />,
+          }
+        : false,
+    ];
+  }
+
+  if (routeConfig().type === 'event') {
+    return [
+      {
+        title: <FormattedMessage id="navbar.alerts" />,
+        path: ALERTS,
+        icon: <NotificationsOutlined />,
+      },
+      {
+        title: <FormattedMessage id="navbar.saved_events" />,
+        path: SAVED,
+        icon: <FavoriteBorderOutlined />,
+      },
+      {
+        title: <FormattedMessage id="navbar.post_event_button" />,
+        path: EVENT_POST,
         icon: <PostAddOutlined />,
       },
 

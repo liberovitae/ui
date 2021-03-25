@@ -35,7 +35,7 @@ import {
 import routeConfigs from '../../../constants/routeConfig';
 import Loading from '../../Shared/Loading';
 import { subscribeUserToPush } from '../../../helpers/subscriptions';
-import regions from '../../../constants/regions';
+import regionsList from '../../../constants/regions';
 import { ALERTS } from '../../../constants/routes';
 import history from '../../../constants/history';
 
@@ -257,7 +257,7 @@ const AlertForm = ({ refetch }) => {
             </Box>
             <Box pb={2}>
               <AutoCompleteInput
-                data={regions()}
+                data={regionsList()}
                 value={state.regions}
                 onChange={onChange}
                 name="regions"

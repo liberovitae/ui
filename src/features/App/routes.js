@@ -38,6 +38,9 @@ import {
   NEWSLETTER,
   FAQ,
   BLOG_PAGE,
+  EVENTS,
+  EVENT_POST,
+  EVENT_BASE,
 } from '../../constants/routes';
 
 const RegisterPage = React.lazy(() => import('../Account/Register'));
@@ -70,7 +73,7 @@ const ItemPage = React.lazy(() => import('../Item/ItemPage'));
 
 export default ({ refetch, session, history, location }) => [
   {
-    path: [LANDING, ALERT_VIEW, JOBS, VENUES],
+    path: [LANDING, ALERT_VIEW, JOBS, VENUES, EVENTS],
     exact: true,
     props: {
       refetch: refetch,

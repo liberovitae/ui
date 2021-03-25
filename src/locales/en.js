@@ -22,6 +22,20 @@ export default {
   'venueTypes.health': 'Health & Sport',
   'venueTypes.misc': 'Misc',
 
+  // eventTypes
+  'eventTypes.music': 'Music',
+  'eventTypes.arts': 'Visual & Performing Arts',
+  'eventTypes.film': 'Film',
+  'eventTypes.books': 'Lectures & Books',
+  'eventTypes.fashion': 'Fashion',
+  'eventTypes.food': 'Food & Drink',
+  'eventTypes.festivals': 'Festivals & Fairs',
+  'eventTypes.charities': 'Charities',
+  'eventTypes.sports': 'Sports & Active Life',
+  'eventTypes.nightlight': 'Nightlife',
+  'eventTypes.kids': 'Kids & Family',
+  'eventTypes.other': 'Other',
+
   // Regions
   'regions.africa': 'Africa',
   'regions.asia': 'Asia/Pacific',
@@ -63,8 +77,10 @@ export default {
   'navbar.account_button': 'My account',
   'navbar.saved_jobs': 'Saved jobs',
   'navbar.saved_venues': 'Saved venues',
+  'navbar.saved_events': 'Saved events',
   'navbar.alerts': 'Alerts',
   'navbar.post_venue_button': 'Post a venue',
+  'navbar.post_event_button': 'Post an event',
   'navbar.search_jobs': 'Search jobs',
   'navbar.search_venues': 'Search venues',
   'navbar.admin_button': 'Admin',
@@ -537,4 +553,9 @@ company per user account can be created and edited.`,
 
   'blog_form.updated_success_snackbar': 'Successfully updated blog',
   'blog_form.created_success_snackbar': 'Sucessfully created blog',
+
+  // Events
+  // Job site header
+  'event.site_header':
+    'Your go-to source for events - free & simple.',
 };

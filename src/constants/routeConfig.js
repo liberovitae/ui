@@ -10,17 +10,25 @@ import {
   VENUE_POST,
   MY_JOBS,
   MY_VENUES,
+  EVENTS,
+  EVENT_POST,
+  EVENT_BASE,
+  MY_EVENTS,
 } from '../constants/routes';
 import jobTypes from './jobTypes';
 import venueTypes from './venueTypes';
+import eventTypes from './eventTypes';
 import INITIAL_JOB_STATE from '../constants/initialJobSearch';
 import INITIAL_VENUE_STATE from '../constants/initialVenueSearch';
+import INITIAL_EVENT_STATE from '../constants/initialEventSearch';
 import { queryParamGenerate } from '../helpers/queryParams';
 import {
   purple,
   purpleDark,
   blue,
   blueDark,
+  orange,
+  orangeDark,
 } from '../features/App/Themes';
 import {
   GET_PAGINATED_JOBS,
@@ -37,7 +45,14 @@ import {
 import {
   GET_ME_JOBS,
   GET_ME_VENUES,
+  GET_ME_EVENTS,
 } from '../features/Account/Dashboard/queries';
+import {
+  GET_PAGINATED_EVENTS,
+  CREATE_EVENT,
+  UPDATE_EVENT,
+  GET_EVENT,
+} from '../features/Event/queries';
 
 export default {
   venue: {
@@ -66,8 +81,34 @@ export default {
       : makeVar(INITIAL_VENUE_STATE),
     detailedSearch: false,
   },
-  job: {
+  event: {
     tabIndex: 1,
+    type: 'event',
+    theme: { colour: 'orange', light: orange, dark: orangeDark },
+    routes: {
+      base: EVENT_BASE,
+      landing: EVENTS,
+      post: EVENT_POST,
+      myListings: MY_EVENTS,
+    },
+    queries: {
+      getPaginated: GET_PAGINATED_EVENTS,
+      get: GET_EVENT,
+      myListings: GET_ME_EVENTS,
+      create: CREATE_EVENT,
+      update: UPDATE_EVENT,
+      nextPage: 2,
+    },
+    defaultSiteHeader: <FormattedMessage id="event.site_header" />,
+    types: eventTypes,
+    INITIAL_STATE: INITIAL_EVENT_STATE,
+    searchVar: window.location.pathname.startsWith(EVENT_BASE)
+      ? makeVar(queryParamGenerate())
+      : makeVar(INITIAL_EVENT_STATE),
+    detailedSearch: false,
+  },
+  job: {
+    tabIndex: 2,
     type: 'job',
     theme: { colour: 'blue', light: blue, dark: blueDark },
     routes: {

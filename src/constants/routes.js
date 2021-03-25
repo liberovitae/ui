@@ -28,6 +28,7 @@ export const SET_PASSWORD = '/account/password_reset/:token';
 export const MY_JOBS = '/account/jobs';
 export const SAVED = '/account/saved';
 export const MY_VENUES = '/account/venues';
+export const MY_EVENTS = '/account/events';
 export const SAVED_VENUES = '/account/venues/saved';
 export const SAVE_VENUES = '/account/venues/save/:slug';
 
@@ -60,3 +61,8 @@ export const BLOG_POST = '/blog/post/:slug?';
 export const VENUES = '/venues';
 export const VENUE_POST = '/venue/post';
 export const VENUE_BASE = '/venue';
+
+// EVENTS
+export const EVENTS = '/events';
+export const EVENT_POST = '/event/post';
+export const EVENT_BASE = '/event';
