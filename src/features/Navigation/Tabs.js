@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { VENUES, JOBS } from '../../constants/routes';
+import { VENUES, JOBS, EVENTS } from '../../constants/routes';
 import history from '../../constants/history';
 import { contentDrawer, tabIndex } from '../../constants/globalVars';
 import { scrollTop } from '../Shared/ScrollTop';
@@ -14,6 +14,10 @@ const handleTabChange = (e, index) => {
   }
 
   if (index === 1) {
+    history.push(EVENTS);
+  }
+
+  if (index === 2) {
     history.push(JOBS);
   }
 };
@@ -47,6 +51,25 @@ const AppBarTabs = React.memo(
               return scrollTop();
           }}
           label="Venues"
+        />
+        <Tab
+          onClick={(e) => {
+            e.stopPropagation();
+
+            if (history.location.pathname !== EVENTS)
+              return history.push(EVENTS);
+
+            if (
+              contentDrawer().show &&
+              window.location.pathname !== EVENTS
+            ) {
+              return history.goBack();
+            }
+
+            if (history.location.pathname === EVENTS)
+              return scrollTop();
+          }}
+          label="Events"
         />
         <Tab
           onClick={(e) => {

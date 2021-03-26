@@ -30,8 +30,12 @@ const ToolTip = ({ children, url, type }) => {
       { url: url },
     ),
     venue: intl.formatMessage(
-      { id: 'venue_detail.contact_button_tooltip' },
-      { url: url },
+      { id: 'item_detail.contact_button_tooltip' },
+      { url: url, type: type },
+    ),
+    event: intl.formatMessage(
+      { id: 'item_detail.contact_button_tooltip' },
+      { url: url, type: type },
     ),
   };
 

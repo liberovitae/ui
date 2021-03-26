@@ -26,6 +26,19 @@ export const GET_ME_VENUES = gql`
   }
 `;
 
+export const GET_ME_EVENTS = gql`
+  query {
+    meEvents {
+      id
+      title
+      types
+      slug
+      status
+      createdAt
+    }
+  }
+`;
+
 export const DELETE_VENUE = gql`
   mutation($id: ID!) {
     deleteVenue(id: $id)
@@ -168,7 +181,6 @@ export const CREATE_ALERT = gql`
       alertType
       keywords
       location
-      regions
       types
       frequency
       active
@@ -191,7 +203,6 @@ export const UPDATE_ALERT = gql`
       name
       keywords
       location
-      regions
       types
       frequency
       active
@@ -252,7 +263,6 @@ export const GET_ALERT = gql`
       alertType
       keywords
       location
-      regions
       types
       slug
       frequency

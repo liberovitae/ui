@@ -4,7 +4,7 @@ import { useLazyQuery } from '@apollo/client';
 import { TextField, FormControl } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { GET_LOCATION } from '../Job/JobForm/queries';
+import { GET_LOCATION } from '../Item/ItemForm/queries';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

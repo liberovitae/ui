@@ -12,6 +12,7 @@ const useStyles = makeStyles({
   },
   container: {
     paddingBottom: '2rem',
+    minHeight: '100vh',
   },
 });
 const ContentDrawer = ({ children }) => {

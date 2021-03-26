@@ -17,7 +17,6 @@ const handleSearch = (event) => {
       ...routeConfig().searchVar(),
       keywords: value,
       location: { name: routeConfig().searchVar().location.name },
-      regions: routeConfig().searchVar().regions,
       types: routeConfig().searchVar().types,
     });
     history.location.pathname !== routeConfig().routes.landing &&

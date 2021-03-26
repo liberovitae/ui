@@ -21,7 +21,7 @@ import {
 } from './queries';
 import StatusChip from './Shared/StatusChip';
 import { TypeChip } from '../../Shared/Elements';
-import { GET_PAGINATED_JOBS } from '../../Job/queries';
+import { GET_PAGINATED_JOBS } from '../../../constants/routeConfig/job/queries';
 import { hero } from '../../../constants/globalVars';
 
 const useStyles = makeStyles((theme) => ({

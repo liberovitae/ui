@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavButtons = ({ themeSnackbar, session }) => {
-  const { INITIAL_STATE, type } = routeConfig();
+  const { INITIAL_SEARCH_STATE, type } = routeConfig();
   const classes = useStyles();
 
   return (
@@ -67,13 +67,16 @@ const NavButtons = ({ themeSnackbar, session }) => {
       </IconButton>
 
       {quickSearch().show ||
-      !objCompare(routeConfig().searchVar(), INITIAL_STATE) ? (
+      !objCompare(routeConfig().searchVar(), INITIAL_SEARCH_STATE) ? (
         <IconButton
           title="Reset search"
           onClick={(e) => {
             e.stopPropagation();
             if (
-              objCompare(routeConfig().searchVar(), INITIAL_STATE)
+              objCompare(
+                routeConfig().searchVar(),
+                INITIAL_SEARCH_STATE,
+              )
             ) {
               quickSearch({ show: false });
               return;

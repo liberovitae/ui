@@ -17,7 +17,7 @@ const SiteHeader = React.memo(
         style={{
           marginTop: !objCompare(
             reactiveSearch,
-            reactiveRouteConfig.INITIAL_STATE,
+            reactiveRouteConfig.INITIAL_SEARCH_STATE,
           )
             ? '4rem'
             : '2rem',

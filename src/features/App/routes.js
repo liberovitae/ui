@@ -17,15 +17,14 @@ import {
   ALERTS,
   ALERT_POST,
   ITEM_PREVIEW,
+  ITEM_POST,
   ITEM_PAGE,
-  JOB_POST,
   ALERT_VIEW,
   ACCOUNT_DELETE,
   ACCOUNT_EDIT,
   PASSWORD_EDIT,
   PASSWORD_RESET,
   SET_PASSWORD,
-  VENUE_POST,
   ACCOUNT_VERIFY,
   ADMIN,
   ADMIN_BLOGS,
@@ -38,6 +37,7 @@ import {
   NEWSLETTER,
   FAQ,
   BLOG_PAGE,
+  EVENTS,
 } from '../../constants/routes';
 
 const RegisterPage = React.lazy(() => import('../Account/Register'));
@@ -48,8 +48,7 @@ const DonatePage = React.lazy(() => import('../Pages/Donate'));
 const CompanyForm = React.lazy(() =>
   import('../Company/CompanyForm'),
 );
-const JobForm = React.lazy(() => import('../Job/JobForm'));
-const VenueForm = React.lazy(() => import('../Venue/VenueForm'));
+const ItemForm = React.lazy(() => import('../Item/ItemForm'));
 const PasswordReset = React.lazy(() =>
   import('../Account/PasswordReset'),
 );
@@ -70,7 +69,7 @@ const ItemPage = React.lazy(() => import('../Item/ItemPage'));
 
 export default ({ refetch, session, history, location }) => [
   {
-    path: [LANDING, ALERT_VIEW, JOBS, VENUES],
+    path: [LANDING, ALERT_VIEW, JOBS, VENUES, EVENTS],
     exact: true,
     props: {
       refetch: refetch,
@@ -188,8 +187,33 @@ export default ({ refetch, session, history, location }) => [
     suspense: true,
     Component: ItemPreview,
   },
+  // {
+  //   path: `${JOB_POST}/:slug?`,
+  //   exact: true,
+  //   props: {
+  //     session: session,
+  //     history: history,
+  //     refetch: refetch,
+  //   },
+  //   suspense: true,
+  //   Component:
+  //     session && session.me && !session.me.company
+  //       ? CompanyForm
+  //       : JobForm,
+  // },
+  // {
+  //   path: `${VENUE_POST}/:slug?`,
+  //   exact: true,
+  //   props: {
+  //     session: session,
+  //     history: history,
+  //     refetch: refetch,
+  //   },
+  //   suspense: true,
+  //   Component: VenueForm,
+  // },
   {
-    path: `${JOB_POST}/:slug?`,
+    path: `${ITEM_POST}/:slug?`,
     exact: true,
     props: {
       session: session,
@@ -197,21 +221,7 @@ export default ({ refetch, session, history, location }) => [
       refetch: refetch,
     },
     suspense: true,
-    Component:
-      session && session.me && !session.me.company
-        ? CompanyForm
-        : JobForm,
-  },
-  {
-    path: `${VENUE_POST}/:slug?`,
-    exact: true,
-    props: {
-      session: session,
-      history: history,
-      refetch: refetch,
-    },
-    suspense: true,
-    Component: VenueForm,
+    Component: ItemForm,
   },
   {
     path: ITEM_PAGE,

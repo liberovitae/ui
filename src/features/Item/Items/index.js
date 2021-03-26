@@ -48,7 +48,7 @@ const Items = React.memo(
 
         if (
           JSON.stringify(reactiveSearch) !==
-          JSON.stringify(routeConfig().INITIAL_STATE)
+          JSON.stringify(routeConfig().INITIAL_SEARCH_STATE)
         ) {
           siteHeader(
             <>
@@ -81,22 +81,15 @@ const Items = React.memo(
       skip: !slug,
       variables: { slug: slug },
       onCompleted: ({ alert }) => {
-        const {
-          alertType,
-          keywords,
-          location,
-          regions,
-          types,
-        } = alert;
+        const { alertType, keywords, location, types } = alert;
         searchVar({
           alertType: alertType,
           keywords: keywords ?? '',
           location: { name: location ?? '' },
-          regions: regions ?? [],
           types: types ?? [],
         });
         useLocalCache(false);
-        routeConfig(routeConfigs[alertType]);
+        routeConfig(alertType);
         tabIndex(routeConfig().tabIndex);
         delete searchVar().alertType; // Remove alertType to not break search variable
       },
@@ -122,7 +115,9 @@ const Items = React.memo(
 
               if (
                 JSON.stringify(reactiveSearch) !==
-                JSON.stringify(reactiveRouteConfig.INITIAL_STATE)
+                JSON.stringify(
+                  reactiveRouteConfig.INITIAL_SEARCH_STATE,
+                )
               ) {
                 siteHeader(
                   <>

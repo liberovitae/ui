@@ -1,18 +1,18 @@
 import gql from 'graphql-tag.macro';
 
-export const GET_PAGINATED_VENUES = gql`
+export const GET_PAGINATED_EVENTS = gql`
   query(
     $cursor: Int
     $limit: Int!
-    $filter: VenueFilterInput
+    $filter: EventFilterInput
     $cache: Boolean
   ) {
-    venues(
+    events(
       cursor: $cursor
       limit: $limit
       filter: $filter
       cache: $cache
-    ) @connection(key: "VenuesConnection") {
+    ) @connection(key: "EventsConnection") {
       edges {
         id
         title
@@ -36,9 +36,9 @@ export const GET_PAGINATED_VENUES = gql`
   }
 `;
 
-export const GET_VENUE = gql`
+export const GET_EVENT = gql`
   query($slug: String!) {
-    venue(slug: $slug) {
+    event(slug: $slug) {
       id
       title
       logo
@@ -47,7 +47,6 @@ export const GET_VENUE = gql`
         lat
         lon
       }
-      regions
       description
       status
       types
@@ -66,9 +65,9 @@ export const GET_VENUE = gql`
   }
 `;
 
-export const CREATE_VENUE = gql`
-  mutation($input: VenueInput!) {
-    createVenue(input: $input) {
+export const CREATE_EVENT = gql`
+  mutation($input: EventInput!) {
+    createEvent(input: $input) {
       id
       title
       logo
@@ -79,7 +78,6 @@ export const CREATE_VENUE = gql`
         lon
       }
       url
-      regions
       types
       status
       tags
@@ -89,9 +87,9 @@ export const CREATE_VENUE = gql`
   }
 `;
 
-export const UPDATE_VENUE = gql`
-  mutation($id: ID!, $input: VenueInput!) {
-    updateVenue(id: $id, input: $input) {
+export const UPDATE_EVENT = gql`
+  mutation($id: ID!, $input: EventInput!) {
+    updateEvent(id: $id, input: $input) {
       id
       title
       logo
@@ -102,7 +100,6 @@ export const UPDATE_VENUE = gql`
         lon
       }
       url
-      regions
       types
       status
       tags

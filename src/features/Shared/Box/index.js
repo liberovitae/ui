@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     padding: theme.spacing(1),
     paddingBottom: theme.spacing(4),
-    minHeight: '60vh',
+    minHeight: '80vh',
     maxWidth: '960px',
     flexDirection: 'column',
   },

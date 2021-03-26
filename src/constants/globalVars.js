@@ -9,7 +9,6 @@ export const hero = makeVar({
   subtitle: '',
   country: null,
 });
-export const routeConfig = makeVar(routePicker());
 export const darkTheme = makeVar(
   JSON.parse(localStorage.getItem('darkTheme')),
 );
@@ -18,7 +17,6 @@ export const hideBlog = makeVar(
 );
 export const contentDrawer = makeVar({ show: false, slug: null });
 export const backdrop = makeVar(false);
-export const siteHeader = makeVar(routeConfig().defaultSiteHeader);
 export const drawer = makeVar(false);
 export const isLoading = makeVar(false);
 export const quickSearch = makeVar({
@@ -31,3 +29,5 @@ export const filterSearch = makeVar({
 });
 export const navSidebar = makeVar(false);
 export const useLocalCache = makeVar(false);
+export const routeConfig = makeVar(routePicker());
+export const siteHeader = makeVar(routeConfig().defaultSiteHeader);

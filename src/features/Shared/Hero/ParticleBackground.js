@@ -8,7 +8,7 @@ const ParticleBackground = ({ theme, routeConfig, heroRoot }) => (
     style={{
       marginTop: objCompare(
         routeConfig().searchVar(),
-        routeConfig().INITIAL_STATE,
+        routeConfig().INITIAL_SEARCH_STATE,
       )
         ? '4rem'
         : '6rem',

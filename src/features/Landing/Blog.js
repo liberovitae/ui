@@ -20,7 +20,9 @@ const Blog = ({ session, blogs }) => {
   const classes = useStyles();
   const reactiveSearch = useReactiveVar(routeConfig().searchVar);
 
-  if (objCompare(reactiveSearch, routeConfig().INITIAL_STATE)) {
+  if (
+    objCompare(reactiveSearch, routeConfig().INITIAL_SEARCH_STATE)
+  ) {
     return (
       <div id="blog">
         <IconButton

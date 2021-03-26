@@ -1,4 +1,8 @@
-import { VENUE_BASE, JOB_BASE } from '../constants/routes';
+import {
+  VENUE_BASE,
+  JOB_BASE,
+  EVENT_BASE,
+} from '../constants/routes';
 import history from '../constants/history';
 
 const { pathname } = history.location;
@@ -8,8 +12,12 @@ const tabPicker = () => {
     return 0;
   }
 
-  if (pathname.startsWith(JOB_BASE)) {
+  if (pathname.startsWith(EVENT_BASE)) {
     return 1;
+  }
+
+  if (pathname.startsWith(JOB_BASE)) {
+    return 2;
   }
   return 0;
 };

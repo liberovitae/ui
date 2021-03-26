@@ -5,6 +5,8 @@ import CKEditor from './CKEditor';
 import Debounce from './Debounce';
 import Select from './Select';
 import Text from './Text';
+import Location from './Location';
+import Radio from './Radio';
 import TextValidator from './TextValidator';
 import Upload from './Upload';
 
@@ -17,5 +19,7 @@ export {
   Select,
   Text,
   TextValidator,
+  Radio,
+  Location,
   Upload,
 };

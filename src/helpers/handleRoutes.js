@@ -1,19 +1,23 @@
 import queryString from 'query-string';
 import { routeConfig, tabIndex } from '../constants/globalVars';
-import routeConfigs from '../constants/routeConfig';
+import { venue, event, job } from '../constants/routeConfig';
 import history from '../constants/history';
 import { objCompare, queryParamsTransObject } from '.';
-import { JOB_BASE, VENUE_BASE } from '../constants/routes';
+import {
+  JOB_BASE,
+  VENUE_BASE,
+  EVENT_BASE,
+} from '../constants/routes';
 
 const handleRoutes = ({ lastLocation }) => {
-  const { searchVar, type, INITIAL_STATE } = routeConfig();
+  const { searchVar, type, INITIAL_SEARCH_STATE } = routeConfig();
 
   if (
     (!lastLocation?.pathname.includes(JOB_BASE) &&
       history.location.pathname.includes(JOB_BASE)) ||
     history.location.pathname.includes('company')
   ) {
-    type !== 'job' && routeConfig(routeConfigs.job);
+    type !== 'job' && routeConfig(job);
     tabIndex() !== tabIndex && tabIndex(routeConfig().tabIndex);
     return;
   }
@@ -22,7 +26,17 @@ const handleRoutes = ({ lastLocation }) => {
     !lastLocation?.pathname.includes(VENUE_BASE) &&
     history.location.pathname.includes(VENUE_BASE)
   ) {
-    type !== 'venue' && routeConfig(routeConfigs.venue);
+    type !== 'venue' && routeConfig(venue);
+    tabIndex() !== routeConfig().tabIndex &&
+      tabIndex(routeConfig().tabIndex);
+    return;
+  }
+
+  if (
+    !lastLocation?.pathname.includes(EVENT_BASE) &&
+    history.location.pathname.includes(EVENT_BASE)
+  ) {
+    type !== 'event' && routeConfig(event);
     tabIndex() !== routeConfig().tabIndex &&
       tabIndex(routeConfig().tabIndex);
     return;
@@ -32,7 +46,7 @@ const handleRoutes = ({ lastLocation }) => {
     history.location.pathname === routeConfig().routes.landing &&
     !history.location.search
   ) {
-    searchVar(INITIAL_STATE);
+    searchVar(INITIAL_SEARCH_STATE);
     return;
   }
 
@@ -46,8 +60,8 @@ const handleRoutes = ({ lastLocation }) => {
     return;
   }
 
-  if (objCompare(searchVar(), INITIAL_STATE)) {
-    searchVar(INITIAL_STATE);
+  if (objCompare(searchVar(), INITIAL_SEARCH_STATE)) {
+    searchVar(INITIAL_SEARCH_STATE);
   }
 };
 

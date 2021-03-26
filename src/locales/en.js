@@ -3,6 +3,14 @@ export default {
   'site.name': 'liberovitae.com',
   'site.header': 'Your trusted social connectivity platform.',
 
+  // Venue site header
+  'venue.site_header':
+    'Your trusted source for venues - free & simple.',
+
+  // Event site header
+  'event.site_header':
+    'Your go-to source for events - free & simple.',
+
   // search
   'search.not_found': 'No items found matching your search',
 
@@ -22,14 +30,19 @@ export default {
   'venueTypes.health': 'Health & Sport',
   'venueTypes.misc': 'Misc',
 
-  // Regions
-  'regions.africa': 'Africa',
-  'regions.asia': 'Asia/Pacific',
-  'regions.europe': 'Europe',
-  'regions.middleeast': 'Middle East',
-  'regions.namerica': 'North America',
-  'regions.samerica': 'South America',
-  'regions.remote': 'Remote/Anywhere',
+  // eventTypes
+  'eventTypes.music': 'Music',
+  'eventTypes.arts': 'Visual & Performing Arts',
+  'eventTypes.film': 'Film',
+  'eventTypes.books': 'Lectures & Books',
+  'eventTypes.fashion': 'Fashion',
+  'eventTypes.food': 'Food & Drink',
+  'eventTypes.festivals': 'Festivals & Fairs',
+  'eventTypes.charities': 'Charities',
+  'eventTypes.sports': 'Sports & Active Life',
+  'eventTypes.nightlife': 'Nightlife',
+  'eventTypes.kids': 'Kids & Family',
+  'eventTypes.other': 'Other',
 
   // Common and shared single words/phrases
   'common.name': 'Name',
@@ -63,8 +76,10 @@ export default {
   'navbar.account_button': 'My account',
   'navbar.saved_jobs': 'Saved jobs',
   'navbar.saved_venues': 'Saved venues',
+  'navbar.saved_events': 'Saved events',
   'navbar.alerts': 'Alerts',
   'navbar.post_venue_button': 'Post a venue',
+  'navbar.post_event_button': 'Post an event',
   'navbar.search_jobs': 'Search jobs',
   'navbar.search_venues': 'Search venues',
   'navbar.admin_button': 'Admin',
@@ -105,9 +120,9 @@ export default {
   'account.menu.jobs': 'Jobs',
   'account.menu.venues': 'Venues',
   'account.menu.alerts': 'Alerts',
+  'account.menu.events': 'Events',
   'account.menu.job_ads': 'Job ads',
   'account.menu.company': 'Company',
-  'account.menu.job_alerts': 'Job alerts',
   'account.menu.saved': 'Saved',
   'account.menu.saved_venues': 'Saved venues',
   'account.menu.settings': 'Settings',
@@ -306,9 +321,7 @@ export default {
   'alert_form.location_input_label': 'Location',
   'alert_form.location_input_helperText': `For exact city, state or country filtering if necessary or leave blank for all locations.
     `,
-  'alert_form.regions_input_label': 'Regions',
-  'alert_form.regions_input_helperText':
-    'Select a region or leave blank if you want to cover all regions.',
+
   'alert_form.types_input_label': 'Types',
   'alert_form.types_input_helperText':
     'Select a {type} type or leave blank if you want to include all types.',
@@ -330,42 +343,6 @@ export default {
   'job_detail.share_buttons.text': 'Share',
   'job_detail.apply_button_tooltip':
     'To apply for this job please send your application via email to {url}',
-
-  // Job preview
-  'job_preview.draft_save.success_snackbar':
-    'Successfully saved draft job',
-  'job_preview.publish.success_snackbar':
-    'Successfully published job.',
-  'job_preview.hero.title': 'Post a job',
-  'job_preview.hero.subtitle': 'Preview your job ad',
-  'job_preview.edit_item_button': 'Edit job ad',
-  'job_preview.edit_company_button': 'Edit company info',
-  'job_preview.save_draft_button': 'Save draft',
-  'job_preview.publish_button': 'Publish',
-  'job_preview.frontpage_text':
-    'This is how it looks on the front page and in search results:',
-  'job_preview.detail_text':
-    'Here is the preview of the details page of your job ad:',
-  'job_preview.confirm_text': 'Looks good?',
-  'job_preview.change_button': `No, let's change it`,
-
-  // Venue preview
-  'venue_preview.draft_save.success_snackbar':
-    'Successfully saved draft venue',
-  'venue_preview.publish.success_snackbar':
-    'Successfully published venue.',
-  'venue_preview.hero.title': 'Post a venue',
-  'venue_preview.hero.subtitle': 'Preview your venue ad',
-  'venue_preview.edit_item_button': 'Edit venue ad',
-  'venue_preview.edit_company_button': 'Edit company info',
-  'venue_preview.save_draft_button': 'Save draft',
-  'venue_preview.publish_button': 'Publish',
-  'venue_preview.frontpage_text':
-    'This is how it looks on the front page and in search results:',
-  'venue_preview.detail_text':
-    'Here is the preview of the details page of your venue ad:',
-  'venue_preview.confirm_text': 'Looks good?',
-  'venue_preview.change_button': `No, let's change it`,
 
   // Items list
   'items_list.no_jobs':
@@ -393,86 +370,49 @@ company per user account can be created and edited.`,
   'company_form.button_account': 'Save changes',
   'company_form.button': 'Save changes and proceed',
 
-  // Post job form
-  'post_job.hero.title': 'Post a job',
-  'post_job.hero.subtitle': 'Edit your job ad',
-  'post_job.header': 'Job details',
-  'post_job.title.input_label': 'Job title',
-  'post_job.types.input_label': 'Job types',
-  'post_job.types.input_helperText':
-    'Select one or more applicable job types.',
-  'post_job.regions.input_label': 'Job regions',
-  'post_job.regions.input_helperText':
-    'Select one or more regions. For a remote position select "Remote/Anywhere" and any regional restrictions if applicable.',
-  'post_job.location.input_label': 'Job location',
-  'post_job.location.input_helperText':
+  // Item post form
+  'post_form.hero.title': 'Post a new {type}',
+  'post_form.hero.subtitle': 'Edit your {type}',
+  'post_form.header': '{type} details',
+  'post_form.title.input_label': '{type} name',
+  'post_form.types.input_label': '{type} types',
+  'post_form.types.input_helperText':
+    'Select one or more applicable {type} types.',
+  'post_form.location.input_label': '{type} location',
+  'post_form.location.input_helperText':
+    'If this is a remote/online {type} just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
+  'post_form.location.input_placeholder': `e.g. "London, GB" or "San Francisco, CA, US"`,
+  'post_form.location.input_helperText':
     'If this is a remote position just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
-  'post_job.location.input_placeholder': `e.g. "London, GB" or "San Francisco, CA, US"`,
-
-  'post_job.description.input_label': 'Description',
-  'post_job.description.input_helperText':
-    'Add a description of the position - requirements, duties, etc.',
-  'post_job.tags.input_label': 'Job tags',
-  'post_job.level.input_label': 'Experience level',
-  'post_job.level.input_helperText':
-    'Select minimum required or leave blank (e.g. if position is an internship)',
-  'post_job.tags.input_helperText':
-    'Select or create tags for your job (max 10).',
-  'post_job.url.input_label': 'Application URL or email address',
-  'post_job.url.input_helperText':
-    'Enter the URL to your career/job page or an application email address',
-  'post_job.button': 'Continue to preview',
-  'post_job.load_failure_snackbar': 'Failed to load job',
-  'post_job.job_filled_snackbar': 'This job as already been filled',
-
-  // Post venue form
-  'post_venue.hero.title': 'Post a venue',
-  'post_venue.hero.subtitle': 'Edit your venue',
-  'post_venue.header': 'Venue details',
-  'post_venue.title.input_label': 'Venue name',
-  'post_venue.types.input_label': 'Venue types',
-  'post_venue.types.input_helperText':
-    'Select one or more applicable venue types.',
-  'post_venue.regions.input_label': 'Venue regions',
-  'post_venue.regions.input_helperText':
-    'Select one or more regions. For a remote/online venue select "Remote/Anywhere".',
-  'post_venue.location.input_label': 'Venue location',
-  'post_venue.location.input_helperText':
-    'If this is a remote/online venue just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
-  'post_venue.location.input_placeholder': `e.g. "London, GB" or "San Francisco, CA, US"`,
-
-  'post_venue.description.input_label': 'Description',
-  'post_venue.description.input_helperText':
-    'Tell us more about your venue.',
-  'post_venue.tags.input_label': 'Venue tags',
-  'post_venue.tags.input_helperText':
-    'Select or create tags for your venue (max 10).',
-  'post_venue.url.input_label': 'Website URL or email address',
-  'post_venue.url.input_helperText':
+  'post_form.description.input_label': 'Description',
+  'post_form.description.input_helperText':
+    'Tell us more about your {type}.',
+  'post_form.tags.input_label': '{type} tags',
+  'post_form.tags.input_helperText':
+    'Select or create tags for your {type} (max 10).',
+  'post_form.url.input_label': 'Website URL or email address',
+  'post_form.url.input_helperText':
     'Enter the URL to your website or a contact email address',
-  'post_venue.button': 'Continue to preview',
-  'post_venue.load_failure_snackbar': 'Failed to load venue',
+  'post_form.button': 'Continue to preview',
+  'post_form.load_failure_snackbar': 'Failed to load {type}',
 
-  // Venue site header
-  'venue.site_header':
-    'Your trusted source for venues - free & simple.',
-
-  // Venue preview
-  'venue_preview.draft_save.success_snackbar':
-    'Successfully saved draft venue',
-  'venue_preview.publish.success_snackbar':
-    'Successfully published venue.',
-  'venue_preview.hero.title': 'Post a venue',
-  'venue_preview.hero.subtitle': 'Preview your venue',
-  'venue_preview.edit_venue_button': 'Edit venue',
-  'venue_preview.save_draft_button': 'Save draft',
-  'venue_preview.publish_button': 'Publish',
-  'venue_preview.frontpage_text':
+  // Item preview
+  'preview.draft_save.success_snackbar':
+    'Successfully saved draft {type}',
+  'preview.publish.success_snackbar':
+    'Successfully published {type}.',
+  'preview.hero.title': 'Post a {type}',
+  'preview.hero.subtitle': 'Preview your {type}',
+  'preview.edit_item_button': 'Edit {type}',
+  'preview.edit_venue_button': 'Edit {type}',
+  'preview.save_draft_button': 'Save draft',
+  'preview.publish_button': 'Publish',
+  'preview.frontpage_text':
     'This is how it looks on the front page and in search results:',
-  'venue_preview.detail_text':
-    'Here is the preview of the details page of your venue:',
-  'venue_preview.confirm_text': 'Looks good?',
-  'venue_preview.change_button': `No, let's change it`,
+  'preview.detail_text':
+    'Here is the preview of the details page of your {type}:',
+  'preview.confirm_text': 'Looks good?',
+  'preview.change_button': `No, let's change it`,
 
   // Account Venues
   'account.venues.hero.title': 'Venues',
@@ -488,17 +428,16 @@ company per user account can be created and edited.`,
   'account.venues.confirm_delete':
     'Are you sure you want to delete this venue?',
 
-  // Venue detail
-  'venue_detail.contact_button': 'Contact venue',
-  'venue_detail.visit_button': 'Visit website',
-  'venue_detail.save_later_button': 'Add to saved venues',
-  'venue_detail.share_buttons.text': 'Share',
-  'venue_detail.contact_button_tooltip':
-    'To contact this venue please send your an email to {url}',
+  // Item detail
+  'item_detail.contact_button': 'Contact {type}',
+  'item_detail.visit_button': 'Visit website',
+  'item_detail.save_later_button': 'Add to saved {type}s',
+  'item_detail.share_buttons.text': 'Share',
+  'item_detail.contact_button_tooltip':
+    'To contact this {type} please send your an email to {url}',
 
   // Filter
-  'filter.regions.input_label':
-    'Filter by region and/or "Remote/Anywhere"...',
+
   'filter.create_job_alert_button': 'Create alert',
 
   // Footer

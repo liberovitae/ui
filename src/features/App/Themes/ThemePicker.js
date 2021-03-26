@@ -1,4 +1,11 @@
-import { blue, purple, purpleDark, blueDark } from './';
+import {
+  blue,
+  purple,
+  purpleDark,
+  blueDark,
+  orange,
+  orangeDark,
+} from './';
 
 export const themePicker = ({
   reactiveRouteConfig,
@@ -36,6 +43,23 @@ export const themePicker = ({
     }
     localStorage.setItem('darkTheme', false);
     return blueTheme;
+  }
+
+  if (reactiveRouteConfig.theme.colour === 'orange') {
+    const orangeTheme = orange();
+
+    if (
+      theme.palette.primary.main === orangeTheme.palette.primary.main
+    ) {
+      return false;
+    }
+
+    if (reactiveDarkTheme) {
+      localStorage.setItem('darkTheme', true);
+      return orangeDark();
+    }
+    localStorage.setItem('darkTheme', false);
+    return orangeTheme;
   }
 };
 
