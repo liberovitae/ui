@@ -12,7 +12,7 @@ import { getQueryString } from './queryParams';
 const handleReset = (event) => {
   const queryStringNew = getQueryString(routeConfig().searchVar());
 
-  routeConfig().searchVar(routeConfig().INITIAL_STATE);
+  routeConfig().searchVar(routeConfig().INITIAL_SEARCH_STATE);
 
   quickSearch({ show: false });
   filterSearch({ show: false });

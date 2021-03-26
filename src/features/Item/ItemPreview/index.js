@@ -53,7 +53,6 @@ const ItemPreview = ({ refetch, session, history }) => {
           location: item.location,
           description: item.description,
           url: item.url,
-          regions: item.regions,
           types: item.types,
           tags: item.tags,
           logo: item.logo,
@@ -66,14 +65,12 @@ const ItemPreview = ({ refetch, session, history }) => {
         sessionStorage.removeItem(type);
         if (Object.values(data)[0].status === 'draft') {
           enqueueSnackbar(
-            (type === 'job' &&
-              intl.formatMessage({
-                id: 'job_preview.draft_save.success_snackbar',
-              })) ||
-              (type === 'venue' &&
-                intl.formatMessage({
-                  id: 'venue_preview.draft_save.success_snackbar',
-                })),
+            intl.formatMessage(
+              {
+                id: 'preview.draft_save.success_snackbar',
+              },
+              { type: type },
+            ),
             {
               variant: 'success',
             },
@@ -84,14 +81,12 @@ const ItemPreview = ({ refetch, session, history }) => {
         }
 
         enqueueSnackbar(
-          (type === 'job' &&
-            intl.formatMessage({
-              id: 'job_preview.publish.success_snackbar',
-            })) ||
-            (type === 'venue' &&
-              intl.formatMessage({
-                id: 'venue_preview.publish.success_snackbar',
-              })),
+          intl.formatMessage(
+            {
+              id: 'preview.publish.success_snackbar',
+            },
+            { type: type },
+          ),
           {
             variant: 'success',
           },
@@ -108,17 +103,15 @@ const ItemPreview = ({ refetch, session, history }) => {
 
   useEffect(() => {
     hero({
-      title:
-        (type === 'job' &&
-          intl.formatMessage({ id: 'job_preview.hero.title' })) ||
-        (type === 'venue' &&
-          intl.formatMessage({ id: 'venue_preview.hero.title' })),
+      title: intl.formatMessage(
+        { id: 'preview.hero.title' },
+        { type: type },
+      ),
 
-      subtitle:
-        (type === 'job' &&
-          intl.formatMessage({ id: 'job_preview.hero.subtitle' })) ||
-        (type === 'venue' &&
-          intl.formatMessage({ id: 'venue_preview.hero.subtitle' })),
+      subtitle: intl.formatMessage(
+        { id: 'preview.hero.subtitle' },
+        { type: type },
+      ),
     });
     scrollTop();
   }, []);
@@ -137,7 +130,7 @@ const ItemPreview = ({ refetch, session, history }) => {
           variables: {
             limit: 20,
             cache: false,
-            filter: reactiveRouteConfig.INITIAL_STATE,
+            filter: reactiveRouteConfig.INITIAL_SEARCH_STATE,
           },
         },
         { query: GET_ME_COUNTS },
@@ -171,12 +164,10 @@ const ItemPreview = ({ refetch, session, history }) => {
           <Grid item xs={6} sm={3}>
             <Link to={reactiveRouteConfig.routes.post}>
               <Button variant="outlined">
-                {type === 'job' && (
-                  <FormattedMessage id="job_preview.edit_item_button" />
-                )}
-                {type === 'venue' && (
-                  <FormattedMessage id="venue_preview.edit_item_button" />
-                )}
+                <FormattedMessage
+                  id="preview.edit_item_button"
+                  values={{ type: type }}
+                />
               </Button>
             </Link>
           </Grid>
@@ -199,12 +190,7 @@ const ItemPreview = ({ refetch, session, history }) => {
                 onSubmit(event, mutateItem, 'draft')
               }
             >
-              {type === 'job' && (
-                <FormattedMessage id="job_preview.save_draft_button" />
-              )}
-              {type === 'venue' && (
-                <FormattedMessage id="venue_preview.save_draft_button" />
-              )}
+              <FormattedMessage id="preview.save_draft_button" />
             </Button>
           </Grid>
           <Grid className={classes.publishButton} item xs={6} sm={3}>
@@ -216,22 +202,12 @@ const ItemPreview = ({ refetch, session, history }) => {
               color="primary"
               type="submit"
             >
-              {type === 'job' && (
-                <FormattedMessage id="job_preview.publish_button" />
-              )}
-              {type === 'venue' && (
-                <FormattedMessage id="venue_preview.publish_button" />
-              )}
+              <FormattedMessage id="preview.publish_button" />
             </Button>
           </Grid>
         </Grid>
         <Box p={6} textAlign="center">
-          {type === 'job' && (
-            <FormattedMessage id="job_preview.frontpage_text" />
-          )}
-          {type === 'venue' && (
-            <FormattedMessage id="venue_preview.frontpage_text" />
-          )}
+          <FormattedMessage id="preview.frontpage_text" />
         </Box>
 
         <Paper className={classes.paper} elevation={6}>
@@ -241,12 +217,10 @@ const ItemPreview = ({ refetch, session, history }) => {
         </Paper>
 
         <Box p={6} textAlign="center">
-          {type === 'job' && (
-            <FormattedMessage id="job_preview.detail_text" />
-          )}
-          {type === 'venue' && (
-            <FormattedMessage id="venue_preview.detail_text" />
-          )}
+          <FormattedMessage
+            id="preview.detail_text"
+            values={{ type: type }}
+          />
         </Box>
 
         <Paper className={classes.paper} elevation={6}>
@@ -261,12 +235,7 @@ const ItemPreview = ({ refetch, session, history }) => {
         </Paper>
 
         <Box p={6} textAlign="center">
-          {type === 'job ' && (
-            <FormattedMessage id="job_preview.confirm_text" />
-          )}
-          {type === 'venue ' && (
-            <FormattedMessage id="venue_preview.confirm_text" />
-          )}
+          <FormattedMessage id="preview.confirm_text" />
         </Box>
         <Grid
           container
@@ -278,12 +247,7 @@ const ItemPreview = ({ refetch, session, history }) => {
           <Grid className={classes.buttons} item sm={4}>
             <Link to={reactiveRouteConfig.routes.post}>
               <Button variant="outlined">
-                {type === 'job' && (
-                  <FormattedMessage id="job_preview.change_button" />
-                )}
-                {type === 'venue' && (
-                  <FormattedMessage id="venue_preview.change_button" />
-                )}
+                <FormattedMessage id="preview.change_button" />
               </Button>
             </Link>
           </Grid>
@@ -295,12 +259,7 @@ const ItemPreview = ({ refetch, session, history }) => {
                 onSubmit(event, mutateItem, 'draft')
               }
             >
-              {type === 'job' && (
-                <FormattedMessage id="job_preview.save_draft_button" />
-              )}
-              {type === 'venue' && (
-                <FormattedMessage id="venue_preview.save_draft_button" />
-              )}
+              <FormattedMessage id="preview.save_draft_button" />
             </Button>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -313,12 +272,7 @@ const ItemPreview = ({ refetch, session, history }) => {
               style={{ width: matches ? '100%' : null }}
               type="submit"
             >
-              {type === 'job' && (
-                <FormattedMessage id="job_preview.publish_button" />
-              )}
-              {type === 'venue' && (
-                <FormattedMessage id="venue_preview.publish_button" />
-              )}
+              <FormattedMessage id="preview.publish_button" />
             </Button>
           </Grid>
         </Grid>

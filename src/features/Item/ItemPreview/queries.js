@@ -21,7 +21,6 @@ export const CREATE_JOB = gql`
         linkedin
       }
       url
-      regions
       types
       status
       tags
@@ -52,7 +51,6 @@ export const UPDATE_JOB = gql`
         linkedin
       }
       url
-      regions
       types
       status
       tags

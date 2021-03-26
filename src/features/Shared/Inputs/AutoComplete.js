@@ -12,6 +12,11 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     width: '100%',
   },
+  label: {
+    '&::first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
 }));
 
 const AutoCompleteInput = ({
@@ -35,7 +40,9 @@ const AutoCompleteInput = ({
       required={required}
       className={classes.formControl}
     >
-      <FormLabel id={`${name}-label`}>{label}</FormLabel>
+      <FormLabel className={classes.label} id={`${name}-label`}>
+        {label}
+      </FormLabel>
       <Autocomplete
         multiple
         autoSelect

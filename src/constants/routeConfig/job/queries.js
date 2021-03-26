@@ -1,22 +1,25 @@
 import gql from 'graphql-tag.macro';
 
-export const GET_PAGINATED_EVENTS = gql`
+export const GET_PAGINATED_JOBS = gql`
   query(
     $cursor: Int
     $limit: Int!
-    $filter: EventFilterInput
+    $filter: JobFilterInput
     $cache: Boolean
   ) {
-    events(
+    jobs(
       cursor: $cursor
       limit: $limit
       filter: $filter
       cache: $cache
-    ) @connection(key: "EventsConnection") {
+    ) @connection(key: "JobsConnection") {
       edges {
         id
         title
-        logo
+        company {
+          name
+          logo
+        }
         location {
           name
         }
@@ -36,27 +39,32 @@ export const GET_PAGINATED_EVENTS = gql`
   }
 `;
 
-export const GET_EVENT = gql`
+export const GET_JOB = gql`
   query($slug: String!) {
-    event(slug: $slug) {
+    job(slug: $slug) {
       id
       title
-      logo
+      company {
+        name
+        logo
+        twitter
+        tagline
+        linkedin
+        website
+      }
       location {
         name
         lat
         lon
       }
-      regions
       description
       status
       types
       tags
       slug
       url
-      publishedAt
       createdAt
-      userId
+      publishedAt
       stats {
         views
         visits
@@ -66,20 +74,27 @@ export const GET_EVENT = gql`
   }
 `;
 
-export const CREATE_EVENT = gql`
-  mutation($input: EventInput!) {
-    createEvent(input: $input) {
+export const CREATE_JOB = gql`
+  mutation($input: JobInput!) {
+    createJob(input: $input) {
       id
       title
-      logo
       description
       location {
         name
         lat
         lon
       }
+      company {
+        id
+        name
+        logo
+        website
+        tagline
+        twitter
+        linkedin
+      }
       url
-      regions
       types
       status
       tags
@@ -89,20 +104,27 @@ export const CREATE_EVENT = gql`
   }
 `;
 
-export const UPDATE_EVENT = gql`
-  mutation($id: ID!, $input: EventInput!) {
-    updateEvent(id: $id, input: $input) {
+export const UPDATE_JOB = gql`
+  mutation($id: ID!, $input: JobInput!) {
+    updateJob(id: $id, input: $input) {
       id
       title
-      logo
       description
       location {
         name
         lat
         lon
       }
+      company {
+        id
+        name
+        logo
+        website
+        tagline
+        twitter
+        linkedin
+      }
       url
-      regions
       types
       status
       tags

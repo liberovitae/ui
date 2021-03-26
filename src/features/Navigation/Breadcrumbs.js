@@ -113,16 +113,6 @@ const SearchBreadCrumbs = React.memo(
               </Typography>
             </Fade>
           )}
-          {searchVar().regions.length && (
-            <Fade in>
-              <Typography title="Regions" variant="caption">
-                <Public className={classes.icon} />
-                {searchVar().regions.length
-                  ? searchVar().regions.join(', ')
-                  : '...'}
-              </Typography>
-            </Fade>
-          )}
 
           {searchVar().types.length && (
             <Fade in>

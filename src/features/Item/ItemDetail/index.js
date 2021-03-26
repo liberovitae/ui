@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const ItemDetail = React.memo(
   ({ item, preview, type, session }) => {
     const classes = useStyles();
-    const { track, page, identify } = useAnalytics();
+    const { track } = useAnalytics();
 
     const [showMap, setShowMap] = useState(false);
     const {
@@ -109,6 +109,7 @@ const ItemDetail = React.memo(
           {preview && (
             <Grid item xs={12}>
               <Title title={title} />
+              <br />
               <Location location={location} />
             </Grid>
           )}
@@ -191,12 +192,15 @@ const ItemDetail = React.memo(
                       <FormattedMessage id="job_detail.apply_button" />
                     )}
 
-                    {type === 'venue' && urlIsEmail && (
-                      <FormattedMessage id="venue_detail.contact_button" />
+                    {type !== 'job' && urlIsEmail && (
+                      <FormattedMessage
+                        id="item_detail.contact_button"
+                        values={{ type }}
+                      />
                     )}
 
-                    {type === 'venue' && !urlIsEmail && (
-                      <FormattedMessage id="venue_detail.visit_button" />
+                    {type !== 'job' && !urlIsEmail && (
+                      <FormattedMessage id="item_detail.visit_button" />
                     )}
                   </Button>
                 </a>
@@ -220,8 +224,11 @@ const ItemDetail = React.memo(
                     <FormattedMessage id="job_detail.apply_later_button" />
                   )}
 
-                  {type === 'venue' && (
-                    <FormattedMessage id="venue_detail.save_later_button" />
+                  {type !== 'job' && (
+                    <FormattedMessage
+                      id="item_detail.save_later_button"
+                      values={{ type: type }}
+                    />
                   )}
                 </Button>
               </Link>
@@ -274,12 +281,15 @@ const ItemDetail = React.memo(
                     <FormattedMessage id="job_detail.apply_button" />
                   )}
 
-                  {type === 'venue' && urlIsEmail && (
-                    <FormattedMessage id="venue_detail.contact_button" />
+                  {type !== 'job' && urlIsEmail && (
+                    <FormattedMessage
+                      id="item_detail.contact_button"
+                      values={{ type: type }}
+                    />
                   )}
 
-                  {type === 'venue' && !urlIsEmail && (
-                    <FormattedMessage id="venue_detail.visit_button" />
+                  {type !== 'job' && !urlIsEmail && (
+                    <FormattedMessage id="item_detail.visit_button" />
                   )}
                 </Button>
               </a>
@@ -303,8 +313,11 @@ const ItemDetail = React.memo(
                   <FormattedMessage id="job_detail.apply_later_button" />
                 )}
 
-                {type === 'venue' && (
-                  <FormattedMessage id="venue_detail.save_later_button" />
+                {type !== 'job' && (
+                  <FormattedMessage
+                    id="item_detail.save_later_button"
+                    values={{ type: type }}
+                  />
                 )}
               </Button>
             </Link>

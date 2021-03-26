@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
+  label: {
+    '&::first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
 }));
 
 const SelectInput = ({
@@ -29,7 +34,9 @@ const SelectInput = ({
   const classes = useStyles();
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <FormLabel id={`${id}-label`}>{label}</FormLabel>
+      <FormLabel className={classes.label} id={`${id}-label`}>
+        {label}
+      </FormLabel>
       <Select
         labelId={`${id}-label`}
         id={id}

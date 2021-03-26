@@ -22,7 +22,7 @@ import {
 } from './queries';
 import StatusChip from './Shared/StatusChip';
 import { TypeChip } from '../../Shared/Elements';
-import { GET_PAGINATED_VENUES } from '../../Venue/queries';
+import { GET_PAGINATED_VENUES } from '../../../constants/routeConfig/venue/queries';
 
 const useStyles = makeStyles((theme) => ({
   itemControl: {

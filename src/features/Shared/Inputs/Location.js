@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
   map: {
     height: '300px',
   },
+  label: {
+    '&::first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
 }));
 
 // function LocationMarker() {
@@ -78,7 +83,14 @@ const compareValues = (key, order = 'asc') => {
 };
 
 const LocationInput = React.memo(
-  ({ location, onChange, required, label, helperText }) => {
+  ({
+    location,
+    onChange,
+    required,
+    label,
+    helperText,
+    placeholder,
+  }) => {
     const [options, setOptions] = useState([]);
     const [showMap, setShowMap] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -99,7 +111,7 @@ const LocationInput = React.memo(
 
     const classes = useStyles();
 
-    const JobMap = React.memo(
+    const ItemMap = React.memo(
       ({ position }) => {
         return (
           <MapContainer
@@ -185,7 +197,9 @@ const LocationInput = React.memo(
         required={required}
         className={classes.formControl}
       >
-        <FormLabel id="location">{label}</FormLabel>
+        <FormLabel className={classes.label} id="location">
+          {label}
+        </FormLabel>
         <Autocomplete
           id="location"
           name="location"
@@ -249,9 +263,7 @@ const LocationInput = React.memo(
               variant="outlined"
               required={required}
               helperText={helperText}
-              placeholder={intl.formatMessage({
-                id: 'post_job.location.input_placeholder',
-              })}
+              placeholder={placeholder}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -278,7 +290,7 @@ const LocationInput = React.memo(
           )}
         />
         <Collapse in={showMap}>
-          {geoObj && <JobMap position={selectedLocation} />}
+          {geoObj && <ItemMap position={selectedLocation} />}
         </Collapse>
       </FormControl>
     );

@@ -1,54 +1,45 @@
 import queryString from 'query-string';
-import INITIAL_STATE from '../constants/initialJobSearch';
+import INITIAL_SEARCH_STATE from '../constants/routeConfig/job/initialJobSearch';
 
 export const queryParams = queryString.parse(window.location.search);
 
 export const queryParamsTransObject = (queryParams) => ({
-  keywords: queryParams.k || INITIAL_STATE.keywords,
+  keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
   location: {
-    name: queryParams.l || INITIAL_STATE.location.name,
-    lat: INITIAL_STATE.location.lat,
-    lon: INITIAL_STATE.location.lon,
+    name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
+    lat: INITIAL_SEARCH_STATE.location.lat,
+    lon: INITIAL_SEARCH_STATE.location.lon,
   },
-  regions: queryParams.r
-    ? Array.isArray(queryParams.r)
-      ? queryParams.r
-      : [queryParams.r]
-    : INITIAL_STATE.regions,
+
   types: queryParams.t
     ? Array.isArray(queryParams.t)
       ? queryParams.t
       : [queryParams.t]
-    : INITIAL_STATE.types,
+    : INITIAL_SEARCH_STATE.types,
 });
 
 export const queryParamGenerate = () => {
   const queryParams = queryString.parse(window.location.search);
 
   return {
-    keywords: queryParams.k || INITIAL_STATE.keywords,
+    keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
     location: {
-      name: queryParams.l || INITIAL_STATE.location.name,
-      lat: INITIAL_STATE.location.lat,
-      lon: INITIAL_STATE.location.lon,
+      name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
+      lat: INITIAL_SEARCH_STATE.location.lat,
+      lon: INITIAL_SEARCH_STATE.location.lon,
     },
-    regions: queryParams.r
-      ? Array.isArray(queryParams.r)
-        ? queryParams.r
-        : [queryParmas.r]
-      : INITIAL_STATE.regions,
+
     types: queryParams.t
       ? Array.isArray(queryParams.t)
         ? queryParams.t
         : [queryParams.t]
-      : INITIAL_STATE.types,
+      : INITIAL_SEARCH_STATE.types,
   };
 };
 
 export const queryObject = (filter) => ({
   k: filter.keywords,
   l: filter?.location?.name,
-  r: filter?.regions,
   t: filter?.types,
 });
 

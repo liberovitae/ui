@@ -16,8 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { routeConfig, backdrop } from '../../constants/globalVars';
 import { handleReset, objCompare } from '../../helpers';
 import LocationInput from './LocationInput';
-import regionsList from '../../constants/regions';
-import { Debounce, AutoComplete, Checkbox } from '../Shared/Inputs';
+import { Debounce, Checkbox } from '../Shared/Inputs';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles({
@@ -50,7 +49,7 @@ const Filter = React.memo(
       ...reactiveSearch,
     });
 
-    const { INITIAL_STATE } = reactiveRouteConfig;
+    const { INITIAL_SEARCH_STATE } = reactiveRouteConfig;
 
     useEffect(() => {
       backdrop(true);
@@ -111,7 +110,7 @@ const Filter = React.memo(
     };
 
     if (reactiveSearch) {
-      const { keywords, location, regions, types } = searchFilter;
+      const { keywords, location, types } = searchFilter;
       return (
         <ClickAwayListener onClickAway={handleClickAway}>
           <div onClick={(e) => e.stopPropagation()}>
@@ -155,19 +154,6 @@ const Filter = React.memo(
                     location={location.name}
                   />
                 </Grid>
-                <Grid item className={classes.input} xs={12}>
-                  <AutoComplete
-                    id="regions"
-                    name="regions"
-                    // disabled={nearMe}
-                    onChange={handleSearch}
-                    data={regionsList()}
-                    value={regions}
-                    textFieldLabel={
-                      <FormattedMessage id="filter.regions.input_label" />
-                    }
-                  />
-                </Grid>
 
                 <Checkbox
                   data={routeConfig().types()}
@@ -177,7 +163,9 @@ const Filter = React.memo(
 
                 <Grid className={classes.buttons} item xs={12}>
                   <Collapse
-                    in={!objCompare(searchFilter, INITIAL_STATE)}
+                    in={
+                      !objCompare(searchFilter, INITIAL_SEARCH_STATE)
+                    }
                   >
                     <Link
                       to={{
@@ -200,7 +188,12 @@ const Filter = React.memo(
                       variant="outlined"
                       color="primary"
                       onClick={() => {
-                        if (objCompare(reactiveSearch, INITIAL_STATE))
+                        if (
+                          objCompare(
+                            reactiveSearch,
+                            INITIAL_SEARCH_STATE,
+                          )
+                        )
                           return handleClickAway();
 
                         handleReset();

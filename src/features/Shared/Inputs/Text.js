@@ -6,6 +6,11 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     width: '100%',
   },
+  label: {
+    '&::first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
 }));
 
 const TextInput = ({
@@ -23,7 +28,9 @@ const TextInput = ({
   const classes = useStyles();
   return (
     <FormControl required={required} className={classes.formControl}>
-      <FormLabel id={value}>{label}</FormLabel>
+      <FormLabel className={classes.label} id={value}>
+        {label}
+      </FormLabel>
       <TextField
         id={name}
         autoFocus={autoFocus}

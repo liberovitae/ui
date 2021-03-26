@@ -92,7 +92,10 @@ const Appbar = React.memo(
             appear
             in={
               !filterSearch().show &&
-              !objCompare(reactiveSearch, routeConfig().INITIAL_STATE)
+              !objCompare(
+                reactiveSearch,
+                routeConfig().INITIAL_SEARCH_STATE,
+              )
             }
             mountOnEnter
             unmountOnExit

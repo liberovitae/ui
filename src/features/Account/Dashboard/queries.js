@@ -181,7 +181,6 @@ export const CREATE_ALERT = gql`
       alertType
       keywords
       location
-      regions
       types
       frequency
       active
@@ -204,7 +203,6 @@ export const UPDATE_ALERT = gql`
       name
       keywords
       location
-      regions
       types
       frequency
       active
@@ -265,7 +263,6 @@ export const GET_ALERT = gql`
       alertType
       keywords
       location
-      regions
       types
       slug
       frequency

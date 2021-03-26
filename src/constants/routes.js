@@ -40,7 +40,7 @@ export const JOB_BASE = '/job';
 // ITEMS
 export const ITEMS = '/:type';
 export const ITEM_PAGE = '/:type/:slug';
-export const ITEM_POST = '/:type/post/:slug?';
+export const ITEM_POST = '/:type/post';
 export const ITEM_PREVIEW = '/:type/post/:slug?/preview';
 export const ITEM_SAVE = '/:type/save/:slug?';
 

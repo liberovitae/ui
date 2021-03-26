@@ -35,14 +35,11 @@ import {
 import routeConfigs from '../../../constants/routeConfig';
 import Loading from '../../Shared/Loading';
 import { subscribeUserToPush } from '../../../helpers/subscriptions';
-import regionsList from '../../../constants/regions';
 import { ALERTS } from '../../../constants/routes';
 import history from '../../../constants/history';
 
-const INITIAL_SEARCH_STATE = routeConfig().INITIAL_STATE;
-
 const INITIAL_STATE = {
-  ...INITIAL_SEARCH_STATE,
+  ...routeConfig().INITIAL_SEARCH_STATE,
   id: '',
   alertType: routeConfig().type,
   name: '',
@@ -63,7 +60,6 @@ const AlertForm = ({ refetch }) => {
     keywords,
     location,
     frequency,
-    regions,
     types,
     active,
     email,
@@ -92,7 +88,7 @@ const AlertForm = ({ refetch }) => {
   }, [slug]);
 
   useEffect(() => {
-    routeConfig(routeConfigs[alertType]);
+    routeConfig(alertType);
     tabIndex(routeConfig().tabIndex);
   }, [alertType]);
 
@@ -109,7 +105,6 @@ const AlertForm = ({ refetch }) => {
           keywords: keywords,
           location: location.name,
           frequency: frequency,
-          regions: state.regions,
           types: types,
           active: active,
           email: email,
@@ -152,7 +147,6 @@ const AlertForm = ({ refetch }) => {
         alertType,
         keywords,
         location,
-        regions,
         types,
         frequency,
         active,
@@ -167,7 +161,6 @@ const AlertForm = ({ refetch }) => {
         alertType: alertType,
         keywords: keywords,
         location: { name: location },
-        regions: regions,
         types: types,
         frequency: frequency,
         active: active,
@@ -255,20 +248,7 @@ const AlertForm = ({ refetch }) => {
                 helperText="For exact city, state or country filtering if necessary or leave blank for all locations."
               />
             </Box>
-            <Box pb={2}>
-              <AutoCompleteInput
-                data={regionsList()}
-                value={state.regions}
-                onChange={onChange}
-                name="regions"
-                label={
-                  <FormattedMessage id="alert_form.regions_input_label" />
-                }
-                helperText={
-                  <FormattedMessage id="alert_form.regions_input_helperText" />
-                }
-              />
-            </Box>
+
             <Box pb={2}>
               <AutoCompleteInput
                 data={routeConfig().types()}

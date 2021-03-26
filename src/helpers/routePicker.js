@@ -3,10 +3,9 @@ import {
   JOB_BASE,
   EVENT_BASE,
 } from '../constants/routes';
-import ROUTE_CONFIG from '../constants/routeConfig';
+import { job, venue, event } from '../constants/routeConfig';
 import history from '../constants/history';
 
-const { job, venue, event } = ROUTE_CONFIG;
 const { pathname } = history.location;
 
 const routePicker = () => {
