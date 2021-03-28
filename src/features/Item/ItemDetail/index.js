@@ -26,6 +26,7 @@ import {
   Status,
   PublishedTime,
   Tooltip,
+  Date,
 } from '../../Shared/Elements';
 import { useAnalytics } from 'use-analytics';
 
@@ -93,6 +94,8 @@ const ItemDetail = React.memo(
       logo,
       url,
       slug,
+      dateStart,
+      dateEnd,
     } = item;
     const urlIsEmail = isEmail(url);
 
@@ -143,7 +146,9 @@ const ItemDetail = React.memo(
               name={name || company?.name}
               logo={logo || company?.logo}
             />
-
+            {type === 'event' && (
+              <Date dateEnd={dateEnd} dateStart={dateStart} />
+            )}
             <>
               <Grid item xs={12} className={classes.name}>
                 <Subtitle text={subtitle || company?.name} />

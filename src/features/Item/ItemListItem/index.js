@@ -14,8 +14,8 @@ import {
   Status,
   TagChip,
   TypeChip,
+  Date,
 } from '../../Shared/Elements';
-import { useReactiveVar } from '@apollo/client';
 import {
   contentDrawer,
   routeConfig,
@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemListItem = ({ item, preview, session }) => {
   const classes = useStyles();
-  const reactiveRouteConfig = useReactiveVar(routeConfig);
   const {
     title,
     name,
@@ -61,7 +60,11 @@ const ItemListItem = ({ item, preview, session }) => {
     status,
     logo,
     slug,
+    dateEnd,
+    dateStart,
   } = item;
+
+  const { type, routes } = routeConfig();
 
   return (
     <Fade in timeout={400}>
@@ -71,7 +74,7 @@ const ItemListItem = ({ item, preview, session }) => {
           window.history.pushState(
             null,
             null,
-            `${reactiveRouteConfig.routes.base}/${slug}`,
+            `${routes.base}/${slug}`,
           );
           !contentDrawer().show &&
             contentDrawer({ show: true, slug: slug });
@@ -84,7 +87,7 @@ const ItemListItem = ({ item, preview, session }) => {
         <Grid item xs={9} className={classes.item}>
           <Avatar logo={logo || company?.logo} name={name} />
           <Box>
-            {reactiveRouteConfig.type === 'job' && (
+            {type === 'job' && (
               <>
                 <Subtitle text={subtitle || company?.name} />
                 <br />
@@ -93,8 +96,11 @@ const ItemListItem = ({ item, preview, session }) => {
 
             <Title title={title} />
             <br />
+            {type === 'event' && (
+              <Date dateEnd={dateEnd} dateStart={dateStart} />
+            )}
 
-            <Box mt={reactiveRouteConfig.type === 'job' ? 1 : 2}>
+            <Box mt={type === 'job' ? 1 : 2}>
               {tags &&
                 tags.map((tag) => (
                   <TagChip tag={tag} key={slug + tag} />

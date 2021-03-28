@@ -114,20 +114,21 @@ const ItemForm = ({
 
             {type === 'event' && (
               <MuiPickersUtilsProvider utils={DateDayJSUtils}>
-                <FormLabel>Event dates</FormLabel>
+                <FormLabel required>Event dates</FormLabel>
                 <Grid
                   style={{
                     marginTop: '1rem',
                     marginBottom: '1rem',
                   }}
                   container
-                  alignItems="baseline"
+                  alignItems="flex-end"
                   justify="space-evenly"
                 >
                   <DateTimePicker
                     animateYearScrolling
                     ampm={false}
                     autoOk
+                    required
                     name="dateStart"
                     variant="inline"
                     disableToolbar
@@ -144,11 +145,12 @@ const ItemForm = ({
                     animateYearScrolling
                     ampm={false}
                     autoOk
+                    required
                     name="dateEnd"
                     variant="inline"
                     label="End date/time"
                     disableToolbar
-                    disablePast
+                    minDate={dateStart}
                     InputProps={{
                       endAdornment: <CalendarTodayIcon />,
                     }}
@@ -159,19 +161,21 @@ const ItemForm = ({
               </MuiPickersUtilsProvider>
             )}
 
-            {type !== 'job' && (
-              <Box pb={2}>
-                <Upload
-                  name="logo"
-                  id="logo"
-                  label={
-                    <FormattedMessage id="company_form.upload_input_label" />
-                  }
-                  value={logo}
-                  handleFile={handleFile}
-                />
-              </Box>
-            )}
+            {type !== 'job' ||
+              type !==
+                'event'(
+                  <Box pb={2}>
+                    <Upload
+                      name="logo"
+                      id="logo"
+                      label={
+                        <FormattedMessage id="company_form.upload_input_label" />
+                      }
+                      value={logo}
+                      handleFile={handleFile}
+                    />
+                  </Box>,
+                )}
 
             <Box pb={2}>
               <AutoComplete
