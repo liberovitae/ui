@@ -17,11 +17,11 @@ import {
 } from '../../../constants/globalVars';
 import NoItems from './NoItems';
 import NoSearchItems from './NoSeachItems';
-import { getQueryString } from '../../../helpers';
-import routeConfigs from '../../../constants/routeConfig';
+import { getQueryString, objCompare } from '../../../helpers';
 import { client } from '../../../index';
 import ItemPage from '../../Item/ItemPage';
 import { GET_ALERT } from '../../Account/Dashboard/queries';
+import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
 
 const Items = React.memo(
   ({ limit, history, session }) => {
@@ -47,8 +47,10 @@ const Items = React.memo(
         useLocalCache(true);
 
         if (
-          JSON.stringify(reactiveSearch) !==
-          JSON.stringify(routeConfig().INITIAL_SEARCH_STATE)
+          !objCompare(
+            reactiveSearch,
+            routeConfig().INITIAL_SEARCH_STATE,
+          )
         ) {
           siteHeader(
             <>
@@ -89,8 +91,9 @@ const Items = React.memo(
           types: types ?? [],
         });
         useLocalCache(false);
-        routeConfig(alertType);
-        tabIndex(routeConfig().tabIndex);
+        console.log(alertType);
+        routeConfig(ROUTE_CONFIGS[alertType]);
+        tabIndex(reactiveRouteConfig.tabIndex);
         delete searchVar().alertType; // Remove alertType to not break search variable
       },
     });
@@ -114,8 +117,8 @@ const Items = React.memo(
               inputElem && inputElem.blur();
 
               if (
-                JSON.stringify(reactiveSearch) !==
-                JSON.stringify(
+                !objCompare(
+                  reactiveSearch,
                   reactiveRouteConfig.INITIAL_SEARCH_STATE,
                 )
               ) {
@@ -166,6 +169,7 @@ const Items = React.memo(
     );
 
     if (noItems) {
+      scrollTop();
       return <NoItems reactiveRouteConfig={reactiveRouteConfig} />;
     }
 
