@@ -335,7 +335,7 @@ export default {
 
   // Job site header
   'job.site_header':
-    'Your prime source for opportunities - free & simple.',
+    'Your prime source for job opportunities - free & simple.',
 
   // Job detail
   'job_detail.apply_button': 'Apply now',
@@ -401,7 +401,7 @@ company per user account can be created and edited.`,
     'Successfully saved draft {type}',
   'preview.publish.success_snackbar':
     'Successfully published {type}.',
-  'preview.hero.title': 'Post a {type}',
+  'preview.hero.title': 'Post a new {type}',
   'preview.hero.subtitle': 'Preview your {type}',
   'preview.edit_item_button': 'Edit {type}',
   'preview.edit_venue_button': 'Edit {type}',
