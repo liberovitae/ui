@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { config } from 'dotenv';
 import {
   ApolloProvider,
   ApolloClient,
@@ -16,12 +17,16 @@ import { inflate } from 'graphql-deduplicator';
 import App from './features/App';
 import { Logout } from './features/Account/Logout';
 import './index.css';
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { createUploadLink } from 'apollo-upload-client';
 import { IntlProvider } from 'react-intl';
 import Snackbar from './features/Shared/Snackbar';
 import { en } from './locales';
 import * as serviceWorker from './registerServiceWorker';
+
+const env = process.env.NODE_ENV;
+
+config({ path: `./.env.${env}` });
 
 sessionStorage.clear();
 
@@ -119,16 +124,10 @@ export const client = new ApolloClient({
   cache,
 });
 
-const env = process.env.NODE_ENV;
-
-require('dotenv').config({ path: `./.env.${env}` });
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <IntlProvider messages={en} locale="en" defaultLocale="en">
-      <SnackbarProvider maxSnack={3}>
-        <App />
-      </SnackbarProvider>
+      <App />
     </IntlProvider>
   </ApolloProvider>,
   document.getElementById('root'),
