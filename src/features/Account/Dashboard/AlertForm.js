@@ -32,7 +32,6 @@ import {
   tabIndex,
   hero,
 } from '../../../constants/globalVars';
-import routeConfigs from '../../../constants/routeConfig';
 import Loading from '../../Shared/Loading';
 import { subscribeUserToPush } from '../../../helpers/subscriptions';
 import { ALERTS } from '../../../constants/routes';
@@ -180,13 +179,13 @@ const AlertForm = ({ refetch }) => {
     ),
   });
 
-  const onChange = (event) => {
+  const onChange = (e) => {
     const { name, value } = event.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
     mutateAlert();
   };
 
@@ -202,7 +201,7 @@ const AlertForm = ({ refetch }) => {
           </Typography>
 
           <Divider variant="fullWidth" />
-          <form onSubmit={(event) => onSubmit(event)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <Box pt={2}>
               <Typography paragraph gutterBottom variant="h5">
                 <FormattedMessage id="alert_form.title" />
