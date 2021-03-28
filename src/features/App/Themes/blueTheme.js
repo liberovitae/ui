@@ -43,6 +43,9 @@ const blueTheme = () => {
             backgroundColor: '#305E88',
             outline: '1px solid slategrey',
           },
+          scrollbar: {
+            backgroundColor: lighten('#305E88', 0.2),
+          },
         },
       },
       MuiFormLabel: {
