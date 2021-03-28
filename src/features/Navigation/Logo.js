@@ -8,8 +8,12 @@ import {
 import { ReactComponent as Logo } from '../../logo.svg';
 import { getQueryString } from '../../helpers';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   logo: {
+    [theme.breakpoints.down('xs')]: {
+      width: '30px',
+      marginTop: '8px',
+    },
     height: '20px',
     width: '60px',
     display: 'inline',
@@ -19,7 +23,7 @@ const useStyles = makeStyles({
     marginLeft: '1rem',
     cursor: 'pointer',
   },
-});
+}));
 
 const NavLogo = ({ history, lastLocation }) => {
   const classes = useStyles();

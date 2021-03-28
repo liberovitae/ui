@@ -41,6 +41,9 @@ const purpleDarkTheme = () => {
             outline: '1px solid slategrey',
           },
           '--ck-focus-ring': '1px solid #f48fb1',
+          scrollbar: {
+            backgroundColor: lighten('#f48fb1', 0.2),
+          },
         },
       },
       MuiFormLabel: {

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { Grid, Box } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import ItemDetail from '../ItemDetail';
 import Loading from '../../Shared/Loading';
@@ -21,6 +22,7 @@ import {
 import { scrollTop } from '../../Shared/ScrollTop';
 import Hero from '../../Shared/Hero';
 import { useAnalytics } from 'use-analytics';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const ItemPage = ({ session }) => {
   const reactiveRouteConfig = useReactiveVar(routeConfig);
@@ -30,7 +32,8 @@ const ItemPage = ({ session }) => {
   const { slug: paramSlug, type: paramType } = useParams();
   const intl = useIntl();
   const { page } = useAnalytics();
-
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const combineSlug = slug || paramSlug;
   const combineType = type || paramType;
 
@@ -81,7 +84,7 @@ const ItemPage = ({ session }) => {
     } = item;
 
     return (
-      <Box>
+      <Box pb={matches ? 6 : 0}>
         <Helmet
           defaultTitle={intl.formatMessage({ id: 'site.name' })}
           titleTemplate={`${intl.formatMessage({

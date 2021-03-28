@@ -39,6 +39,9 @@ const orangeDarkTheme = () => {
             outline: '1px solid slategrey',
           },
           // '--ck-focus-ring': '1px solid #F4A261',
+          scrollbar: {
+            backgroundColor: lighten('#F4A261', 0.2),
+          },
         },
       },
       MuiFormLabel: {

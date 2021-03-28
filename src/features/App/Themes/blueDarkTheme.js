@@ -39,6 +39,9 @@ const blueDarkTheme = () => {
             outline: '1px solid slategrey',
           },
           // '--ck-focus-ring': '1px solid #488ecc',
+          scrollbar: {
+            backgroundColor: lighten('#488ecc', 0.2),
+          },
         },
       },
       MuiFormLabel: {

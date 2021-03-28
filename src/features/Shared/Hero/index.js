@@ -9,12 +9,20 @@ import {
 } from '@material-ui/core/styles';
 import { Typography, Fade } from '@material-ui/core';
 import { routeConfig, hero } from '../../../constants/globalVars';
-import { objCompare } from '../../../helpers';
 import { useReactiveVar } from '@apollo/client';
 import ParticleBackground from './ParticleBackground';
-
+import { objCompare } from '../../../helpers';
 const useStyles = makeStyles((theme) => ({
   root: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 0,
+    },
+    marginTop: !objCompare(
+      routeConfig().searchVar(),
+      routeConfig().INITIAL_SEARCH_STATE,
+    )
+      ? '6rem'
+      : '4rem',
     textAlign: 'center',
     paddingTop: '2rem',
     paddingLeft: '1rem',
@@ -65,18 +73,7 @@ const Hero = React.memo(
     if (title || reactiveHero?.title) {
       return (
         <Fade in>
-          <div
-            id="heroRoot"
-            style={{
-              marginTop: objCompare(
-                routeConfig().searchVar(),
-                routeConfig().INITIAL_SEARCH_STATE,
-              )
-                ? '4rem'
-                : '6rem',
-            }}
-            className={classes.root}
-          >
+          <div id="heroRoot" className={classes.root}>
             <div className={classes.container}>
               <ParticleBackground
                 routeConfig={routeConfig}

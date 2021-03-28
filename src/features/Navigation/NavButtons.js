@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { IconButton, Hidden, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   ExpandMore,
   Search,
@@ -30,6 +30,9 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
   accountButtons: { padding: '0.5rem' },
   expand: {
+    [theme.breakpoints.down('xs')]: {
+      transform: 'rotate(180deg)',
+    },
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
@@ -37,11 +40,15 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   expandOpen: {
+    [theme.breakpoints.down('xs')]: {
+      transform: 'rotate(0deg)',
+    },
     transform: 'rotate(180deg)',
   },
 }));
 
 const NavButtons = ({ themeSnackbar, session }) => {
+  const theme = useTheme();
   const { INITIAL_SEARCH_STATE, type } = routeConfig();
   const classes = useStyles();
 
@@ -51,7 +58,6 @@ const NavButtons = ({ themeSnackbar, session }) => {
         className={clsx(classes.expand, {
           [classes.expandOpen]: filterSearch().show,
         })}
-        // size="small"
         edge="end"
         title="Advanced search"
         onClick={(event) => {
@@ -99,14 +105,13 @@ const NavButtons = ({ themeSnackbar, session }) => {
               show: !quickSearch().show,
               autofocus: true,
             });
-            // backdrop(true);
           }}
         >
           <Search />
         </IconButton>
       )}
 
-      <Hidden mdUp>
+      <Hidden lgUp>
         <IconButton
           edge="start"
           aria-label="menu"
@@ -118,7 +123,7 @@ const NavButtons = ({ themeSnackbar, session }) => {
           <Menu fontSize="large" />
         </IconButton>
       </Hidden>
-      <Hidden smDown>
+      <Hidden mdDown>
         <Link
           onClick={(e) => e.stopPropagation()}
           to={routeConfig().routes.post}

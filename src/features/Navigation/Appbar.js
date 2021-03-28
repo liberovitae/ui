@@ -7,7 +7,7 @@ import {
   Slide,
   useScrollTrigger,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useReactiveVar } from '@apollo/client';
 import { objCompare } from '../../helpers';
 import { useSnackbar } from 'notistack';
@@ -24,11 +24,17 @@ import Breadcrumbs from './Breadcrumbs';
 import NavButtons from './NavButtons';
 import Logo from './Logo';
 import { scrollTop } from '../Shared/ScrollTop';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
+    [theme.breakpoints.down('xs')]: {
+      top: 'auto',
+      bottom: 0,
+      boxShadow: '1px -3px 20px rgba(0, 0, 0, 0.1)',
+    },
     backgroundColor: theme.palette.background.default,
-    boxShadow: '1px 3px 10px rgba(0, 0, 0, 0.2)',
+    boxShadow: '1px 3px 20px rgba(0, 0, 0, 0.1)',
   },
   grow: {
     flexGrow: 1,
@@ -36,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HideOnScroll = (props) => {
-  const { children } = props;
+  const { children, matches } = props;
 
   const trigger = useScrollTrigger({
     target: window ? window : undefined,
@@ -45,8 +51,8 @@ const HideOnScroll = (props) => {
   return (
     <Slide
       appear={false}
-      direction="down"
-      in={quickSearch().show || filterSearch().show || !trigger}
+      direction={matches ? 'up' : 'down'}
+      in={!trigger}
     >
       {children}
     </Slide>
@@ -55,6 +61,9 @@ const HideOnScroll = (props) => {
 
 const Appbar = React.memo(
   ({ history, session, lastLocation }) => {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
     const classes = useStyles();
     const reactiveSearch = useReactiveVar(routeConfig().searchVar);
     const reactiveFilterSearch = useReactiveVar(filterSearch);
@@ -73,8 +82,45 @@ const Appbar = React.memo(
     };
 
     return (
-      <HideOnScroll>
+      <HideOnScroll matches={matches}>
         <AppBar onClick={scrollTop} className={classes.appBar}>
+          {matches && (
+            <>
+              <Collapse
+                appear
+                in={
+                  !filterSearch().show &&
+                  !objCompare(
+                    reactiveSearch,
+                    routeConfig().INITIAL_SEARCH_STATE,
+                  )
+                }
+                mountOnEnter
+                unmountOnExit
+                timeout="auto"
+              >
+                <Breadcrumbs />
+              </Collapse>
+              <Collapse
+                appear
+                in={reactiveFilterSearch.show}
+                timeout="auto"
+                mountOnEnter
+                unmountOnExit
+              >
+                <Box p={1}>
+                  <Filter
+                    backdrop={backdrop}
+                    handleClickAway={(e) => {
+                      filterSearch().show &&
+                        filterSearch({ show: false });
+                      backdrop(false);
+                    }}
+                  />
+                </Box>
+              </Collapse>
+            </>
+          )}
           <Toolbar disableGutters>
             <Logo lastLocation={lastLocation} history={history} />
 
@@ -88,40 +134,43 @@ const Appbar = React.memo(
             />
           </Toolbar>
 
-          <Collapse
-            appear
-            in={
-              !filterSearch().show &&
-              !objCompare(
-                reactiveSearch,
-                routeConfig().INITIAL_SEARCH_STATE,
-              )
-            }
-            mountOnEnter
-            unmountOnExit
-            timeout="auto"
-          >
-            <Breadcrumbs />
-          </Collapse>
-
-          <Collapse
-            appear
-            in={reactiveFilterSearch.show}
-            timeout="auto"
-            mountOnEnter
-            unmountOnExit
-          >
-            <Box p={1}>
-              <Filter
-                backdrop={backdrop}
-                handleClickAway={(e) => {
-                  filterSearch().show &&
-                    filterSearch({ show: false });
-                  backdrop(false);
-                }}
-              />
-            </Box>
-          </Collapse>
+          {!matches && (
+            <>
+              <Collapse
+                appear
+                in={
+                  !filterSearch().show &&
+                  !objCompare(
+                    reactiveSearch,
+                    routeConfig().INITIAL_SEARCH_STATE,
+                  )
+                }
+                mountOnEnter
+                unmountOnExit
+                timeout="auto"
+              >
+                <Breadcrumbs />
+              </Collapse>
+              <Collapse
+                appear
+                in={reactiveFilterSearch.show}
+                timeout="auto"
+                mountOnEnter
+                unmountOnExit
+              >
+                <Box p={1}>
+                  <Filter
+                    backdrop={backdrop}
+                    handleClickAway={(e) => {
+                      filterSearch().show &&
+                        filterSearch({ show: false });
+                      backdrop(false);
+                    }}
+                  />
+                </Box>
+              </Collapse>
+            </>
+          )}
         </AppBar>
       </HideOnScroll>
     );

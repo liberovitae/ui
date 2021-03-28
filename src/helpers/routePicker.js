@@ -20,6 +20,7 @@ const routePicker = () => {
   if (pathname.startsWith(JOB_BASE)) {
     return job;
   }
+
   return venue;
 };
 

@@ -43,6 +43,9 @@ const orangeTheme = () => {
             backgroundColor: '#bd4a03',
             outline: '1px solid slategrey',
           },
+          scrollbar: {
+            backgroundColor: lighten('#bd4a03', 0.2),
+          },
         },
       },
       MuiFormLabel: {

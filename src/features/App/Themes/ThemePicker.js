@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client';
 import {
   blue,
   purple,
@@ -6,60 +7,76 @@ import {
   orange,
   orangeDark,
 } from './';
+import { useTheme } from '@material-ui/core/styles';
 
-export const themePicker = ({
-  reactiveRouteConfig,
-  reactiveDarkTheme,
-  theme,
-}) => {
-  if (reactiveRouteConfig.theme.colour === 'purple') {
-    const purpleTheme = purple();
+import {
+  routeConfig,
+  darkTheme,
+} from '../../../constants/globalVars';
 
-    if (
-      theme.palette.primary.main === purpleTheme.palette.primary.main
-    ) {
-      return false;
-    }
+export const themePicker = () => {
+  const reactiveRouteConfig = useReactiveVar(routeConfig);
+  const reactiveDarkTheme = useReactiveVar(darkTheme);
+  const theme = useTheme();
+  const { theme: routeTheme } = reactiveRouteConfig;
 
-    if (reactiveDarkTheme) {
-      localStorage.setItem('darkTheme', true);
-      return purpleDark();
-    }
-    localStorage.setItem('darkTheme', false);
-    return purpleTheme;
-  }
-  if (reactiveRouteConfig.theme.colour === 'blue') {
-    const blueTheme = blue();
+  const { colour } = routeTheme;
 
-    if (
-      theme.palette.primary.main === blueTheme.palette.primary.main
-    ) {
-      return false;
-    }
+  console.log(reactiveRouteConfig);
 
-    if (reactiveDarkTheme) {
-      localStorage.setItem('darkTheme', true);
-      return blueDark();
-    }
-    localStorage.setItem('darkTheme', false);
-    return blueTheme;
-  }
+  switch (colour) {
+    case 'purple':
+      const purpleTheme = purple();
+      if (
+        theme.palette.primary.main ===
+        purpleTheme.palette.primary.main
+      )
+        break;
 
-  if (reactiveRouteConfig.theme.colour === 'orange') {
-    const orangeTheme = orange();
+      if (reactiveDarkTheme) {
+        localStorage.setItem('darkTheme', true);
+        return purpleDark();
+      }
+      localStorage.setItem('darkTheme', false);
+      return purpleTheme;
 
-    if (
-      theme.palette.primary.main === orangeTheme.palette.primary.main
-    ) {
-      return false;
-    }
+    case 'blue':
+      const blueTheme = blue();
+      if (
+        theme.palette.primary.main === blueTheme.palette.primary.main
+      )
+        break;
 
-    if (reactiveDarkTheme) {
-      localStorage.setItem('darkTheme', true);
-      return orangeDark();
-    }
-    localStorage.setItem('darkTheme', false);
-    return orangeTheme;
+      if (reactiveDarkTheme) {
+        localStorage.setItem('darkTheme', true);
+        return blueDark();
+      }
+      localStorage.setItem('darkTheme', false);
+      return blueTheme;
+
+    case 'orange':
+      const orangeTheme = orange();
+      if (
+        theme.palette.primary.main ===
+        orangeTheme.palette.primary.main
+      )
+        break;
+      if (
+        theme.palette.primary.main ===
+        orangeTheme.palette.primary.main
+      ) {
+        return false;
+      }
+
+      if (reactiveDarkTheme) {
+        localStorage.setItem('darkTheme', true);
+        return orangeDark();
+      }
+      localStorage.setItem('darkTheme', false);
+      return orangeTheme;
+
+    default:
+      return purpleTheme;
   }
 };
 

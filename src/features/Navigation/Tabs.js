@@ -1,10 +1,16 @@
 import React from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { Tooltip, Tabs, Tab } from '@material-ui/core';
 import { VENUES, JOBS, EVENTS } from '../../constants/routes';
 import history from '../../constants/history';
 import { contentDrawer, tabIndex } from '../../constants/globalVars';
 import { scrollTop } from '../Shared/ScrollTop';
+import {
+  WorkOutlineOutlined,
+  HomeWorkOutlined,
+  EventOutlined,
+} from '@material-ui/icons';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const handleTabChange = (e, index) => {
   if (tabIndex() === index) return;
@@ -24,6 +30,9 @@ const handleTabChange = (e, index) => {
 
 const AppBarTabs = React.memo(
   ({}) => {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
     return (
       <Tabs
         value={tabIndex()}
@@ -33,63 +42,69 @@ const AppBarTabs = React.memo(
         variant="scrollable"
         scrollButtons="off"
       >
-        <Tab
-          onClick={(e) => {
-            e.stopPropagation();
+        <Tooltip title={matches ? 'Venues' : ''}>
+          <Tab
+            onClick={(e) => {
+              e.stopPropagation();
 
-            if (history.location.pathname !== VENUES)
-              return history.push(VENUES);
+              if (history.location.pathname !== VENUES)
+                return history.push(VENUES);
 
-            if (
-              contentDrawer().show &&
-              window.location.pathname !== VENUES
-            ) {
-              return history.goBack();
-            }
+              if (
+                contentDrawer().show &&
+                window.location.pathname !== VENUES
+              ) {
+                return history.goBack();
+              }
 
-            if (history.location.pathname === VENUES)
-              return scrollTop();
-          }}
-          label="Venues"
-        />
-        <Tab
-          onClick={(e) => {
-            e.stopPropagation();
+              if (history.location.pathname === VENUES)
+                return scrollTop();
+            }}
+            label={matches ? <HomeWorkOutlined /> : 'Venues'}
+          />
+        </Tooltip>
+        <Tooltip title={matches ? 'Events' : ''}>
+          <Tab
+            onClick={(e) => {
+              e.stopPropagation();
 
-            if (history.location.pathname !== EVENTS)
-              return history.push(EVENTS);
+              if (history.location.pathname !== EVENTS)
+                return history.push(EVENTS);
 
-            if (
-              contentDrawer().show &&
-              window.location.pathname !== EVENTS
-            ) {
-              return history.goBack();
-            }
+              if (
+                contentDrawer().show &&
+                window.location.pathname !== EVENTS
+              ) {
+                return history.goBack();
+              }
 
-            if (history.location.pathname === EVENTS)
-              return scrollTop();
-          }}
-          label="Events"
-        />
-        <Tab
-          onClick={(e) => {
-            e.stopPropagation();
+              if (history.location.pathname === EVENTS)
+                return scrollTop();
+            }}
+            label={matches ? <EventOutlined /> : 'Events'}
+          />
+        </Tooltip>
+        <Tooltip title={matches ? 'Jobs' : ''}>
+          <Tab
+            onClick={(e) => {
+              e.stopPropagation();
 
-            if (history.location.pathname !== JOBS)
-              return history.push(JOBS);
+              if (history.location.pathname !== JOBS)
+                return history.push(JOBS);
 
-            if (
-              contentDrawer().show &&
-              window.location.pathname !== JOBS
-            ) {
-              return history.goBack();
-            }
+              if (
+                contentDrawer().show &&
+                window.location.pathname !== JOBS
+              ) {
+                return history.goBack();
+              }
 
-            if (history.location.pathname === JOBS)
-              return scrollTop();
-          }}
-          label="Jobs"
-        />
+              if (history.location.pathname === JOBS)
+                return scrollTop();
+            }}
+            label={matches ? <WorkOutlineOutlined /> : 'Jobs'}
+          />
+        </Tooltip>
       </Tabs>
     );
   },

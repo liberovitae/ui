@@ -15,6 +15,7 @@ const purpleTheme = () => {
       },
       type: 'light',
     },
+
     overrides: {
       MuiCssBaseline: {
         '@global': {
@@ -39,6 +40,9 @@ const purpleTheme = () => {
           '*::-webkit-scrollbar-thumb': {
             backgroundColor: '#88305D',
             outline: '1px solid slategrey',
+          },
+          scrollbar: {
+            backgroundColor: lighten('#88305D', 0.2),
           },
         },
       },
