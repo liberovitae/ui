@@ -3,6 +3,9 @@ import { makeVar } from '@apollo/client';
 import tabPicker from '../helpers/tabPicker';
 import routePicker from '../helpers/routePicker';
 
+export const routeConfig = makeVar(routePicker());
+export const siteHeader = makeVar(routeConfig().defaultSiteHeader);
+
 export const tabIndex = makeVar(tabPicker());
 export const hero = makeVar({
   title: '',
@@ -29,5 +32,3 @@ export const filterSearch = makeVar({
 });
 export const navSidebar = makeVar(false);
 export const useLocalCache = makeVar(false);
-export const routeConfig = makeVar(routePicker());
-export const siteHeader = makeVar(routeConfig().defaultSiteHeader);
