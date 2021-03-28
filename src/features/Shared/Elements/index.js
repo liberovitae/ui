@@ -12,6 +12,7 @@ import Tagline from './Tagline';
 import Tooltip from './Tooltip';
 import BackButton from './BackButton';
 import Stats from './Stats';
+import Date from './Date';
 
 export {
   Avatar,
@@ -28,4 +29,5 @@ export {
   TypeChip,
   Tooltip,
   Stats,
+  Date,
 };
