@@ -8,10 +8,14 @@ import { hero, hideBlog } from '../../constants/globalVars';
 import SiteHeader from './SiteHeader';
 import SwipeableViews from './SwipeableViews';
 import Blog from './Blog';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const Landing = React.memo(
   ({ history, session }) => {
     const intl = useIntl();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
 
     useEffect(() => {
       hero(null);
@@ -50,8 +54,8 @@ const Landing = React.memo(
           />
         </Helmet>
 
-        <Box pt={4}>
-          <SiteHeader />
+        <Box pt={matches ? 0 : 4}>
+          <SiteHeader matches={matches} />
 
           {blogs && blogs.length > 0 && (
             <Blog history={history} session={session} blogs={blogs} />
