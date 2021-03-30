@@ -14,6 +14,7 @@ import {
   MailOutline,
   WorkOutlineOutlined,
   HomeWorkOutlined,
+  EventOutlined,
 } from '@material-ui/icons';
 import { useQuery, useMutation } from '@apollo/client';
 import { SAVED } from '../../../constants/routes';
@@ -111,6 +112,7 @@ const SavedItems = ({ session }) => {
     combinedItems = [
       ...data?.savedItems.jobs,
       ...data?.savedItems.venues,
+      ...data?.savedItems.events,
     ];
   }
 
@@ -140,6 +142,12 @@ const SavedItems = ({ session }) => {
                   fontSize="small"
                 />
               ),
+              eventIcon: (
+                <EventOutlined
+                  className={classes.icon}
+                  fontSize="small"
+                />
+              ),
             }}
           />
         </Typography>
@@ -159,9 +167,11 @@ const SavedItems = ({ session }) => {
                   {key === 'venue' && (
                     <HomeWorkOutlined className={classes.listIcon} />
                   )}
+                  {key === 'event' && (
+                    <EventOutlined className={classes.listIcon} />
+                  )}
                   {item[key].title}
-                  {item[key].company &&
-                    ' @ ' + item[key].company.name}
+                  {item[key].parent && ' @ ' + item[key].parent.title}
                   {item.reminder && (
                     <MailOutline className={classes.listIcon} />
                   )}

@@ -18,6 +18,15 @@ export const GET_ME_VENUES = gql`
     meVenues {
       id
       title
+      children {
+        id
+        title
+        slug
+        dates {
+          start
+          end
+        }
+      }
       types
       slug
       status
@@ -42,6 +51,12 @@ export const GET_ME_EVENTS = gql`
 export const DELETE_VENUE = gql`
   mutation($id: ID!) {
     deleteVenue(id: $id)
+  }
+`;
+
+export const DELETE_EVENT = gql`
+  mutation($id: ID!) {
+    deleteEvent(id: $id)
   }
 `;
 
@@ -74,24 +89,6 @@ export const GET_ME_COUNTS = gql`
   }
 `;
 
-export const GET_SAVED_JOBS = gql`
-  query {
-    savedJobs {
-      job {
-        id
-        title
-        company {
-          name
-        }
-        slug
-        createdAt
-        publishedAt
-      }
-      reminder
-    }
-  }
-`;
-
 export const GET_SAVED_ITEMS = gql`
   query {
     savedItems {
@@ -99,8 +96,8 @@ export const GET_SAVED_ITEMS = gql`
         job {
           id
           title
-          company {
-            name
+          parent {
+            title
           }
           slug
           createdAt
@@ -111,6 +108,17 @@ export const GET_SAVED_ITEMS = gql`
       }
       venues {
         venue {
+          id
+          title
+          slug
+          createdAt
+          publishedAt
+        }
+        reminder
+        createdAt
+      }
+      events {
+        event {
           id
           title
           slug
@@ -177,7 +185,7 @@ export const EDIT_PASSWORD = gql`
 export const CREATE_ALERT = gql`
   mutation($input: AlertInput!) {
     createAlert(input: $input) {
-      name
+      title
       alertType
       keywords
       location
@@ -200,7 +208,7 @@ export const UPDATE_ALERT = gql`
   mutation($id: ID!, $input: AlertInput!) {
     updateAlert(id: $id, input: $input) {
       id
-      name
+      title
       keywords
       location
       types
@@ -224,7 +232,7 @@ export const GET_ALERTS = gql`
       venues {
         id
         alertType
-        name
+        title
         slug
         frequency
         active
@@ -233,7 +241,16 @@ export const GET_ALERTS = gql`
       jobs {
         id
         alertType
-        name
+        title
+        slug
+        frequency
+        active
+        createdAt
+      }
+      events {
+        id
+        alertType
+        title
         slug
         frequency
         active
@@ -259,7 +276,7 @@ export const GET_ALERT = gql`
   query($slug: String!) {
     alert(slug: $slug) {
       id
-      name
+      title
       alertType
       keywords
       location

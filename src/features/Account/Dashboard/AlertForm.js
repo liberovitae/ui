@@ -36,12 +36,13 @@ import Loading from '../../Shared/Loading';
 import { subscribeUserToPush } from '../../../helpers/subscriptions';
 import { ALERTS } from '../../../constants/routes';
 import history from '../../../constants/history';
+import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
 
 const INITIAL_STATE = {
   ...routeConfig().INITIAL_SEARCH_STATE,
   id: '',
   alertType: routeConfig().type,
-  name: '',
+  title: '',
   frequency: 'weekly',
   active: true,
   email: true,
@@ -54,7 +55,7 @@ const AlertForm = ({ refetch }) => {
   const [state, setState] = useState(INITIAL_STATE);
   const {
     id,
-    name,
+    title,
     alertType,
     keywords,
     location,
@@ -87,7 +88,7 @@ const AlertForm = ({ refetch }) => {
   }, [slug]);
 
   useEffect(() => {
-    routeConfig(alertType);
+    routeConfig(ROUTE_CONFIGS[alertType]);
     tabIndex(routeConfig().tabIndex);
   }, [alertType]);
 
@@ -99,7 +100,7 @@ const AlertForm = ({ refetch }) => {
       variables: {
         id: id,
         input: {
-          name: name,
+          title: title,
           alertType: alertType,
           keywords: keywords,
           location: location.name,
@@ -142,7 +143,7 @@ const AlertForm = ({ refetch }) => {
     onCompleted: ({ alert }) => {
       const {
         id,
-        name,
+        title,
         alertType,
         keywords,
         location,
@@ -156,7 +157,7 @@ const AlertForm = ({ refetch }) => {
 
       setState({
         id: id,
-        name: name,
+        title: title,
         alertType: alertType,
         keywords: keywords,
         location: { name: location },
@@ -217,12 +218,12 @@ const AlertForm = ({ refetch }) => {
             <Box pb={2}>
               <TextInput
                 required
-                name="name"
-                value={name}
-                label={<FormattedMessage id="common.name" />}
+                title="title"
+                value={title}
+                label={<FormattedMessage id="common.title" />}
                 onChange={onChange}
                 helperText={
-                  <FormattedMessage id="alert_form.name_input_helperText" />
+                  <FormattedMessage id="alert_form.title_input_helperText" />
                 }
               />
             </Box>
