@@ -9,6 +9,7 @@ import {
 } from './queries';
 import { blue, blueDark } from '../../../features/App/Themes';
 import INITIAL_JOB_SEARCH_STATE from './initialJobSearch';
+import INITIAL_STATE from './initialJob';
 import { JOBS, JOB_BASE, JOB_POST, MY_JOBS } from '../../routes';
 import jobTypes from './jobTypes';
 import { GET_ME_JOBS } from '../../../features/Account/Dashboard/queries';
@@ -34,8 +35,9 @@ export default {
   },
   defaultSiteHeader: <FormattedMessage id="job.site_header" />,
   types: jobTypes,
+  INITIAL_STATE: INITIAL_STATE,
   INITIAL_SEARCH_STATE: INITIAL_JOB_SEARCH_STATE,
   searchVar: window.location.pathname.startsWith(JOB_BASE)
-    ? makeVar(queryParamGenerate())
+    ? makeVar(queryParamGenerate(INITIAL_JOB_SEARCH_STATE))
     : makeVar(INITIAL_JOB_SEARCH_STATE),
 };

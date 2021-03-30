@@ -16,9 +16,9 @@ export const GET_PAGINATED_JOBS = gql`
       edges {
         id
         title
-        company {
-          name
-          logo
+        parent {
+          title
+          image
         }
         location {
           name
@@ -44,9 +44,9 @@ export const GET_JOB = gql`
     job(slug: $slug) {
       id
       title
-      company {
-        name
-        logo
+      parent {
+        title
+        image
         twitter
         tagline
         linkedin
@@ -85,10 +85,10 @@ export const CREATE_JOB = gql`
         lat
         lon
       }
-      company {
+      parent {
         id
-        name
-        logo
+        title
+        image
         website
         tagline
         twitter
@@ -115,10 +115,10 @@ export const UPDATE_JOB = gql`
         lat
         lon
       }
-      company {
+      parent {
         id
-        name
-        logo
+        title
+        image
         website
         tagline
         twitter

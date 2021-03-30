@@ -16,7 +16,11 @@ export const GET_PAGINATED_EVENTS = gql`
       edges {
         id
         title
-        logo
+        parent {
+          title
+          image
+        }
+        image
         location {
           name
         }
@@ -26,6 +30,10 @@ export const GET_PAGINATED_EVENTS = gql`
         featured
         tags
         publishedAt
+        dates {
+          start
+          end
+        }
       }
       pageInfo {
         hasNextPage
@@ -41,7 +49,12 @@ export const GET_EVENT = gql`
     event(slug: $slug) {
       id
       title
-      logo
+      parent {
+        id
+        title
+        image
+      }
+      image
       location {
         name
         lat
@@ -54,8 +67,11 @@ export const GET_EVENT = gql`
       slug
       url
       publishedAt
+      dates {
+        start
+        end
+      }
       createdAt
-      userId
       stats {
         views
         visits
@@ -70,7 +86,7 @@ export const CREATE_EVENT = gql`
     createEvent(input: $input) {
       id
       title
-      logo
+      image
       description
       location {
         name
@@ -79,6 +95,10 @@ export const CREATE_EVENT = gql`
       }
       url
       types
+      dates {
+        start
+        end
+      }
       status
       tags
       createdAt
@@ -92,7 +112,7 @@ export const UPDATE_EVENT = gql`
     updateEvent(id: $id, input: $input) {
       id
       title
-      logo
+      image
       description
       location {
         name
@@ -101,6 +121,10 @@ export const UPDATE_EVENT = gql`
       }
       url
       types
+      dates {
+        start
+        end
+      }
       status
       tags
       createdAt
