@@ -187,31 +187,7 @@ export default ({ refetch, session, history, location }) => [
     suspense: true,
     Component: ItemPreview,
   },
-  // {
-  //   path: `${JOB_POST}/:slug?`,
-  //   exact: true,
-  //   props: {
-  //     session: session,
-  //     history: history,
-  //     refetch: refetch,
-  //   },
-  //   suspense: true,
-  //   Component:
-  //     session && session.me && !session.me.company
-  //       ? CompanyForm
-  //       : JobForm,
-  // },
-  // {
-  //   path: `${VENUE_POST}/:slug?`,
-  //   exact: true,
-  //   props: {
-  //     session: session,
-  //     history: history,
-  //     refetch: refetch,
-  //   },
-  //   suspense: true,
-  //   Component: VenueForm,
-  // },
+
   {
     path: `${ITEM_POST}/:slug?`,
     exact: true,
