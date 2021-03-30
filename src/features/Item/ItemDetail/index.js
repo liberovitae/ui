@@ -57,9 +57,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     padding: 0,
   },
-  name: {
+  title: {
     textAlign: 'left',
-    display: 'flex',
+    display: 'inline-grid',
     alignItems: 'stretch',
   },
   applyButton: {
@@ -82,7 +82,6 @@ const ItemDetail = React.memo(
     const [showMap, setShowMap] = useState(false);
     const {
       title,
-      name,
       subtitle,
       tags,
       description,
@@ -148,30 +147,28 @@ const ItemDetail = React.memo(
 
           <Grid item xs={12} sm={8} className={classes.itemContent}>
             <Avatar
-              name={name || parent?.title}
+              name={title || parent?.title}
               image={image || parent?.image}
             />
 
-            <>
-              <Grid item xs={12} className={classes.name}>
-                <Subtitle text={subtitle || parent?.title} />
+            <Grid item xs={12} className={classes.title}>
+              <Subtitle text={subtitle || parent?.title} />
+              <br />
+              {type === 'event' && <Date listItem dates={dates} />}
 
-                <Tagline tagline={tagline || parent?.tagline} />
+              <Tagline tagline={tagline || parent?.tagline} />
+            </Grid>
+            {/* <Grid item xs={12}></Grid> */}
+            {location.lat && location.lon && (
+              <Grid item xs={2}>
+                <IconButton
+                  onClick={() => setShowMap(!showMap)}
+                  title="Show on map"
+                >
+                  <LocationOn />
+                </IconButton>
               </Grid>
-              {/* <Grid item xs={12}> */}
-              {type === 'event' && <Date dates={dates} />}
-              {/* </Grid> */}
-              {location.lat && location.lon && (
-                <Grid item xs={2}>
-                  <IconButton
-                    onClick={() => setShowMap(!showMap)}
-                    title="Show on map"
-                  >
-                    <LocationOn />
-                  </IconButton>
-                </Grid>
-              )}
-            </>
+            )}
           </Grid>
 
           <Hidden xsDown>

@@ -49,11 +49,8 @@ const ItemForm = React.memo(
     onChange,
     onSubmit,
     item,
-    setDateStart,
-    setDateEnd,
+    handleDates,
     type,
-    dateStart,
-    dateEnd,
     session,
   }) => {
     const {
@@ -158,8 +155,8 @@ const ItemForm = React.memo(
                           InputProps={{
                             endAdornment: <CalendarTodayIcon />,
                           }}
-                          value={dateStart || dates.start}
-                          onChange={setDateStart}
+                          value={dates.start}
+                          onChange={(e) => handleDates(e, 'start')}
                         />
                       </Grid>
 
@@ -189,14 +186,12 @@ const ItemForm = React.memo(
                           variant="inline"
                           label="End date/time"
                           disableToolbar
-                          minDate={
-                            dateStart || dates.start || new Date()
-                          }
+                          minDate={dates.start || new Date()}
                           InputProps={{
                             endAdornment: <CalendarTodayIcon />,
                           }}
-                          value={dateEnd || dates.end}
-                          onChange={setDateEnd}
+                          value={dates.end}
+                          onChange={(e) => handleDates(e, 'end')}
                         />
                       </Grid>
                     </Grid>
