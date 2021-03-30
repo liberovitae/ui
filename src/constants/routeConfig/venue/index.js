@@ -19,10 +19,12 @@ import INITIAL_STATE from './initialVenue';
 import { GET_ME_VENUES } from '../../../features/Account/Dashboard/queries';
 import { purple, purpleDark } from '../../../features/App/Themes';
 import { queryParamGenerate } from '../../../helpers/queryParams';
+import { HomeWorkOutlined } from '@material-ui/icons';
 
 export default {
   tabIndex: 1,
   type: 'venue',
+  Icon: HomeWorkOutlined,
   theme: { colour: 'purple', light: purple, dark: purpleDark },
   routes: {
     base: VENUE_BASE,
