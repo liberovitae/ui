@@ -13,7 +13,11 @@ import {
   Collapse,
   IconButton,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  darken,
+  lighten,
+} from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 import { hero } from '../../../constants/globalVars';
 import history from '../../../constants/history';
@@ -41,6 +45,14 @@ import { TypeChip, Date, Avatar } from '../../Shared/Elements';
 import { GET_PAGINATED_VENUES } from '../../../constants/routeConfig/venue/queries';
 import { GET_PAGINATED_EVENTS } from '../../../constants/routeConfig/event/queries';
 
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
+
 const useStyles = makeStyles((theme) => ({
   itemControl: {
     width: '100%',
@@ -55,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   divider: {
+    marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
   description: {
@@ -75,6 +88,24 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
+  },
+  children: {
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? lighten(theme.palette.background.default, 0.08)
+          : darken(theme.palette.background.default, 0.02),
+    },
+  },
+  timeline: {
+    marginTop: '0.2rem',
+    marginRight: '0.2rem',
+
+    '&::before': {
+      padding: 0,
+      marginLeft: '0.5rem',
+    },
   },
 }));
 
@@ -255,48 +286,64 @@ const VenueAds = React.memo(({ refetch }) => {
                 key={venue.id}
               >
                 <Grid item className={classes.flexContainer}>
-                  <Typography variant="h6">{venue.title}</Typography>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    <Avatar image={venue.image} />
+                    <Typography variant="h6">
+                      {venue.title}
+                    </Typography>
+                  </span>
                   <StatusChip status={venue.status} />
                 </Grid>
-                <TypeChip type={venue.types[0]} />
-                <div>
-                  {eventCount > 0 && (
-                    <Button
-                      onClick={() => handleExpandClick(venue.id)}
-                      style={{ marginRight: '1rem' }}
-                    >
-                      <ExpandMore
-                        className={clsx(classes.expand, {
-                          [classes.expandOpen]: expanded[venue.id],
-                        })}
-                      />
-                      {eventCount} events
-                    </Button>
-                  )}
-                  <Button
-                    onClick={() =>
-                      history.push(`${VENUE_POST}/${venue.slug}`)
-                    }
-                    // variant="outlined"
-                    color="primary"
-                  >
-                    <Edit
-                      style={{ marginRight: '0.3rem' }}
-                      fontSize="small"
-                    />
-                    <FormattedMessage id="common.edit" />
-                  </Button>
 
-                  <IconButton
-                    onClick={() => confirmDelete(venue.id)}
-                    style={{ margin: '1rem' }}
-                    // variant="outlined"
-                    color="secondary"
-                  >
-                    <Delete />
-                    {/* <FormattedMessage id="common.delete" /> */}
-                  </IconButton>
-                </div>
+                <Grid
+                  item
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <TypeChip type={venue.types[0]} />
+                  <span>
+                    <IconButton
+                      onClick={() => confirmDelete(venue.id)}
+                      color="secondary"
+                    >
+                      <Delete fontSize="small" />
+                    </IconButton>
+                    <Button
+                      onClick={() =>
+                        history.push(`${VENUE_POST}/${venue.slug}`)
+                      }
+                      color="primary"
+                    >
+                      <Edit
+                        style={{ marginRight: '0.3rem' }}
+                        fontSize="small"
+                      />
+                      <FormattedMessage id="common.edit" />
+                    </Button>
+                    {eventCount > 0 && (
+                      <Button
+                        onClick={() => handleExpandClick(venue.id)}
+                        style={{ marginRight: '1rem' }}
+                      >
+                        <ExpandMore
+                          className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded[venue.id],
+                          })}
+                        />
+                        {eventCount} events
+                      </Button>
+                    )}
+                  </span>
+                </Grid>
                 <Divider className={classes.divider} />
                 <Collapse
                   in={expanded[venue.id]}
@@ -305,36 +352,49 @@ const VenueAds = React.memo(({ refetch }) => {
                 >
                   {venue.children.map((event) => (
                     <Grid
+                      className={classes.children}
                       onClick={() =>
                         history.push(`/event/${event.slug}`)
                       }
                       container
                       key={event.id}
                     >
-                      <Divider orientation="vertical" flexItem />
+                      <TimelineItem className={classes.timeline}>
+                        <TimelineSeparator>
+                          <TimelineDot
+                            variant="outlined"
+                            color="primary"
+                          />
+                          <TimelineConnector />
+                        </TimelineSeparator>
+                      </TimelineItem>
                       <Grid
+                        style={{
+                          paddingLeft: '0.5rem',
+                        }}
                         sm={10}
                         xs={8}
                         item
-                        style={{
-                          marginLeft: '1rem',
-                        }}
                       >
                         <Typography variant="h6">
                           {event.title}
                         </Typography>
                         <Date listItem dates={event.dates} />
+                        <TypeChip type={event.types[0]} />
                       </Grid>
+
                       <Grid
                         onClick={(e) => e.stopPropagation()}
-                        sm={2}
-                        xs={2}
+                        sm={1}
+                        xs={1}
                         item
                         style={{
-                          display: 'inline-flex',
-                          alignItems: 'flex-end',
+                          display: 'inline-table',
+                          textAlign: 'right',
                         }}
                       >
+                        <StatusChip status={event.status} />
+                        <br />
                         <IconButton
                           onClick={() => confirmEventDelete(event.id)}
                           className={classes.buttonSmall}

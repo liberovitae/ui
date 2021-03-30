@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         : props.status === 'published'
         ? theme.palette.primary.main
         : '#666',
-    margin: '0.5rem',
+    margin: '0.25rem',
     textTransform: 'capitalize',
   },
 }));

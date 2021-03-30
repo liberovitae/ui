@@ -22,12 +22,15 @@ export const GET_ME_VENUES = gql`
         id
         title
         slug
+        status
+        types
         dates {
           start
           end
         }
       }
       types
+      image
       slug
       status
       createdAt
