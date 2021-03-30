@@ -4,7 +4,7 @@ import { DropzoneArea } from 'material-ui-dropzone';
 import { UPLOAD_FILE_MUTATION } from './queries';
 
 export const Upload = React.memo(
-  ({ name, handleFile, logo, initialFiles }) => {
+  ({ name, handleFile, image, initialFiles }) => {
     const [uploadFile, { data, loading, error }] = useMutation(
       UPLOAD_FILE_MUTATION,
     );
@@ -31,7 +31,7 @@ export const Upload = React.memo(
     );
   },
   (prevState, nextState) => {
-    if (prevState.logo !== nextState.logo) return false;
+    if (prevState.image !== nextState.image) return false;
 
     return true;
   },
