@@ -9,7 +9,7 @@ import CompanyForm from './CompanyForm';
 const CompanyCreate = ({ session, refetch, history, account }) => {
   const [state, setState] = useState({
     name: '',
-    logo: '',
+    image: '',
     website: '',
     tagline: '',
     twitter: '',
@@ -18,8 +18,8 @@ const CompanyCreate = ({ session, refetch, history, account }) => {
 
   const {
     id,
-    name,
-    logo,
+    title,
+    image,
     website,
     tagline,
     twitter,
@@ -63,8 +63,8 @@ const CompanyCreate = ({ session, refetch, history, account }) => {
   return (
     <CompanyForm
       id={id}
-      name={name}
-      logo={logo}
+      title={title}
+      image={image}
       website={website}
       tagline={tagline}
       twitter={twitter}

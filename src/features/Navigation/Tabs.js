@@ -42,27 +42,6 @@ const AppBarTabs = React.memo(
         variant="scrollable"
         scrollButtons="off"
       >
-        <Tooltip title={matches ? 'Venues' : ''}>
-          <Tab
-            onClick={(e) => {
-              e.stopPropagation();
-
-              if (history.location.pathname !== VENUES)
-                return history.push(VENUES);
-
-              if (
-                contentDrawer().show &&
-                window.location.pathname !== VENUES
-              ) {
-                return history.goBack();
-              }
-
-              if (history.location.pathname === VENUES)
-                return scrollTop();
-            }}
-            label={matches ? <HomeWorkOutlined /> : 'Venues'}
-          />
-        </Tooltip>
         <Tooltip title={matches ? 'Events' : ''}>
           <Tab
             onClick={(e) => {
@@ -84,6 +63,28 @@ const AppBarTabs = React.memo(
             label={matches ? <EventOutlined /> : 'Events'}
           />
         </Tooltip>
+        <Tooltip title={matches ? 'Venues' : ''}>
+          <Tab
+            onClick={(e) => {
+              e.stopPropagation();
+
+              if (history.location.pathname !== VENUES)
+                return history.push(VENUES);
+
+              if (
+                contentDrawer().show &&
+                window.location.pathname !== VENUES
+              ) {
+                return history.goBack();
+              }
+
+              if (history.location.pathname === VENUES)
+                return scrollTop();
+            }}
+            label={matches ? <HomeWorkOutlined /> : 'Venues'}
+          />
+        </Tooltip>
+
         <Tooltip title={matches ? 'Jobs' : ''}>
           <Tab
             onClick={(e) => {

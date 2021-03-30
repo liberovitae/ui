@@ -45,21 +45,29 @@ const ItemPreview = ({ refetch, session, history }) => {
 
     delete item.location.__typename; // Remove typename to match our Schema
 
-    mutateItem({
-      variables: {
-        id: item.id,
-        input: {
-          title: item.title,
-          location: item.location,
-          description: item.description,
-          url: item.url,
-          types: item.types,
-          tags: item.tags,
-          logo: item.logo,
-          status: status,
-        },
+    let variables = {
+      id: item.id,
+      input: {
+        title: item.title,
+        location: item.location,
+        parent: item.parent,
+        description: item.description,
+        url: item.url,
+        types: item.types,
+        tags: item.tags,
+        image: item.image,
+        status: status,
       },
-    }).then(({ data }) => {
+    };
+
+    if (type === 'event') {
+      variables.input.dates = item.dates;
+    }
+
+    mutateItem({
+      variables: variables,
+    }).then((data) => {
+      console.log(data);
       if (data && Object.values(data)[0]) {
         localStorage.removeItem(type);
         sessionStorage.removeItem(type);

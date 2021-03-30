@@ -16,7 +16,7 @@ export const GET_PAGINATED_VENUES = gql`
       edges {
         id
         title
-        logo
+        image
         location {
           name
         }
@@ -41,7 +41,7 @@ export const GET_VENUE = gql`
     venue(slug: $slug) {
       id
       title
-      logo
+      image
       location {
         name
         lat
@@ -70,7 +70,7 @@ export const CREATE_VENUE = gql`
     createVenue(input: $input) {
       id
       title
-      logo
+      image
       description
       location {
         name
@@ -92,7 +92,7 @@ export const UPDATE_VENUE = gql`
     updateVenue(id: $id, input: $input) {
       id
       title
-      logo
+      image
       description
       location {
         name

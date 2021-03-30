@@ -74,13 +74,12 @@ const Hero = React.memo(
       return (
         <Fade in>
           <div id="heroRoot" className={classes.root}>
+            <ParticleBackground
+              routeConfig={routeConfig}
+              theme={theme}
+              heroRoot={heroRoot}
+            />
             <div className={classes.container}>
-              <ParticleBackground
-                routeConfig={routeConfig}
-                theme={theme}
-                heroRoot={heroRoot}
-              />
-
               <div className={classes.container}>
                 <Typography className={classes.title} variant="h4">
                   {title || reactiveHero?.title}

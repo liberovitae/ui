@@ -108,8 +108,7 @@ const SaveItem = ({ session, slug }) => {
             :{' '}
             <strong>
               {`${data[type].title}`}{' '}
-              {data?.[type]?.company &&
-                `@ ${data[type].company.name}`}{' '}
+              {data?.[type]?.parent && `@ ${data[type].parent.title}`}{' '}
             </strong>
           </Typography>
           <FormControlLabel

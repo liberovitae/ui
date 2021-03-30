@@ -63,9 +63,11 @@ const Appbar = React.memo(
   ({ history, session, lastLocation }) => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('xs'));
-
+    const reactiveRouteConfig = useReactiveVar(routeConfig);
     const classes = useStyles();
-    const reactiveSearch = useReactiveVar(routeConfig().searchVar);
+    const reactiveSearch = useReactiveVar(
+      reactiveRouteConfig.searchVar,
+    );
     const reactiveFilterSearch = useReactiveVar(filterSearch);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -80,6 +82,8 @@ const Appbar = React.memo(
         variant: 'success',
       });
     };
+
+    console.log(reactiveSearch, routeConfig().INITIAL_SEARCH_STATE);
 
     return (
       <HideOnScroll matches={matches}>

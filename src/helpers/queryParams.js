@@ -1,39 +1,47 @@
 import queryString from 'query-string';
-import INITIAL_SEARCH_STATE from '../constants/routeConfig/job/initialJobSearch';
+// import initialState from '../constants/routeConfig/job/initialJobSearch';
 
 export const queryParams = queryString.parse(window.location.search);
 
-export const queryParamsTransObject = (queryParams) => ({
-  keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
-  location: {
-    name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
-    lat: INITIAL_SEARCH_STATE.location.lat,
-    lon: INITIAL_SEARCH_STATE.location.lon,
-  },
-
-  types: queryParams.t
-    ? Array.isArray(queryParams.t)
-      ? queryParams.t
-      : [queryParams.t]
-    : INITIAL_SEARCH_STATE.types,
-});
-
-export const queryParamGenerate = () => {
-  const queryParams = queryString.parse(window.location.search);
-
+export const queryParamsTransObject = (queryParams, initialState) => {
+  // const dates = initialState.dates
+  //   ? { dates: initialState.dates }
+  //   : null;
   return {
-    keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
+    keywords: queryParams.k || initialState.keywords,
     location: {
-      name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
-      lat: INITIAL_SEARCH_STATE.location.lat,
-      lon: INITIAL_SEARCH_STATE.location.lon,
+      name: queryParams.l || initialState.location.name,
+      lat: initialState.location.lat,
+      lon: initialState.location.lon,
     },
-
+    // ...dates,
     types: queryParams.t
       ? Array.isArray(queryParams.t)
         ? queryParams.t
         : [queryParams.t]
-      : INITIAL_SEARCH_STATE.types,
+      : initialState.types,
+  };
+};
+
+export const queryParamGenerate = (initialState) => {
+  const queryParams = queryString.parse(window.location.search);
+
+  // const dates = initialState.dates
+  //   ? { dates: initialState.dates }
+  //   : null;
+  return {
+    keywords: queryParams.k || initialState.keywords,
+    location: {
+      name: queryParams.l || initialState.location.name,
+      lat: initialState.location.lat,
+      lon: initialState.location.lon,
+    },
+    // ...dates,
+    types: queryParams.t
+      ? Array.isArray(queryParams.t)
+        ? queryParams.t
+        : [queryParams.t]
+      : initialState.types,
   };
 };
 
@@ -41,6 +49,7 @@ export const queryObject = (filter) => ({
   k: filter.keywords,
   l: filter?.location?.name,
   t: filter?.types,
+  // d: filter?.dates,
 });
 
 export const getQueryString = (filter) =>

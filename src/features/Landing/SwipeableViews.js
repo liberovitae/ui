@@ -29,13 +29,11 @@ const Swipeableviews = ({ history, session }) => {
 
   const handleTabChange = (index) => {
     if (index === reactiveTabIndex) return;
-
     if (index === 0) {
-      history.push(VENUES);
-    }
-
-    if (index === 1) {
       history.push(EVENTS);
+    }
+    if (index === 1) {
+      history.push(VENUES);
     }
 
     if (index === 2) {
@@ -46,7 +44,6 @@ const Swipeableviews = ({ history, session }) => {
   return (
     <SwipeableViews
       resistance
-      threshold={20}
       axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
       index={reactiveTabIndex}
       onChangeIndex={handleTabChange}

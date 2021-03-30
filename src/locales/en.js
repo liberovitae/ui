@@ -46,6 +46,7 @@ export default {
 
   // Common and shared single words/phrases
   'common.name': 'Name',
+  'common.title': 'Title',
   'common.keywords': 'Keywords',
   'common.location': 'Location',
   'common.account': 'Account',
@@ -262,7 +263,7 @@ export default {
   'account.saved.hero.title': 'Saved',
   'account.saved.hero.subtitle': 'Manage your saved jobs & venues',
   'account.saved.description':
-    'Your saved jobs ({jobIcon}) & venues ({venueIcon}) are shown below. Reminder emails will be sent to {email} for listings saved with the reminder option selected. (indicated by {icon} ).',
+    'Your saved events ({eventIcon}), venues ({venueIcon}) & jobs ({jobIcon}) are shown below. Reminder emails will be sent to {email} for listings saved with the reminder option selected. (indicated by {icon} ).',
   'account.saved.reminder_title': 'Saved with reminder email',
   'account.saved.not_found': 'No saved listings found',
   'account.saved.remove_success_snackbar':
@@ -314,8 +315,8 @@ export default {
   from the previous week appearing in one list, sent out
   every Monday morning (UTC).
   `,
-  'alert_form.name_input_helperText':
-    'Give your alert setup a name to describe what it is about',
+  'alert_form.title_input_helperText':
+    'Give your alert setup a title to describe what it is about',
   'alert_form.keywords_input_helperText':
     'You can enter a search term here to narrow down your results.',
   'alert_form.location_input_label': 'Location',
@@ -383,7 +384,7 @@ company per user account can be created and edited.`,
     'If this is a remote/online {type} just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
   'post_form.location.input_placeholder': `e.g. "London, GB" or "San Francisco, CA, US"`,
   'post_form.location.input_helperText':
-    'If this is a remote position just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
+    'If this is a remote {type} just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
   'post_form.description.input_label': 'Description',
   'post_form.description.input_helperText':
     'Tell us more about your {type}.',
@@ -416,8 +417,7 @@ company per user account can be created and edited.`,
 
   // Account Venues
   'account.venues.hero.title': 'Venues',
-  'account.venues.hero.subtitle':
-    'Manage your venues, events & saved venues',
+  'account.venues.hero.subtitle': 'Manage your venues & events',
   'account.venues.description':
     'Your published venues & events are shown below.',
   'account.venues.create_new_button': 'New venue',
@@ -427,6 +427,14 @@ company per user account can be created and edited.`,
   'account.venues.remove_failure_snackbar': 'Failed to remove venue',
   'account.venues.confirm_delete':
     'Are you sure you want to delete this venue?',
+
+  // Account events
+  'account.events.create_new_button': 'New event',
+  'account.events.remove_success_snackbar':
+    'Successfully removed event',
+  'account.events.remove_failure_snackbar': 'Failed to remove event',
+  'account.events.confirm_delete':
+    'Are you sure you want to delete this event?',
 
   // Item detail
   'item_detail.contact_button': 'Contact {type}',

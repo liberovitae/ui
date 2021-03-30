@@ -11,8 +11,8 @@ import TextInput from '../../Shared/Inputs/Text';
 import { scrollTop } from '../../Shared/ScrollTop';
 const CompanyForm = ({
   id,
-  name,
-  logo,
+  title,
+  image,
   website,
   tagline,
   twitter,
@@ -31,8 +31,8 @@ const CompanyForm = ({
     {
       variables: {
         id: id,
-        name: name,
-        logo: logo,
+        title: title,
+        image: image,
         website: website,
         tagline: tagline,
         twitter: twitter,
@@ -76,9 +76,9 @@ const CompanyForm = ({
           >
             <Box pb={1}>
               <TextInput
-                id="name"
-                name="name"
-                value={name}
+                id="title"
+                name="title"
+                value={title}
                 onChange={onChange}
                 required
                 label={
@@ -88,12 +88,12 @@ const CompanyForm = ({
             </Box>
             <Box pb={1}>
               <UploadInput
-                name="logo"
-                id="logo"
+                name="image"
+                id="image"
                 label={
                   <FormattedMessage id="company_form.upload_input_label" />
                 }
-                value={logo}
+                value={image}
                 handleFile={handleFile}
               />
             </Box>

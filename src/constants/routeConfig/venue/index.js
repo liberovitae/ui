@@ -15,12 +15,13 @@ import {
   GET_VENUE,
 } from './queries';
 import INITIAL_VENUE_SEARCH_STATE from './initialVenueSearch';
+import INITIAL_STATE from './initialVenue';
 import { GET_ME_VENUES } from '../../../features/Account/Dashboard/queries';
 import { purple, purpleDark } from '../../../features/App/Themes';
 import { queryParamGenerate } from '../../../helpers/queryParams';
 
 export default {
-  tabIndex: 0,
+  tabIndex: 1,
   type: 'venue',
   theme: { colour: 'purple', light: purple, dark: purpleDark },
   routes: {
@@ -39,8 +40,9 @@ export default {
   },
   defaultSiteHeader: <FormattedMessage id="venue.site_header" />,
   types: venueTypes,
+  INITIAL_STATE: INITIAL_STATE,
   INITIAL_SEARCH_STATE: INITIAL_VENUE_SEARCH_STATE,
   searchVar: window.location.pathname.startsWith(VENUE_BASE)
-    ? makeVar(queryParamGenerate())
+    ? makeVar(queryParamGenerate(INITIAL_VENUE_SEARCH_STATE))
     : makeVar(INITIAL_VENUE_SEARCH_STATE),
 };

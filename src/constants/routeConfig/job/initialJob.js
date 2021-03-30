@@ -1,6 +1,5 @@
 export default {
   id: '',
-  parent: '',
   title: '',
   location: {
     name: '',
@@ -8,13 +7,8 @@ export default {
     lon: '',
   },
   description: '',
-  dates: {
-    start: null,
-    end: null,
-  },
   url: '',
   types: [],
   tags: [],
-  image: '',
   status: 'draft',
 };

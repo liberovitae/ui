@@ -9,14 +9,13 @@ export const GET_ME = gql`
       secondaryEmail
       role
       verified
+      venues {
+        id
+        title
+      }
       company {
         id
-        name
-        logo
-        website
-        tagline
-        twitter
-        linkedin
+        title
       }
     }
   }

@@ -55,13 +55,13 @@ const AutoCompleteInput = ({
         limitTags={10}
         name={name}
         value={value}
-        onChange={(event, value) => {
-          event.target = {
+        onChange={(e, value) => {
+          e.target = {
             name: name,
             value: value,
           };
 
-          onChange(event);
+          onChange(e);
         }}
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
@@ -76,9 +76,13 @@ const AutoCompleteInput = ({
           <TextField
             {...params}
             name={name}
+            className={classes.label}
             label={textFieldLabel}
             variant="outlined"
             helperText={helperText}
+            InputLabelProps={{
+              className: classes.label,
+            }}
             inputProps={{
               ...params.inputProps,
               maxLength: maxLength,

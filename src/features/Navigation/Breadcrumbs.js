@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Search,
   LocationOn,
-  Public,
   WorkOutlineOutlined,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,8 +50,8 @@ const SearchBreadCrumbs = React.memo(
     return (
       <div>
         <Breadcrumbs
-          onClick={(event) => {
-            event.stopPropagation();
+          onClick={(e) => {
+            e.stopPropagation();
             filterSearch({ show: !filterSearch().show });
           }}
           className={classes.root}
@@ -62,29 +61,29 @@ const SearchBreadCrumbs = React.memo(
               <div title="Keywords">
                 <Search className={classes.icon} />
                 <DebounceInput
-                  onFocus={(event) => {
-                    event.currentTarget.select();
+                  onFocus={(e) => {
+                    e.currentTarget.select();
                     backdrop(true);
                   }}
                   onBlur={() => backdrop(false)}
-                  onKeyDown={(event) => {
-                    if (event.keyCode === 27) {
-                      event.preventDefault();
+                  onKeyDown={(e) => {
+                    if (e.keyCode === 27) {
+                      e.preventDefault();
                       quickSearch({ show: false });
                       backdrop(false);
                     }
-                    if (event.keyCode === 191) {
-                      event.preventDefault();
+                    if (e.keyCode === 191) {
+                      e.preventDefault();
                     }
                   }}
-                  onKeyUp={(event) => {
-                    if (event.keyCode === 191) {
+                  onKeyUp={(e) => {
+                    if (e.keyCode === 191) {
                       quickSearch({ show: false });
                       backdrop(false);
                     }
                   }}
                   className={classes.searchInput}
-                  onClick={(event) => event.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
                   element={InputBase}
                   inputProps={{
                     style: {

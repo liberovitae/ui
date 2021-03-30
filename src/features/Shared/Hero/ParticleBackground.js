@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     position: 'absolute',
     minHeight: '200px',
+    width: '100%',
   },
 }));
 

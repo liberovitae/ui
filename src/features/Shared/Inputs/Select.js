@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FormLabel,
   FormControl,
   Select,
   MenuItem,
   FormHelperText,
-  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,25 +29,44 @@ const SelectInput = ({
   label,
   helperText,
   onChange,
+  required,
 }) => {
   const classes = useStyles();
+
+  const [localValue, setLocalValue] = useState(false);
+
+  useEffect(() => {
+    // Work around loading value as default in material-ui select
+    value && setLocalValue(value);
+  }, [value]);
+
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl
+      required={required}
+      variant="outlined"
+      className={classes.formControl}
+    >
       <FormLabel className={classes.label} id={`${id}-label`}>
         {label}
       </FormLabel>
       <Select
         labelId={`${id}-label`}
         id={id}
-        value={value}
+        value={localValue}
         name={name}
-        IconComponent={Typography}
-        onChange={onChange}
+        onChange={(e) => {
+          onChange(e);
+          setLocalValue(e.target.value);
+        }}
+        required={required}
       >
         {data &&
           data.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
+            <MenuItem
+              key={item.value || item.id}
+              value={item.value || item.id}
+            >
+              {item.label || item.title}
             </MenuItem>
           ))}
       </Select>

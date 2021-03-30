@@ -8,6 +8,7 @@ import {
   MY_EVENTS,
 } from '../../routes';
 import eventTypes from './eventTypes';
+import INITIAL_STATE from './initialEvent';
 import INITIAL_EVENT_SEARCH_STATE from './initialEventSearch';
 import { queryParamGenerate } from '../../../helpers/queryParams';
 import { orange, orangeDark } from '../../../features/App/Themes';
@@ -20,7 +21,7 @@ import {
 } from './queries';
 
 export default {
-  tabIndex: 1,
+  tabIndex: 0,
   type: 'event',
   theme: { colour: 'orange', light: orange, dark: orangeDark },
   routes: {
@@ -40,8 +41,8 @@ export default {
   defaultSiteHeader: <FormattedMessage id="event.site_header" />,
   types: eventTypes,
   INITIAL_SEARCH_STATE: INITIAL_EVENT_SEARCH_STATE,
+  INITIAL_STATE: INITIAL_STATE,
   searchVar: window.location.pathname.startsWith(EVENT_BASE)
-    ? makeVar(queryParamGenerate())
+    ? makeVar(queryParamGenerate(INITIAL_EVENT_SEARCH_STATE))
     : makeVar(INITIAL_EVENT_SEARCH_STATE),
-  detailedSearch: false,
 };

@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogoAvatar = ({ name, logo }) => {
+const LogoAvatar = ({ title, image }) => {
   const classes = useStyles();
   return (
     <Avatar
       component="span"
       className={classes.avatar}
-      alt={name}
-      src={logo ? `${logo}` : null}
+      alt={title}
+      src={image ? `${image}` : null}
     />
   );
 };

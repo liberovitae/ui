@@ -55,7 +55,12 @@ const handleRoutes = ({ lastLocation }) => {
     lastLocation?.pathname === history.location.pathname
   ) {
     const queryParams = queryString.parse(window.location.search);
-    searchVar(queryParamsTransObject(queryParams));
+    searchVar(
+      queryParamsTransObject(
+        queryParams,
+        routeConfig().INITIAL_SEARCH_STATE,
+      ),
+    );
 
     return;
   }

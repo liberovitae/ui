@@ -10,9 +10,6 @@ const useStyles = makeStyles((theme) => ({
   formLabel: {
     color: theme.palette.text.secondary,
   },
-  formControlLabel: {
-    marginLeft: 0,
-  },
 }));
 
 const RadioInput = ({ name, value, onChange }) => {
@@ -36,14 +33,19 @@ const RadioInput = ({ name, value, onChange }) => {
           value="venue"
           control={<Radio color="primary" />}
           label="Venue"
-          className={classes.formControlLabel}
-          labelPlacement="start"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value="event"
+          control={<Radio color="primary" />}
+          label="Event"
+          labelPlacement="end"
         />
         <FormControlLabel
           value="job"
           control={<Radio color="primary" />}
           label="Job"
-          labelPlacement="start"
+          labelPlacement="end"
         />
       </RadioGroup>
     </FormControl>
