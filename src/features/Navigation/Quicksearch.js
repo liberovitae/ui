@@ -25,8 +25,6 @@ const Quicksearch = ({}) => {
   const reactiveQuicksearch = useReactiveVar(quickSearch);
   const classes = useStyles();
 
-  console.log(routeConfig().searchVar());
-
   let ref = React.createRef();
 
   useEffect(() => {

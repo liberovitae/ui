@@ -35,11 +35,6 @@ const NavBar = React.memo(
       setScrollPosition(currPos.y);
     });
 
-    const scrollbar = document.getElementById('scrollBar');
-
-    if (scrollbar)
-      scrollbar.style.backgroundColor = reactiveRouteConfig.theme.light().palette.primary.light;
-
     useHotkeys(
       'ctrl+space,shift+/,esc',
       (event, handler) => {
@@ -85,7 +80,10 @@ const NavBar = React.memo(
         queryStringNew !== history.location.search &&
         !objCompare(
           // This comparison stops double back bug in navigation/react router!?
-          queryParamsTransObject(queryParams),
+          queryParamsTransObject(
+            queryParams,
+            reactiveRouteConfig.INITIAL_SEARCH_STATE,
+          ),
           reactiveSearch,
         ) &&
         !history.location.pathname.startsWith(ALERT_BASE) &&
@@ -111,7 +109,12 @@ const NavBar = React.memo(
         lastLocation?.search !== history.location.search
       ) {
         const queryParams = queryString.parse(window.location.search);
-        searchVar(queryParamsTransObject(queryParams));
+        searchVar(
+          queryParamsTransObject(
+            queryParams,
+            reactiveRouteConfig.INITIAL_SEARCH_STATE,
+          ),
+        );
       }
 
       const savedScrollPosition = JSON.parse(
