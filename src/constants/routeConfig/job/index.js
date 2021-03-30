@@ -14,10 +14,12 @@ import { JOBS, JOB_BASE, JOB_POST, MY_JOBS } from '../../routes';
 import jobTypes from './jobTypes';
 import { GET_ME_JOBS } from '../../../features/Account/Dashboard/queries';
 import { queryParamGenerate } from '../../../helpers/queryParams';
+import { WorkOutlineOutlined } from '@material-ui/icons';
 
 export default {
   tabIndex: 2,
   type: 'job',
+  Icon: WorkOutlineOutlined,
   theme: { colour: 'blue', light: blue, dark: blueDark },
   routes: {
     base: JOB_BASE,

@@ -20,9 +20,12 @@ import {
   GET_EVENT,
 } from './queries';
 
+import { EventOutlined } from '@material-ui/icons';
+
 export default {
   tabIndex: 0,
   type: 'event',
+  Icon: EventOutlined,
   theme: { colour: 'orange', light: orange, dark: orangeDark },
   routes: {
     base: EVENT_BASE,

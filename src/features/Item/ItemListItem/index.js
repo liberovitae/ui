@@ -49,7 +49,6 @@ const ItemListItem = ({ item, preview, session }) => {
   const classes = useStyles();
   const {
     title,
-    name,
     subtitle,
     tags,
     parent,
@@ -86,7 +85,7 @@ const ItemListItem = ({ item, preview, session }) => {
         <Grid item xs={9} className={classes.item}>
           <Avatar image={image || parent?.image} title={title} />
           <Box>
-            {(type === 'job' || type == 'event') && (
+            {parent && (
               <>
                 <Subtitle text={subtitle || parent?.title} />
                 <br />
@@ -97,10 +96,10 @@ const ItemListItem = ({ item, preview, session }) => {
             <br />
             {type === 'event' && <Date listItem dates={dates} />}
 
-            <Box mt={type === 'job' ? 1 : 2}>
+            <Box mt={1}>
               {tags &&
-                tags.map((tag) => (
-                  <TagChip tag={tag} key={slug + tag} />
+                tags.map((tag, index) => (
+                  <TagChip tag={tag} key={tag + index} />
                 ))}
             </Box>
           </Box>

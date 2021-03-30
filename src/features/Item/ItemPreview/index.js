@@ -64,6 +64,9 @@ const ItemPreview = ({ refetch, session, history }) => {
       variables.input.dates = item.dates;
     }
 
+    delete item.__typename;
+    delete item.dates.__typename;
+
     mutateItem({
       variables: variables,
     }).then((data) => {
@@ -253,7 +256,13 @@ const ItemPreview = ({ refetch, session, history }) => {
           align="right"
         >
           <Grid className={classes.buttons} item sm={4}>
-            <Link to={reactiveRouteConfig.routes.post}>
+            <Link
+              to={
+                item.slug
+                  ? `${reactiveRouteConfig.routes.post}/${item.slug}`
+                  : reactiveRouteConfig.routes.post
+              }
+            >
               <Button variant="outlined">
                 <FormattedMessage id="preview.change_button" />
               </Button>

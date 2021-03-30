@@ -24,7 +24,7 @@ import {
   GET_ME_COUNTS,
 } from './queries';
 import { hero } from '../../../constants/globalVars';
-
+import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
 const useStyles = makeStyles((theme) => ({
   textValidation: {
     width: '100%',
@@ -156,6 +156,7 @@ const SavedItems = ({ session }) => {
           {combinedItems?.map((item) => {
             const key = Object.keys(item)[1];
 
+            console.log();
             return (
               <Grid item xs={12} key={item[key].id}>
                 <Typography variant="h6">
@@ -182,7 +183,10 @@ const SavedItems = ({ session }) => {
                     <Button
                       className={classes.button}
                       variant="outlined"
-                      color="primary"
+                      style={{
+                        color: ROUTE_CONFIGS[key].theme.light()
+                          .palette.primary.main,
+                      }}
                     >
                       <FormattedMessage id="account.saved.view_item_button" />
                     </Button>

@@ -83,8 +83,6 @@ const Appbar = React.memo(
       });
     };
 
-    console.log(reactiveSearch, routeConfig().INITIAL_SEARCH_STATE);
-
     return (
       <HideOnScroll matches={matches}>
         <AppBar onClick={scrollTop} className={classes.appBar}>

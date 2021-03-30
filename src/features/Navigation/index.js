@@ -75,6 +75,11 @@ const NavBar = React.memo(
     // This should and can be improved at some point.
 
     useEffect(() => {
+      console.log(
+        reactiveRouteConfig.type,
+        reactiveSearch,
+        reactiveRouteConfig.INITIAL_SEARCH_STATE,
+      );
       const queryParams = queryString.parse(history.location.search);
       if (
         queryStringNew !== history.location.search &&

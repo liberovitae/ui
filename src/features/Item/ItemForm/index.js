@@ -15,9 +15,6 @@ const ItemCreate = React.memo(({ session, history }) => {
   const localItem = JSON.parse(localStorage.getItem(type));
   const [item, setItem] = useState(localItem || INITIAL_STATE);
 
-  console.log(item.dates);
-  const [dateStart, setDateStart] = useState(item?.dates?.start);
-  const [dateEnd, setDateEnd] = useState(item?.dates?.end);
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
   const { slug, type } = useParams();
@@ -63,12 +60,27 @@ const ItemCreate = React.memo(({ session, history }) => {
       history.push(VENUE_POST);
     }
 
-    if (item) setLoading(false);
+    if (item) {
+      setLoading(false);
+    }
+
+    console.log(item);
   }, [type]);
 
   const onChange = (e) => {
+    console.log(e);
     const { name, value } = e.target;
     setItem((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleDates = async (e, type) => {
+    setItem((prevState) => ({
+      ...prevState,
+      dates: {
+        ...prevState.dates,
+        [type]: e,
+      },
+    }));
   };
 
   const handleFile = (name, fileName) => {
@@ -85,7 +97,6 @@ const ItemCreate = React.memo(({ session, history }) => {
         type,
         JSON.stringify({
           ...item,
-          dates: { start: dateStart, end: dateEnd },
         }),
       );
       history.push(history.location.pathname + '/preview');
@@ -93,8 +104,6 @@ const ItemCreate = React.memo(({ session, history }) => {
       console.log(err);
     }
   };
-
-  console.log(item);
 
   if (!loading) {
     return (
@@ -105,11 +114,8 @@ const ItemCreate = React.memo(({ session, history }) => {
         onSubmit={onSubmit}
         userId={session.me.id}
         handleFile={handleFile}
-        dateStart={dateStart}
-        dateEnd={dateEnd}
+        handleDates={handleDates}
         session={session}
-        setDateStart={setDateStart}
-        setDateEnd={setDateEnd}
       />
     );
   }
