@@ -36,9 +36,13 @@ const SelectInput = ({
   const [localValue, setLocalValue] = useState(false);
 
   useEffect(() => {
+    console.log(value);
     // Work around loading value as default in material-ui select
-    value && setLocalValue(value);
-  }, [value]);
+    if (value) {
+      onChange({ target: { name, value } });
+      setLocalValue(value);
+    }
+  }, [value, name]);
 
   return (
     <FormControl

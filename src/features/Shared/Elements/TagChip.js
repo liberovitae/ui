@@ -25,9 +25,9 @@ const TagChip = ({ tag }) => {
   return (
     <Chip
       className={classes.root}
-      onClick={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
         searchVar({ ...searchVar(), keywords: tag });
       }}
       key={tag}
