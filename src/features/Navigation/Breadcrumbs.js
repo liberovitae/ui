@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Search,
   LocationOn,
-  WorkOutlineOutlined,
+  DateRange,
+  DoubleArrow,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Breadcrumbs, Fade } from '@material-ui/core';
@@ -15,6 +16,7 @@ import {
 import { DebounceInput } from 'react-debounce-input';
 import { InputBase } from '@material-ui/core';
 import handleSearch from '../../helpers/handleSearch';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,21 +33,25 @@ const useStyles = makeStyles((theme) => ({
   },
   searchInput: {
     verticalAlign: 'middle',
-    fontSize: '0.8rem',
+    fontSize: '0.75rem',
     color: 'white',
     display: 'inline-block',
   },
   icon: {
-    height: 20,
-    verticalAlign: 'middle',
+    height: '1.25rem',
+    verticalAlign: 'text-bottom',
+    marginRight: '0.1rem',
   },
 }));
 
 const SearchBreadCrumbs = React.memo(
   ({}) => {
     const classes = useStyles();
-    const { type, searchVar } = routeConfig();
-    const { keywords } = searchVar();
+    const { type, searchVar, Icon } = routeConfig();
+    const { keywords, dates } = searchVar();
+
+    const startDate = dayjs(dates?.start).format('MMM D');
+    const endDate = dayjs(dates?.end).format('MMM D');
 
     return (
       <div>
@@ -58,8 +64,14 @@ const SearchBreadCrumbs = React.memo(
         >
           {keywords && (
             <Fade in>
-              <div title="Keywords">
-                <Search className={classes.icon} />
+              <div
+                style={{ marginBottom: '0.2rem' }}
+                title="Keywords"
+              >
+                <Search
+                  className={classes.icon}
+                  style={{ verticalAlign: 'middle' }}
+                />
                 <DebounceInput
                   onFocus={(e) => {
                     e.currentTarget.select();
@@ -90,6 +102,7 @@ const SearchBreadCrumbs = React.memo(
                       textOverflow: 'ellipsis',
                       display: 'inline-block',
                       maxWidth: '25vw',
+                      padding: 0,
                       width: keywords.length / 2.1 + 1 + 'em',
                     },
                   }}
@@ -116,10 +129,21 @@ const SearchBreadCrumbs = React.memo(
           {searchVar().types.length && (
             <Fade in>
               <Typography title="Types" variant="caption">
-                <WorkOutlineOutlined className={classes.icon} />
+                <Icon className={classes.icon} />
                 {searchVar().types.length
                   ? searchVar().types.join(', ')
                   : '...'}
+              </Typography>
+            </Fade>
+          )}
+
+          {dates?.start && dates?.end && (
+            <Fade in>
+              <Typography title="Dates" variant="caption">
+                <DateRange className={classes.icon} />
+                {startDate}
+                <DoubleArrow className={classes.icon} />
+                {endDate}
               </Typography>
             </Fade>
           )}
