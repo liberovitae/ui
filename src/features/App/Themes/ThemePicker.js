@@ -19,10 +19,7 @@ export const themePicker = () => {
   const reactiveDarkTheme = useReactiveVar(darkTheme);
   const theme = useTheme();
   const { theme: routeTheme } = reactiveRouteConfig;
-
   const { colour } = routeTheme;
-
-  console.log(reactiveRouteConfig);
 
   switch (colour) {
     case 'purple':

@@ -8,7 +8,7 @@ const orangeTheme = () => {
   return createMuiTheme({
     palette: {
       primary: {
-        main: '#bd4a03',
+        main: '#ca6e35',
       },
       secondary: {
         main: '#D9534F',
@@ -25,9 +25,9 @@ const orangeTheme = () => {
             WebkitFontSmoothing: 'auto',
           },
           a: {
-            color: '#bd4a03',
+            color: '#ca6e35',
             '&:hover': {
-              color: lighten('#bd4a03', 0.2),
+              color: lighten('#ca6e35', 0.2),
             },
           },
           overflow: {
@@ -40,11 +40,11 @@ const orangeTheme = () => {
             '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
           },
           '*::-webkit-scrollbar-thumb': {
-            backgroundColor: '#bd4a03',
+            backgroundColor: '#ca6e35',
             outline: '1px solid slategrey',
           },
           scrollbar: {
-            backgroundColor: lighten('#bd4a03', 0.2),
+            backgroundColor: lighten('#ca6e35', 0.2),
           },
         },
       },
