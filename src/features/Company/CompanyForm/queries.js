@@ -2,31 +2,31 @@ import gql from 'graphql-tag.macro';
 
 export const CREATE_COMPANY = gql`
   mutation(
-    $name: String!
-    $logo: String
+    $title: String!
+    $image: String
     $website: String
     $tagline: String
     $twitter: String
     $linkedin: String
   ) {
     createCompany(
-      name: $name
-      logo: $logo
+      title: $title
+      image: $image
       website: $website
       tagline: $tagline
       twitter: $twitter
       linkedin: $linkedin
     ) {
       id
-      name
-      logo
+      title
+      image
       website
       tagline
       twitter
       linkedin
       user {
         id
-        username
+        usertitle
       }
     }
   }
@@ -35,8 +35,8 @@ export const CREATE_COMPANY = gql`
 export const UPDATE_COMPANY = gql`
   mutation(
     $id: ID!
-    $name: String!
-    $logo: String
+    $title: String!
+    $image: String
     $website: String
     $tagline: String
     $twitter: String
@@ -44,23 +44,23 @@ export const UPDATE_COMPANY = gql`
   ) {
     updateCompany(
       id: $id
-      name: $name
-      logo: $logo
+      title: $title
+      image: $image
       website: $website
       tagline: $tagline
       twitter: $twitter
       linkedin: $linkedin
     ) {
       id
-      name
-      logo
+      title
+      image
       website
       tagline
       twitter
       linkedin
       user {
         id
-        username
+        usertitle
       }
     }
   }
@@ -70,8 +70,8 @@ export const GET_COMPANY = gql`
   query($id: ID) {
     company(id: $id) {
       id
-      name
-      logo
+      title
+      image
       website
       tagline
       twitter
