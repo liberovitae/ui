@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { GET_LOCATION } from '../../Item/ItemForm/queries';
+import { GET_LOCATION } from '../../../constants/queries';
 import { makeStyles } from '@material-ui/core/styles';
 import { LocationOn, LocationOff } from '@material-ui/icons';
 import useGeolocation from '@rooks/use-geolocation';

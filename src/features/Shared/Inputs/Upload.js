@@ -40,7 +40,7 @@ const UploadInput = React.memo(
           key={initialFiles}
           initialFiles={initialFiles}
           name={name}
-          logo={value}
+          image={value}
           handleFile={handleFile}
         />
       </FormControl>
