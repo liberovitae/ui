@@ -16,8 +16,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import { routeConfig, backdrop } from '../../constants/globalVars';
 import { handleReset, objCompare } from '../../helpers';
 import LocationInput from './LocationInput';
-import { Debounce, Checkbox } from '../Shared/Inputs';
-import CloseIcon from '@material-ui/icons/Close';
+import SelectInput from './SelectInput';
+import { Debounce, Checkbox, AutoComplete } from '../Shared/Inputs';
+import {
+  Close,
+  CalendarToday,
+  DoubleArrowOutlined,
+} from '@material-ui/icons';
+import {
+  MuiPickersUtilsProvider,
+  DatePicker,
+} from '@material-ui/pickers';
+import DateDayJSUtils from '@date-io/dayjs';
+import { ALERT_POST } from '../../constants/routes';
 
 const useStyles = makeStyles({
   form: {
@@ -25,6 +36,7 @@ const useStyles = makeStyles({
     margin: 'auto',
   },
   buttons: {
+    marginTop: '0.25rem',
     display: 'flex',
     justifyContent: 'flex-end',
     padding: '0 !important',
@@ -41,15 +53,18 @@ const useStyles = makeStyles({
 const Filter = React.memo(
   ({ handleClickAway }) => {
     const classes = useStyles();
-    const searchVar = routeConfig().searchVar;
-    const reactiveSearch = useReactiveVar(searchVar);
     const reactiveRouteConfig = useReactiveVar(routeConfig);
+    const reactiveSearch = useReactiveVar(
+      reactiveRouteConfig.searchVar,
+    );
+    const { searchVar } = reactiveRouteConfig;
+
     // const [nearMe, setNearMe] = useState(false);
     const [searchFilter, setSearchFilter] = useState({
       ...reactiveSearch,
     });
 
-    const { INITIAL_SEARCH_STATE } = reactiveRouteConfig;
+    const { INITIAL_SEARCH_STATE, type } = reactiveRouteConfig;
 
     useEffect(() => {
       backdrop(true);
@@ -79,146 +94,198 @@ const Filter = React.memo(
     //   when,
     // });
 
-    const handleTypes = async (event) => {
-      const { name, checked } = event.target;
-      if (checked) {
-        setSearchFilter((prevState) => ({
-          ...prevState,
-          types: [...prevState.types, name],
-        }));
-      } else {
-        setSearchFilter((prevState) => ({
-          ...prevState,
-          types: prevState.types.filter((type) => type !== name),
-        }));
-      }
-    };
-
-    const handleSearch = async (event) => {
-      const { name, value } = event.target;
+    const handleSearch = async (e) => {
+      const { name, value } = e.target;
       setSearchFilter((prevState) => ({
         ...prevState,
         [name]: value,
       }));
     };
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
+    const handleDates = async (e, type) => {
+      setSearchFilter((prevState) => ({
+        ...prevState,
+        dates: {
+          ...prevState.dates,
+          [type]: e,
+        },
+      }));
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
       searchVar(searchFilter);
       handleClickAway();
     };
 
-    if (reactiveSearch) {
-      const { keywords, location, types } = searchFilter;
-      return (
-        <ClickAwayListener onClickAway={handleClickAway}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <form
-              className={classes.form}
-              onSubmit={handleSubmit}
-              noValidate
-              autoComplete="off"
+    const { keywords, location, types, dates } = searchFilter;
+    return (
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <div onClick={(e) => e.stopPropagation()}>
+          <form
+            className={classes.form}
+            onSubmit={handleSubmit}
+            noValidate
+            autoComplete="off"
+          >
+            <Grid
+              container
+              spacing={1}
+              justify="space-around"
+              alignItems="center"
             >
-              <Grid container spacing={1} justify="space-around">
-                <Grid item className={classes.input} xs={6}>
-                  <Debounce
-                    id="keywords"
-                    name="keywords"
-                    onChange={handleSearch}
-                    value={keywords}
-                    endAdornment={
-                      keywords && (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={() =>
-                              setSearchFilter((prevState) => ({
-                                ...prevState,
-                                keywords: '',
-                              }))
-                            }
-                            size="small"
-                            edge="end"
-                          >
-                            <CloseIcon fontSize="small" />
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }
-                    label={<FormattedMessage id="common.keywords" />}
-                  />
-                </Grid>
-                <Grid item className={classes.input} xs={6}>
-                  <LocationInput
-                    onChange={handleSearch}
-                    location={location.name}
-                  />
-                </Grid>
-
-                <Checkbox
-                  data={routeConfig().types()}
-                  onChange={handleTypes}
-                  state={types}
+              <Grid item className={classes.input} xs={6}>
+                <Debounce
+                  id="keywords"
+                  name="keywords"
+                  onChange={handleSearch}
+                  value={keywords}
+                  endAdornment={
+                    keywords && (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() =>
+                            setSearchFilter((prevState) => ({
+                              ...prevState,
+                              keywords: '',
+                            }))
+                          }
+                          size="small"
+                          edge="end"
+                        >
+                          <Close fontSize="small" />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }
+                  label={<FormattedMessage id="common.keywords" />}
                 />
+              </Grid>
+              <Grid item className={classes.input} xs={6}>
+                <LocationInput
+                  onChange={handleSearch}
+                  location={location.name}
+                />
+              </Grid>
 
-                <Grid className={classes.buttons} item xs={12}>
-                  <Collapse
-                    in={
-                      !objCompare(searchFilter, INITIAL_SEARCH_STATE)
-                    }
-                  >
-                    <Link
-                      to={{
-                        pathname: '/alert/post',
-                        query: searchFilter,
+              <Grid item xs={12}>
+                <AutoComplete
+                  name="types"
+                  value={types}
+                  textFieldLabel={`${reactiveRouteConfig.type} types`}
+                  data={routeConfig().types()}
+                  onChange={handleSearch}
+                />
+                {/* <SelectInput
+                    type={reactiveRouteConfig.type}
+                    value={reactiveSearch.types}
+                    name="types"
+                    onChange={handleSearch}
+                    label={`${reactiveRouteConfig.type} types`}
+                    data={routeConfig().types()}
+                  /> */}
+              </Grid>
+
+              {type === 'event' && (
+                <MuiPickersUtilsProvider utils={DateDayJSUtils}>
+                  <Grid style={{ textAlign: 'center' }} item xs={5}>
+                    <DatePicker
+                      animateYearScrolling
+                      ampm={false}
+                      autoOk
+                      required
+                      name="dateStart"
+                      variant="inline"
+                      disableToolbar
+                      label="Start date"
+                      value={dates?.start}
+                      onChange={(e) => handleDates(e, 'start')}
+                    />
+                  </Grid>
+                  <DoubleArrowOutlined
+                    fontSize="small"
+                    color="primary"
+                    style={{
+                      opacity: 0.7,
+                      marginTop: '1rem',
+                    }}
+                  />
+                  <Grid style={{ textAlign: 'center' }} item xs={5}>
+                    <DatePicker
+                      animateYearScrolling
+                      ampm={false}
+                      autoOk
+                      required
+                      name="dateEnd"
+                      variant="inline"
+                      disableToolbar
+                      label="End date"
+                      minDate={dates?.start || new Date()}
+                      InputProps={{
+                        endAdornment: <CalendarToday />,
                       }}
-                    >
-                      <Button
-                        className={classes.button}
-                        onClick={handleClickAway}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      >
-                        <FormattedMessage id="filter.create_job_alert_button" />
-                      </Button>
-                    </Link>
+                      value={dates?.end}
+                      onChange={(e) => handleDates(e, 'end')}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              )}
+              <Grid className={classes.buttons} item xs={12}>
+                <Collapse
+                  in={!objCompare(searchFilter, INITIAL_SEARCH_STATE)}
+                >
+                  <Link
+                    to={{
+                      pathname: ALERT_POST,
+                      query: searchFilter,
+                    }}
+                  >
                     <Button
+                      className={classes.button}
+                      onClick={handleClickAway}
                       size="small"
                       variant="outlined"
                       color="primary"
-                      onClick={() => {
-                        if (
-                          objCompare(
-                            reactiveSearch,
-                            INITIAL_SEARCH_STATE,
-                          )
+                    >
+                      <FormattedMessage id="filter.create_job_alert_button" />
+                    </Button>
+                  </Link>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                      if (
+                        objCompare(
+                          reactiveSearch,
+                          INITIAL_SEARCH_STATE,
                         )
-                          return handleClickAway();
+                      )
+                        return handleClickAway();
 
-                        handleReset();
-                      }}
-                    >
-                      <FormattedMessage id="common.reset" />
-                    </Button>
-                    <Button
-                      onClick={handleSubmit}
-                      className={classes.button}
-                      size="small"
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                    >
-                      Search
-                    </Button>
-                  </Collapse>
-                </Grid>
+                      handleReset();
+                    }}
+                  >
+                    <FormattedMessage id="common.reset" />
+                  </Button>
+                  <Button
+                    onClick={handleSubmit}
+                    className={classes.button}
+                    size="small"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Search
+                  </Button>
+                </Collapse>
               </Grid>
-            </form>
-          </div>
-        </ClickAwayListener>
-      );
-    }
+            </Grid>
+          </form>
+        </div>
+      </ClickAwayListener>
+    );
   },
   (prevProps, nextProps) => {},
 );
