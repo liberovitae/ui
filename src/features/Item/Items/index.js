@@ -91,7 +91,6 @@ const Items = React.memo(
           types: types ?? [],
         });
         useLocalCache(false);
-        console.log(alertType);
         routeConfig(ROUTE_CONFIGS[alertType]);
         tabIndex(reactiveRouteConfig.tabIndex);
         delete searchVar().alertType; // Remove alertType to not break search variable

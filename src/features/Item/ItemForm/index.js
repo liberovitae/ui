@@ -2,57 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { hero, routeConfig } from '../../../constants/globalVars';
 import { useParams } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 import withAuthorization from '../../Session/withAuthorization';
 import ItemForm from './ItemForm';
 import Loading from '../../Shared/Loading';
+import { VENUE_POST } from '../../../constants/routes';
 
-const INITIAL_STATE = {
-  id: '',
-  title: '',
-  location: {
-    name: '',
-    lat: '',
-    lon: '',
-  },
-  description: '',
-  dateStart: new Date(),
-  dateEnd: new Date(),
-  url: '',
-  types: [],
-  tags: [],
-  logo: '',
-  status: 'draft',
-};
+const INITIAL_STATE = routeConfig().INITIAL_STATE;
 
-const ItemCreate = ({ session, history }) => {
+const ItemCreate = React.memo(({ session, history }) => {
   const localItem = JSON.parse(localStorage.getItem(type));
   const [item, setItem] = useState(localItem || INITIAL_STATE);
-  const [dateStart, setDateStart] = useState(new Date());
-  const [dateEnd, setDateEnd] = useState(new Date());
+
+  console.log(item.dates);
+  const [dateStart, setDateStart] = useState(item?.dates?.start);
+  const [dateEnd, setDateEnd] = useState(item?.dates?.end);
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
   const { slug, type } = useParams();
 
-  const [getItem, { data }] = useLazyQuery(
-    routeConfig().queries.get,
-    {
-      fetchPolicy: 'network-only',
-      onCompleted: (data) => {
-        const key = Object.keys(data);
-        setItem(data[key]);
-      },
-      onError: () =>
-        enqueueSnackbar(
-          <FormattedMessage
-            id="post_form.load_failure_snackbar"
-            values={{ type }}
-          />,
-          { variant: 'error' },
-        ),
+  const { data } = useQuery(routeConfig().queries.get, {
+    skip: !slug,
+    fetchPolicy: 'network-only',
+    variables: { slug: slug },
+    onCompleted: (data) => {
+      const key = Object.keys(data);
+      setItem(data[key]);
     },
-  );
+    onError: () =>
+      enqueueSnackbar(
+        <FormattedMessage
+          id="post_form.load_failure_snackbar"
+          values={{ type }}
+        />,
+        { variant: 'error' },
+      ),
+  });
 
   useEffect(() => {
     hero({
@@ -70,19 +56,15 @@ const ItemCreate = ({ session, history }) => {
       ),
     });
 
-    console.log(slug);
+    if (type === 'event' && !session?.me?.venues?.length) {
+      enqueueSnackbar('Create a venue first', {
+        variant: 'warning',
+      });
+      history.push(VENUE_POST);
+    }
 
-    slug && getItem({ variables: { slug: slug } });
-
-    setLoading(false);
-  }, []);
-
-  // useEffect(() => {
-  //   if (event.userId !== session.me.id) {
-  //     enqueueSnackbar('Not event owner', { variant: 'error' });
-  //     return history.push(routes.LANDING);
-  //   }
-  // }, [event]);
+    if (item) setLoading(false);
+  }, [type]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -101,13 +83,18 @@ const ItemCreate = ({ session, history }) => {
     try {
       localStorage.setItem(
         type,
-        JSON.stringify({ ...item, dateStart, dateEnd }),
+        JSON.stringify({
+          ...item,
+          dates: { start: dateStart, end: dateEnd },
+        }),
       );
       history.push(history.location.pathname + '/preview');
     } catch (err) {
       console.log(err);
     }
   };
+
+  console.log(item);
 
   if (!loading) {
     return (
@@ -120,13 +107,14 @@ const ItemCreate = ({ session, history }) => {
         handleFile={handleFile}
         dateStart={dateStart}
         dateEnd={dateEnd}
+        session={session}
         setDateStart={setDateStart}
         setDateEnd={setDateEnd}
       />
     );
   }
   return <Loading />;
-};
+});
 
 export default withAuthorization((session) => session && session.me)(
   ItemCreate,

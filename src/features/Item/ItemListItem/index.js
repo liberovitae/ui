@@ -52,16 +52,15 @@ const ItemListItem = ({ item, preview, session }) => {
     name,
     subtitle,
     tags,
-    company,
+    parent,
     location,
     featured,
     types,
     publishedAt,
     status,
-    logo,
+    image,
     slug,
-    dateEnd,
-    dateStart,
+    dates,
   } = item;
 
   const { type, routes } = routeConfig();
@@ -85,20 +84,18 @@ const ItemListItem = ({ item, preview, session }) => {
         direction="row"
       >
         <Grid item xs={9} className={classes.item}>
-          <Avatar logo={logo || company?.logo} name={name} />
+          <Avatar image={image || parent?.image} title={title} />
           <Box>
-            {type === 'job' && (
+            {(type === 'job' || type == 'event') && (
               <>
-                <Subtitle text={subtitle || company?.name} />
+                <Subtitle text={subtitle || parent?.title} />
                 <br />
               </>
             )}
 
             <Title title={title} />
             <br />
-            {type === 'event' && (
-              <Date dateEnd={dateEnd} dateStart={dateStart} />
-            )}
+            {type === 'event' && <Date listItem dates={dates} />}
 
             <Box mt={type === 'job' ? 1 : 2}>
               {tags &&

@@ -52,13 +52,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-start',
   },
-  companyLinks: {
+  parentLinks: {
     display: 'flex',
     justifyContent: 'flex-end',
     padding: 0,
   },
   name: {
     textAlign: 'left',
+    display: 'flex',
+    alignItems: 'stretch',
   },
   applyButton: {
     width: '100%',
@@ -84,19 +86,19 @@ const ItemDetail = React.memo(
       subtitle,
       tags,
       description,
-      company,
+      parent,
       location,
       tagline,
       featured,
       types,
       publishedAt,
       status,
-      logo,
+      image,
       url,
       slug,
-      dateStart,
-      dateEnd,
+      dates,
     } = item;
+
     const urlIsEmail = isEmail(url);
 
     return (
@@ -125,17 +127,20 @@ const ItemDetail = React.memo(
             )}
             <TypeChip type={types[0]} />
           </Grid>
-          <Grid item xs={6} sm={6} className={classes.companyLinks}>
-            {(company || session?.me?.company) && (
+          <Grid item xs={6} sm={6} className={classes.parentLinks}>
+            {parent && (
               <SocialLinks
                 twitter={
-                  company?.twitter || session?.me?.company?.twitter
+                  parent?.twitter ||
+                  session?.me[parent?.type]?.twitter
                 }
-                linkedin={
-                  company?.linkedin || session?.me?.company?.linkedin
+                facebook={
+                  parent?.facebook ||
+                  session?.me[parent?.type]?.facebook
                 }
                 website={
-                  company?.website || session?.me?.company?.website
+                  parent?.website ||
+                  session?.me[parent?.type]?.website
                 }
               />
             )}
@@ -143,20 +148,21 @@ const ItemDetail = React.memo(
 
           <Grid item xs={12} sm={8} className={classes.itemContent}>
             <Avatar
-              name={name || company?.name}
-              logo={logo || company?.logo}
+              name={name || parent?.title}
+              image={image || parent?.image}
             />
-            {type === 'event' && (
-              <Date dateEnd={dateEnd} dateStart={dateStart} />
-            )}
+
             <>
               <Grid item xs={12} className={classes.name}>
-                <Subtitle text={subtitle || company?.name} />
+                <Subtitle text={subtitle || parent?.title} />
 
-                <Tagline tagline={tagline || company?.tagline} />
+                <Tagline tagline={tagline || parent?.tagline} />
               </Grid>
+              {/* <Grid item xs={12}> */}
+              {type === 'event' && <Date dates={dates} />}
+              {/* </Grid> */}
               {location.lat && location.lon && (
-                <Grid item>
+                <Grid item xs={2}>
                   <IconButton
                     onClick={() => setShowMap(!showMap)}
                     title="Show on map"

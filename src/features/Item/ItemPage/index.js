@@ -74,10 +74,9 @@ const ItemPage = ({ session }) => {
     const item = data[key];
 
     const {
-      name,
       title,
       description,
-      company,
+      parent,
       location,
       status,
       stats,
@@ -114,7 +113,7 @@ const ItemPage = ({ session }) => {
             },
             {
               name: `twitter:creator`,
-              content: company?.name || name,
+              content: title || parent.title,
             },
             {
               name: `twitter:title`,
@@ -128,7 +127,7 @@ const ItemPage = ({ session }) => {
         >
           <title>
             {title}
-            {company?.name.replace(/^/, ' @ ') ?? ''} -{' '}
+            {parent?.title.replace(/^/, ' @ ') ?? ''} -{' '}
             {location.name}
           </title>
         </Helmet>
