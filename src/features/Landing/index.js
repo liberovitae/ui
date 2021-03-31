@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_BLOGS } from './queries';
 import Helmet from 'react-helmet';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { useIntl } from 'react-intl';
 import { hero, hideBlog } from '../../constants/globalVars';
 import SiteHeader from './SiteHeader';
@@ -28,7 +28,7 @@ const Landing = React.memo(
     if (data) blogs = data.blogs;
 
     return (
-      <>
+      <Box pt={matches ? 0 : 4}>
         <Helmet
           title={`${intl.formatMessage({
             id: 'site.name',
@@ -54,16 +54,14 @@ const Landing = React.memo(
           />
         </Helmet>
 
-        <Box pt={matches ? 0 : 4}>
-          <SiteHeader matches={matches} />
+        <SiteHeader matches={matches} />
 
-          {blogs && blogs.length > 0 && (
-            <Blog history={history} session={session} blogs={blogs} />
-          )}
+        {blogs && blogs.length > 0 && (
+          <Blog history={history} session={session} blogs={blogs} />
+        )}
 
-          <SwipeableViews history={history} session={session} />
-        </Box>
-      </>
+        <SwipeableViews history={history} session={session} />
+      </Box>
     );
   },
   (prevProps, nextProps) => {

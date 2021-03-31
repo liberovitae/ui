@@ -1,13 +1,15 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { siteHeader, routeConfig } from '../../constants/globalVars';
 import { useReactiveVar } from '@apollo/client';
 import { objCompare } from '../../helpers';
+import { CalendarButton } from '../Shared/Inputs';
 
 const SiteHeader = React.memo(
   ({ matches }) => {
     const reactiveRouteConfig = useReactiveVar(routeConfig);
+
     const reactiveSearch = useReactiveVar(
       reactiveRouteConfig.searchVar,
     );
@@ -28,9 +30,28 @@ const SiteHeader = React.memo(
     }));
     const classes = useStyles();
     return (
-      <Typography className={classes.header} variant="h5">
-        {reactiveHeader}
-      </Typography>
+      <Grid container>
+        <Grid item xs={11}>
+          <Typography className={classes.header} variant="h5">
+            {reactiveHeader}
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={1}
+          style={{
+            alignSelf: 'flex-end',
+            paddingBottom: '0.5rem',
+          }}
+        >
+          {reactiveRouteConfig.type === 'event' && (
+            <CalendarButton
+              reactiveRouteConfig={reactiveRouteConfig}
+              dates={reactiveSearch.dates}
+            />
+          )}
+        </Grid>
+      </Grid>
     );
   },
   (prevProps, nextProps) => {},
