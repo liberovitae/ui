@@ -21,7 +21,6 @@ import themePicker from './Themes/ThemePicker';
 import Quicksearch from '../Navigation/Quicksearch';
 import { SnackbarProvider } from 'notistack';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 const NotFoundPage = React.lazy(() => import('../Shared/404'));
 
 const App = React.memo(
@@ -44,6 +43,8 @@ const App = React.memo(
 
             <Hero />
             <Quicksearch />
+            <Backdrop />
+
             <Router history={history}>
               <LastLocationProvider>
                 <Navigation
@@ -51,7 +52,6 @@ const App = React.memo(
                   refetch={refetch}
                   session={session}
                 />
-                <Backdrop />
                 <Sidebar navLinks={NavLinks(session)} />
                 <BoxTemplate>
                   <Switch location={location}>
