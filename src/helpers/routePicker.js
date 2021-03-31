@@ -21,7 +21,7 @@ const routePicker = () => {
     return job;
   }
 
-  return venue;
+  return event;
 };
 
 export default routePicker;

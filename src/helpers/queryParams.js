@@ -4,22 +4,25 @@ import dayjs from 'dayjs';
 export const queryParams = queryString.parse(window.location.search);
 
 export const queryParamsTransObject = (queryParams, initialState) => {
-  return {
-    keywords: queryParams.k || initialState.keywords,
+  const dates =
+    queryParams.sd && queryParams.ed
+      ? {
+          dates: {
+            start: new Date(queryParams.sd),
+            end: new Date(queryParams.ed),
+          },
+        }
+      : null;
 
+  return {
+    ...initialState,
+    keywords: queryParams.k || initialState.keywords,
     location: {
       name: queryParams.l || initialState.location.name,
       lat: initialState.location.lat,
       lon: initialState.location.lon,
     },
-    dates: {
-      start: queryParams.sd
-        ? new Date(queryParams.sd)
-        : initialState.dates.start,
-      end: queryParams.ed
-        ? new Date(queryParams.ed)
-        : initialState.dates.end,
-    },
+    ...dates,
     types: queryParams.t
       ? Array.isArray(queryParams.t)
         ? queryParams.t
