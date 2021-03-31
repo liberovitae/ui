@@ -5,6 +5,7 @@ import {
   lighten,
   darken,
 } from '@material-ui/core/styles';
+
 import {
   Avatar,
   Subtitle,
@@ -108,7 +109,7 @@ const ItemListItem = ({ item, preview, session }) => {
 
         <Grid item xs={3} className={classes.itemEnd}>
           <Location location={location} />
-          <Box>
+          <Grid item>
             {featured && (
               <>
                 <TypeChip featured={featured} />
@@ -116,11 +117,12 @@ const ItemListItem = ({ item, preview, session }) => {
               </>
             )}
             <TypeChip type={types[0]} />
-
+          </Grid>
+          <Grid item>
             {!preview && <PublishedTime time={publishedAt} />}
-          </Box>
 
-          {preview && <Status status={status} />}
+            {preview && <Status status={status} />}
+          </Grid>
         </Grid>
       </Grid>
     </Fade>

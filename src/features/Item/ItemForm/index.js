@@ -68,7 +68,6 @@ const ItemCreate = React.memo(({ session, history }) => {
   }, [type]);
 
   const onChange = (e) => {
-    console.log(e);
     const { name, value } = e.target;
     setItem((prevState) => ({ ...prevState, [name]: value }));
   };

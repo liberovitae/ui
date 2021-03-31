@@ -22,7 +22,7 @@ import { client } from '../../../index';
 import ItemPage from '../../Item/ItemPage';
 import { GET_ALERT } from '../../Account/Dashboard/queries';
 import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
-
+import ItemListSkeleton from '../../Item/ItemListItem/Skeleton';
 const Items = React.memo(
   ({ limit, history, session }) => {
     const [noItems, setNoItems] = useState(false);
@@ -173,7 +173,11 @@ const Items = React.memo(
     }
 
     if (loading) {
-      return <Loading />;
+      let arr = [];
+      for (let i = 0; i < 19; i++) {
+        arr.push(<ItemListSkeleton key={i} />);
+      }
+      return arr;
     }
 
     if (cachedItems) {

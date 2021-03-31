@@ -153,8 +153,8 @@ const ItemDetail = React.memo(
 
             <Grid item xs={12} className={classes.title}>
               <Subtitle text={subtitle || parent?.title} />
-              <br />
               {type === 'event' && <Date listItem dates={dates} />}
+              <br />
 
               <Tagline tagline={tagline || parent?.tagline} />
             </Grid>
