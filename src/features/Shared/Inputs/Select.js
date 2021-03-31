@@ -36,7 +36,6 @@ const SelectInput = ({
   const [localValue, setLocalValue] = useState(false);
 
   useEffect(() => {
-    console.log(value);
     // Work around loading value as default in material-ui select
     if (value) {
       onChange({ target: { name, value } });
