@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { useReactiveVar } from '@apollo/client';
-import { routeConfig, quickSearch } from '../../constants/globalVars';
+import {
+  routeConfig,
+  quickSearch,
+  filterSearch,
+} from '../../constants/globalVars';
 import { handleSearch } from '../../helpers';
 import { Backdrop } from '@material-ui/core';
 import { Search, Close } from '@material-ui/icons';
@@ -23,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Quicksearch = ({}) => {
   const reactiveSearch = useReactiveVar(routeConfig().searchVar);
   const reactiveQuicksearch = useReactiveVar(quickSearch);
+  const reactiveFilterSearch = useReactiveVar(filterSearch);
   const classes = useStyles();
 
   let ref = React.createRef();
@@ -35,7 +40,7 @@ const Quicksearch = ({}) => {
     <Backdrop
       onClick={() => quickSearch({ show: false })}
       className={classes.backdrop}
-      open={reactiveQuicksearch.show}
+      open={reactiveQuicksearch.show && !reactiveFilterSearch.show}
     >
       <SearchBar
         innerRef={ref}
