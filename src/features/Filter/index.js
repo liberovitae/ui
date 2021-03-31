@@ -13,15 +13,20 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import { GET_NEAREST_CITY } from './queries';
-import { routeConfig, backdrop } from '../../constants/globalVars';
+import {
+  routeConfig,
+  backdrop,
+  quickSearch,
+} from '../../constants/globalVars';
 import { handleReset, objCompare } from '../../helpers';
 import LocationInput from './LocationInput';
 import SelectInput from './SelectInput';
 import { Debounce, Checkbox, AutoComplete } from '../Shared/Inputs';
 import {
   Close,
-  CalendarToday,
   DoubleArrowOutlined,
+  Event,
+  Today,
 } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
@@ -30,7 +35,7 @@ import {
 import DateDayJSUtils from '@date-io/dayjs';
 import { ALERT_POST } from '../../constants/routes';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   form: {
     maxWidth: '960px',
     margin: 'auto',
@@ -48,7 +53,12 @@ const useStyles = makeStyles({
   button: {
     margin: '0.5rem',
   },
-});
+  container: {
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '0.25rem',
+    },
+  },
+}));
 
 const Filter = React.memo(
   ({ handleClickAway }) => {
@@ -67,6 +77,7 @@ const Filter = React.memo(
     const { INITIAL_SEARCH_STATE, type } = reactiveRouteConfig;
 
     useEffect(() => {
+      quickSearch({ show: false });
       backdrop(true);
     }, []);
 
@@ -132,6 +143,7 @@ const Filter = React.memo(
             <Grid
               container
               spacing={1}
+              className={classes.container}
               justify="space-around"
               alignItems="center"
             >
@@ -199,6 +211,9 @@ const Filter = React.memo(
                       variant="inline"
                       disableToolbar
                       label="Start date"
+                      InputProps={{
+                        endAdornment: <Today />,
+                      }}
                       value={dates?.start}
                       onChange={(e) => handleDates(e, 'start')}
                     />
@@ -223,7 +238,7 @@ const Filter = React.memo(
                       label="End date"
                       minDate={dates?.start || new Date()}
                       InputProps={{
-                        endAdornment: <CalendarToday />,
+                        endAdornment: <Event />,
                       }}
                       value={dates?.end}
                       onChange={(e) => handleDates(e, 'end')}
