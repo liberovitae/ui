@@ -59,7 +59,7 @@ const ParticleBackground = ({ theme, routeConfig, heroRoot }) => {
           zIndex: -2,
         },
         detectRetina: true,
-        fpsLimit: 60,
+        fpsLimit: 30,
         infection: {
           cure: false,
           delay: 0,
