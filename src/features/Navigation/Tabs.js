@@ -60,7 +60,22 @@ const AppBarTabs = React.memo(
               if (history.location.pathname === EVENTS)
                 return scrollTop();
             }}
-            label={matches ? <EventOutlined /> : 'Events'}
+            label={
+              matches ? (
+                <EventOutlined />
+              ) : (
+                <span>
+                  <EventOutlined
+                    fontSize="small"
+                    style={{
+                      verticalAlign: 'sub',
+                      marginRight: '0.2rem',
+                    }}
+                  />{' '}
+                  Events
+                </span>
+              )
+            }
           />
         </Tooltip>
         <Tooltip title={matches ? 'Venues' : ''}>
@@ -81,7 +96,22 @@ const AppBarTabs = React.memo(
               if (history.location.pathname === VENUES)
                 return scrollTop();
             }}
-            label={matches ? <HomeWorkOutlined /> : 'Venues'}
+            label={
+              matches ? (
+                <HomeWorkOutlined />
+              ) : (
+                <span>
+                  <HomeWorkOutlined
+                    fontSize="small"
+                    style={{
+                      verticalAlign: 'sub',
+                      marginRight: '0.2rem',
+                    }}
+                  />{' '}
+                  Venues
+                </span>
+              )
+            }
           />
         </Tooltip>
 
@@ -103,7 +133,22 @@ const AppBarTabs = React.memo(
               if (history.location.pathname === JOBS)
                 return scrollTop();
             }}
-            label={matches ? <WorkOutlineOutlined /> : 'Jobs'}
+            label={
+              matches ? (
+                <WorkOutlineOutlined />
+              ) : (
+                <span>
+                  <WorkOutlineOutlined
+                    fontSize="small"
+                    style={{
+                      verticalAlign: 'sub',
+                      marginRight: '0.2rem',
+                    }}
+                  />{' '}
+                  Jobs
+                </span>
+              )
+            }
           />
         </Tooltip>
       </Tabs>

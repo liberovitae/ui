@@ -20,7 +20,6 @@ import {
 import { scrollTop } from '../Shared/ScrollTop';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import queryString from 'query-string';
-import { ALERT_BASE, LANDING } from '../../constants/routes';
 
 const NavBar = React.memo(
   ({ history, session }) => {
@@ -29,7 +28,6 @@ const NavBar = React.memo(
     const reactiveSearch = useReactiveVar(searchVar);
     const lastLocation = useLastLocation();
     const [scrollPosition, setScrollPosition] = useState(null);
-    const queryStringNew = getQueryString(reactiveSearch);
 
     useScrollPosition(({ prevPos, currPos }) => {
       setScrollPosition(currPos.y);
@@ -75,14 +73,11 @@ const NavBar = React.memo(
     // This should and can be improved at some point.
 
     useEffect(() => {
-      console.log(
-        reactiveRouteConfig.type,
-        reactiveSearch,
-        reactiveRouteConfig.INITIAL_SEARCH_STATE,
-      );
+      const queryStringNew = getQueryString(reactiveSearch);
       const queryParams = queryString.parse(history.location.search);
+
       if (
-        queryStringNew !== history.location.search &&
+        history.location.search !== queryStringNew &&
         !objCompare(
           // This comparison stops double back bug in navigation/react router!?
           queryParamsTransObject(
@@ -91,7 +86,6 @@ const NavBar = React.memo(
           ),
           reactiveSearch,
         ) &&
-        !history.location.pathname.startsWith(ALERT_BASE) &&
         history.location.pathname.startsWith(
           reactiveRouteConfig.routes.landing,
         )
@@ -99,6 +93,7 @@ const NavBar = React.memo(
         quickSearch().show && quickSearch({ show: false });
         contentDrawer().show &&
           contentDrawer({ ...contentDrawer(), show: false });
+
         history.push({
           pathname: reactiveRouteConfig.routes.landing,
           search: queryStringNew,
@@ -154,14 +149,8 @@ const NavBar = React.memo(
         navSidebar(false);
       };
 
-      // Push to data type route for now until we have a different landing page
-      if (history.location.pathname === LANDING)
-        history.push(routeConfig().routes.landing);
-
       contentDrawer().show &&
         contentDrawer({ ...contentDrawer(), show: false });
-
-      handleRoutes({ lastLocation });
 
       const savedScrollPosition = JSON.parse(
         sessionStorage.getItem(
@@ -192,6 +181,8 @@ const NavBar = React.memo(
           `${reactiveRouteConfig.type}${history.location.search}`,
           scrollPosition,
         );
+
+      handleRoutes({ lastLocation });
 
       if (
         history.location.pathname !== routeConfig().routes.landing

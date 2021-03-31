@@ -12,11 +12,11 @@ import { useReactiveVar } from '@apollo/client';
 import { objCompare } from '../../helpers';
 import { useSnackbar } from 'notistack';
 import {
-  quickSearch,
   filterSearch,
   backdrop,
   routeConfig,
   darkTheme,
+  quickSearch,
 } from '../../constants/globalVars';
 import Tabs from './Tabs';
 import Filter from '../Filter';
@@ -52,7 +52,7 @@ const HideOnScroll = (props) => {
     <Slide
       appear={false}
       direction={matches ? 'up' : 'down'}
-      in={!trigger}
+      in={filterSearch().show || (!trigger && !quickSearch().show)}
     >
       {children}
     </Slide>
