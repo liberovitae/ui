@@ -142,8 +142,12 @@ const SearchBreadCrumbs = React.memo(
               <Typography title="Dates" variant="caption">
                 <DateRange className={classes.icon} />
                 {startDate}
-                <DoubleArrow className={classes.icon} />
-                {endDate}
+                {startDate !== endDate && (
+                  <>
+                    <DoubleArrow className={classes.icon} />
+                    {endDate}
+                  </>
+                )}
               </Typography>
             </Fade>
           )}

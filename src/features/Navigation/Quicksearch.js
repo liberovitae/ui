@@ -6,10 +6,11 @@ import {
   filterSearch,
 } from '../../constants/globalVars';
 import { handleSearch } from '../../helpers';
-import { Backdrop } from '@material-ui/core';
+import { Backdrop, Grid } from '@material-ui/core';
 import { Search, Close } from '@material-ui/icons';
 import SearchBar from 'material-ui-search-bar';
 import { makeStyles } from '@material-ui/core/styles';
+import { CalendarButton } from '../Shared/Inputs';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -25,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Quicksearch = ({}) => {
-  const reactiveSearch = useReactiveVar(routeConfig().searchVar);
+  const reactiveRouteConfig = useReactiveVar(routeConfig);
+  const reactiveSearch = reactiveRouteConfig.searchVar;
+
   const reactiveQuicksearch = useReactiveVar(quickSearch);
   const reactiveFilterSearch = useReactiveVar(filterSearch);
   const classes = useStyles();
@@ -42,26 +45,38 @@ const Quicksearch = ({}) => {
       className={classes.backdrop}
       open={reactiveQuicksearch.show && !reactiveFilterSearch.show}
     >
-      <SearchBar
-        innerRef={ref}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        id="search"
-        onCancelSearch={(e) => {
-          routeConfig().searchVar({
-            ...reactiveSearch,
-            keywords: '',
-          });
-        }}
-        className={classes.searchBar}
-        cancelOnEscape
-        closeIcon={<Close className={classes.icon} />}
-        searchIcon={<Search className={classes.icon} />}
-        value={reactiveSearch.keywords}
-        onRequestSearch={handleSearch}
-        placeholder={`Search ${routeConfig().type}s`}
-      />
+      <Grid
+        container
+        spacing={4}
+        alignItems="center"
+        direction="column"
+      >
+        <Grid item xs={12}>
+          <SearchBar
+            innerRef={ref}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            id="search"
+            onCancelSearch={(e) => {
+              routeConfig().searchVar({
+                ...reactiveSearch,
+                keywords: '',
+              });
+            }}
+            className={classes.searchBar}
+            cancelOnEscape
+            closeIcon={<Close className={classes.icon} />}
+            searchIcon={<Search className={classes.icon} />}
+            value={reactiveSearch.keywords}
+            onRequestSearch={handleSearch}
+            placeholder={`Search ${routeConfig().type}s`}
+          />
+        </Grid>
+        {reactiveRouteConfig.type === 'event' && (
+          <CalendarButton reactiveRouteConfig={reactiveRouteConfig} />
+        )}
+      </Grid>
     </Backdrop>
   );
 };

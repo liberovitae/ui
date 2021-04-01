@@ -41,12 +41,8 @@ const CalendarButton = React.memo(
             autoOk
             required
             name="dateStart"
-            variant="inline"
+            variant="static"
             disableToolbar
-            InputProps={{
-              className: classes.input,
-              endAdornment: <Today />,
-            }}
             value={dates?.start}
             onChange={(e) => handleChange(e)}
           />

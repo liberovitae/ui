@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { IconButton, Hidden, Button } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   ExpandMore,
   Search,
@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavButtons = ({ themeSnackbar, session }) => {
-  const theme = useTheme();
   const { INITIAL_SEARCH_STATE, type } = routeConfig();
   const classes = useStyles();
 
@@ -60,8 +59,8 @@ const NavButtons = ({ themeSnackbar, session }) => {
         })}
         edge="end"
         title="Advanced search"
-        onClick={(event) => {
-          event.stopPropagation();
+        onClick={(e) => {
+          e.stopPropagation();
 
           filterSearch({
             show: !filterSearch().show,
@@ -71,7 +70,6 @@ const NavButtons = ({ themeSnackbar, session }) => {
       >
         <ExpandMore />
       </IconButton>
-
       {quickSearch().show ||
       !objCompare(routeConfig().searchVar(), INITIAL_SEARCH_STATE) ? (
         <IconButton
@@ -110,7 +108,6 @@ const NavButtons = ({ themeSnackbar, session }) => {
           <Search />
         </IconButton>
       )}
-
       <Hidden lgUp>
         <IconButton
           edge="start"
@@ -134,6 +131,9 @@ const NavButtons = ({ themeSnackbar, session }) => {
             )}
             {type == 'venue' && (
               <FormattedMessage id="navbar.post_venue_button" />
+            )}
+            {type == 'event' && (
+              <FormattedMessage id="navbar.post_event_button" />
             )}
           </Button>
         </Link>

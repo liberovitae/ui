@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { siteHeader, routeConfig } from '../../constants/globalVars';
 import { useReactiveVar } from '@apollo/client';
 import { objCompare } from '../../helpers';
-import { CalendarButton } from '../Shared/Inputs';
 
 const SiteHeader = React.memo(
   ({ matches }) => {
@@ -35,21 +34,6 @@ const SiteHeader = React.memo(
           <Typography className={classes.header} variant="h5">
             {reactiveHeader}
           </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={1}
-          style={{
-            alignSelf: 'flex-end',
-            paddingBottom: '0.5rem',
-          }}
-        >
-          {reactiveRouteConfig.type === 'event' && (
-            <CalendarButton
-              reactiveRouteConfig={reactiveRouteConfig}
-              dates={reactiveSearch.dates}
-            />
-          )}
         </Grid>
       </Grid>
     );
