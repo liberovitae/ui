@@ -76,6 +76,14 @@ const purpleDarkTheme = () => {
           backgroundColor: '#000',
         },
       },
+      MuiPickersBasePicker: {
+        container: { backgroundColor: 'black' },
+      },
+      MuiPickersCalendarHeader: {
+        iconButton: {
+          backgroundColor: 'black',
+        },
+      },
     },
   });
 };

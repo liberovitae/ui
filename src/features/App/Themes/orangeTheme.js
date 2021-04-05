@@ -65,11 +65,15 @@ const orangeTheme = () => {
         },
         icon: { color: 'rgba(0, 0, 0, 0.3) !important' },
       },
-
       MuiDropzonePreviewList: {
         root: {
           flexDirection: 'row',
           justifyContent: 'center',
+        },
+      },
+      MuiPickersStaticWrapper: {
+        staticWrapperRoot: {
+          borderRadius: '4px',
         },
       },
     },
