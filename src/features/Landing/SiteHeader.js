@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { siteHeader, routeConfig } from '../../constants/globalVars';
 import { useReactiveVar } from '@apollo/client';
 import { objCompare } from '../../helpers';
-
+import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
 const SiteHeader = React.memo(
   ({ matches }) => {
     const reactiveRouteConfig = useReactiveVar(routeConfig);
@@ -18,10 +18,7 @@ const SiteHeader = React.memo(
         [theme.breakpoints.down('xs')]: {
           marginTop: 0,
         },
-        marginTop: !objCompare(
-          reactiveSearch,
-          reactiveRouteConfig.INITIAL_SEARCH_STATE,
-        )
+        marginTop: !objCompare(reactiveSearch, INITIAL_SEARCH_STATE)
           ? '4rem'
           : '2rem',
         padding: '0.5rem',

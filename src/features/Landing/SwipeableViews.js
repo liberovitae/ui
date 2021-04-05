@@ -1,6 +1,6 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import Items from '../Item/Items';
+import Posts from '../Post/Posts';
 import { VENUES, JOBS, EVENTS } from '../../constants/routes';
 import { useTheme } from '@material-ui/core/styles';
 import { tabIndex } from '../../constants/globalVars';
@@ -58,21 +58,21 @@ const Swipeableviews = ({ history, session }) => {
         index={0}
         dir={theme.direction}
       >
-        <Items session={session} limit={20} history={history} />
+        <Posts session={session} limit={20} history={history} />
       </TabPanel>
       <TabPanel
         value={reactiveTabIndex}
         index={1}
         dir={theme.direction}
       >
-        <Items session={session} limit={20} history={history} />
+        <Posts session={session} limit={20} history={history} />
       </TabPanel>
       <TabPanel
         value={reactiveTabIndex}
         index={2}
         dir={theme.direction}
       >
-        <Items session={session} limit={20} history={history} />
+        <Posts session={session} limit={20} history={history} />
       </TabPanel>
     </SwipeableViews>
   );
