@@ -5,26 +5,26 @@ import {
   siteHeader,
   backdrop,
 } from '../constants/globalVars';
+import INITIAL_SEARCH_STATE from '../constants/initialSearch';
 import { client } from '../index';
 import history from '../constants/history';
 import { getQueryString } from './queryParams';
 
-const handleReset = (event) => {
+const handleReset = () => {
   const queryStringNew = getQueryString(routeConfig().searchVar());
 
-  routeConfig().searchVar(routeConfig().INITIAL_SEARCH_STATE);
-
+  routeConfig().searchVar(INITIAL_SEARCH_STATE);
   quickSearch({ show: false });
   filterSearch({ show: false });
   backdrop(false);
   client.cache.evict({
     id: 'ROOT_QUERY',
-    fieldName: `${routeConfig().type}s`,
+    fieldName: `posts:${routeConfig().type}`,
   });
   client.cache.gc();
   history.location.pathname === routeConfig().routes.landing &&
     siteHeader(routeConfig().defaultSiteHeader);
-  history.push({ search: null });
+
   sessionStorage.removeItem(`${routeConfig().type}${queryStringNew}`);
 };
 

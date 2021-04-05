@@ -1,42 +1,53 @@
 import queryString from 'query-string';
 import { routeConfig, tabIndex } from '../constants/globalVars';
-import { venue, event, job } from '../constants/routeConfig';
+import { venue, event, job, company } from '../constants/routeConfig';
 import history from '../constants/history';
 import { objCompare, queryParamsTransObject } from '.';
 import {
   JOB_BASE,
   VENUE_BASE,
   EVENT_BASE,
+  COMPANY_BASE,
 } from '../constants/routes';
+import INITIAL_SEARCH_STATE from '../constants/initialSearch';
 
 const handleRoutes = ({ lastLocation }) => {
-  const { searchVar, type, INITIAL_SEARCH_STATE } = routeConfig();
+  const { searchVar, type } = routeConfig();
 
   if (
-    (!lastLocation?.pathname.includes(JOB_BASE) &&
-      history.location.pathname.includes(JOB_BASE)) ||
-    history.location.pathname.includes('company')
+    history.location.pathname.includes(JOB_BASE) &&
+    type !== 'job'
   ) {
-    type !== 'job' && routeConfig(job);
+    routeConfig(job);
     tabIndex() !== tabIndex && tabIndex(routeConfig().tabIndex);
     return;
   }
 
   if (
-    !lastLocation?.pathname.includes(VENUE_BASE) &&
-    history.location.pathname.includes(VENUE_BASE)
+    history.location.pathname.includes(VENUE_BASE) &&
+    type !== 'venue'
   ) {
-    type !== 'venue' && routeConfig(venue);
+    routeConfig(venue);
     tabIndex() !== routeConfig().tabIndex &&
       tabIndex(routeConfig().tabIndex);
     return;
   }
 
   if (
-    !lastLocation?.pathname.includes(EVENT_BASE) &&
-    history.location.pathname.includes(EVENT_BASE)
+    history.location.pathname.includes(EVENT_BASE) &&
+    type !== 'event'
   ) {
-    type !== 'event' && routeConfig(event);
+    routeConfig(event);
+    tabIndex() !== routeConfig().tabIndex &&
+      tabIndex(routeConfig().tabIndex);
+    return;
+  }
+
+  if (
+    history.location.pathname.includes(COMPANY_BASE) &&
+    type !== 'company'
+  ) {
+    routeConfig(company);
     tabIndex() !== routeConfig().tabIndex &&
       tabIndex(routeConfig().tabIndex);
     return;

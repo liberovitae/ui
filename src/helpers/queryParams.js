@@ -1,9 +1,10 @@
 import queryString from 'query-string';
 import dayjs from 'dayjs';
+import INITIAL_SEARCH_STATE from '../constants/initialSearch';
 
 export const queryParams = queryString.parse(window.location.search);
 
-export const queryParamsTransObject = (queryParams, initialState) => {
+export const queryParamsTransObject = (queryParams) => {
   const dates =
     queryParams.sd && queryParams.ed
       ? {
@@ -15,23 +16,23 @@ export const queryParamsTransObject = (queryParams, initialState) => {
       : null;
 
   return {
-    ...initialState,
-    keywords: queryParams.k || initialState.keywords,
+    ...INITIAL_SEARCH_STATE,
+    keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
     location: {
-      name: queryParams.l || initialState.location.name,
-      lat: initialState.location.lat,
-      lon: initialState.location.lon,
+      name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
+      lat: INITIAL_SEARCH_STATE.location.lat,
+      lon: INITIAL_SEARCH_STATE.location.lon,
     },
     ...dates,
     types: queryParams.t
       ? Array.isArray(queryParams.t)
         ? queryParams.t
         : [queryParams.t]
-      : initialState.types,
+      : INITIAL_SEARCH_STATE.types,
   };
 };
 
-export const queryParamGenerate = (initialState) => {
+export const queryParamGenerate = () => {
   const queryParams = queryString.parse(window.location.search);
 
   const dates =
@@ -45,18 +46,18 @@ export const queryParamGenerate = (initialState) => {
       : null;
 
   return {
-    keywords: queryParams.k || initialState.keywords,
+    keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
     location: {
-      name: queryParams.l || initialState.location.name,
-      lat: initialState.location.lat,
-      lon: initialState.location.lon,
+      name: queryParams.l || INITIAL_SEARCH_STATE.location.name,
+      lat: INITIAL_SEARCH_STATE.location.lat,
+      lon: INITIAL_SEARCH_STATE.location.lon,
     },
     ...dates,
     types: queryParams.t
       ? Array.isArray(queryParams.t)
         ? queryParams.t
         : [queryParams.t]
-      : initialState.types,
+      : INITIAL_SEARCH_STATE.types,
   };
 };
 
