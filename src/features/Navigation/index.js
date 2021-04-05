@@ -8,6 +8,7 @@ import {
   handleRoutes,
 } from '../../helpers';
 import { useHotkeys } from 'react-hotkeys-hook';
+import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
 import Appbar from './Appbar';
 import {
   quickSearch,
@@ -79,15 +80,8 @@ const NavBar = React.memo(
       if (
         history.location.search !== queryStringNew &&
         !objCompare(
-          // This comparison stops double back bug in navigation/react router!?
-          queryParamsTransObject(
-            queryParams,
-            reactiveRouteConfig.INITIAL_SEARCH_STATE,
-          ),
+          queryParamsTransObject(queryParams, INITIAL_SEARCH_STATE),
           reactiveSearch,
-        ) &&
-        history.location.pathname.startsWith(
-          reactiveRouteConfig.routes.landing,
         )
       ) {
         quickSearch().show && quickSearch({ show: false });
@@ -141,6 +135,7 @@ const NavBar = React.memo(
     // Listener for route handling saving and restoring scroll positions
     useEffect(() => {
       window.onpopstate = (e) => {
+        // Close all daialogs on navigation change
         quickSearch({ show: false });
         filterSearch({ show: false });
         contentDrawer().show &&
@@ -182,6 +177,7 @@ const NavBar = React.memo(
           scrollPosition,
         );
 
+      // Main route handler
       handleRoutes({ lastLocation });
 
       if (

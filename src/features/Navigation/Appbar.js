@@ -6,6 +6,7 @@ import {
   Toolbar,
   Slide,
   useScrollTrigger,
+  useMediaQuery,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useReactiveVar } from '@apollo/client';
@@ -18,13 +19,13 @@ import {
   darkTheme,
   quickSearch,
 } from '../../constants/globalVars';
+import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
 import Tabs from './Tabs';
 import Filter from '../Filter';
 import Breadcrumbs from './Breadcrumbs';
 import NavButtons from './NavButtons';
 import Logo from './Logo';
 import { scrollTop } from '../Shared/ScrollTop';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -92,10 +93,7 @@ const Appbar = React.memo(
                 appear
                 in={
                   !filterSearch().show &&
-                  !objCompare(
-                    reactiveSearch,
-                    routeConfig().INITIAL_SEARCH_STATE,
-                  )
+                  !objCompare(reactiveSearch, INITIAL_SEARCH_STATE)
                 }
                 mountOnEnter
                 unmountOnExit
@@ -142,10 +140,7 @@ const Appbar = React.memo(
                 appear
                 in={
                   !filterSearch().show &&
-                  !objCompare(
-                    reactiveSearch,
-                    routeConfig().INITIAL_SEARCH_STATE,
-                  )
+                  !objCompare(reactiveSearch, INITIAL_SEARCH_STATE)
                 }
                 mountOnEnter
                 unmountOnExit

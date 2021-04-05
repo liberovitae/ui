@@ -20,7 +20,10 @@ import {
 } from '../../constants/routes';
 
 const NavLinks = (session) => {
-  if (routeConfig().type === 'job') {
+  if (
+    routeConfig().type === 'job' ||
+    routeConfig().type === 'company'
+  ) {
     return [
       {
         title: <FormattedMessage id="navbar.alerts" />,

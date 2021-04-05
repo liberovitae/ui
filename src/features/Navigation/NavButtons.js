@@ -26,6 +26,7 @@ import {
   routeConfig,
 } from '../../constants/globalVars';
 import clsx from 'clsx';
+import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
 
 const useStyles = makeStyles((theme) => ({
   accountButtons: { padding: '0.5rem' },
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavButtons = ({ themeSnackbar, session }) => {
-  const { INITIAL_SEARCH_STATE, type } = routeConfig();
+  const { type } = routeConfig();
   const classes = useStyles();
 
   return (

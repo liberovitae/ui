@@ -10,7 +10,7 @@ import { Backdrop, Grid } from '@material-ui/core';
 import { Search, Close } from '@material-ui/icons';
 import SearchBar from 'material-ui-search-bar';
 import { makeStyles } from '@material-ui/core/styles';
-import { CalendarButton } from '../Shared/Inputs';
+import { Calendar } from '../Shared/Inputs';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBar: {
     zIndex: 105,
+    marginBottom: '1rem',
   },
 }));
 
 const Quicksearch = ({}) => {
   const reactiveRouteConfig = useReactiveVar(routeConfig);
   const reactiveSearch = reactiveRouteConfig.searchVar;
-
   const reactiveQuicksearch = useReactiveVar(quickSearch);
   const reactiveFilterSearch = useReactiveVar(filterSearch);
   const classes = useStyles();
@@ -72,10 +72,10 @@ const Quicksearch = ({}) => {
             onRequestSearch={handleSearch}
             placeholder={`Search ${routeConfig().type}s`}
           />
+          {reactiveRouteConfig.hasDates && (
+            <Calendar reactiveRouteConfig={reactiveRouteConfig} />
+          )}
         </Grid>
-        {reactiveRouteConfig.type === 'event' && (
-          <CalendarButton reactiveRouteConfig={reactiveRouteConfig} />
-        )}
       </Grid>
     </Backdrop>
   );
