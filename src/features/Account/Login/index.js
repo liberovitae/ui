@@ -30,13 +30,13 @@ const Login = ({ refetch, history, session }) => {
     });
   }, []);
 
-  const onChange = (event) => {
+  const onChange = (e) => {
     const { name, value } = event.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const onSubmit = (event, signIn) => {
-    event.preventDefault();
+  const onSubmit = (e, signIn) => {
+    e.preventDefault();
     sessionStorage.clear();
     signIn();
   };

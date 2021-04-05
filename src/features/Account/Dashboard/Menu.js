@@ -7,17 +7,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   ACCOUNT,
-  MY_JOBS,
   SAVED,
   SETTINGS,
-  MY_VENUES,
   ALERTS,
+  MY_POSTS,
 } from '../../../constants/routes';
-import { GET_ME_COUNTS } from './queries';
+import { GET_MY_COUNTS } from './queries';
 import LogoutButton from '../Logout';
 
 const AccountMenu = () => {
-  const { data } = useQuery(GET_ME_COUNTS);
+  const { data } = useQuery(GET_MY_COUNTS);
   const matches = useMediaQuery('(min-width:960px)');
 
   const useStyles = makeStyles((theme) => ({
@@ -59,46 +58,28 @@ const AccountMenu = () => {
       <Link to={ALERTS}>
         <Button className={classes.menuButton}>
           <FormattedMessage id="account.menu.alerts" />
-          {data?.meCounts?.alerts?.jobs +
-            data?.meCounts?.alerts?.venues >
-            0 && (
+          {data?.myCounts?.alerts > 0 && (
             <Badge
               // showZero
               className={classes.badge}
               color="primary"
-              badgeContent={
-                data?.meCounts?.alerts?.jobs +
-                  data?.meCounts?.alerts?.venues || 0
-              }
+              badgeContent={data?.myCounts?.alerts}
             />
           )}
         </Button>
       </Link>
 
-      <Link to={MY_JOBS}>
+      {console.log(data)}
+
+      <Link to={MY_POSTS}>
         <Button className={classes.menuButton}>
-          <FormattedMessage id="account.menu.jobs" />
-          {data?.meCounts?.jobs > 0 && (
+          <FormattedMessage id="account.menu.posts" />
+          {data?.myCounts?.posts > 0 && (
             <Badge
               // showZero
               className={classes.badge}
               color="primary"
-              badgeContent={data?.meCounts?.jobs || 0}
-            />
-          )}
-        </Button>
-      </Link>
-
-      <Link to={MY_VENUES}>
-        <Button className={classes.menuButton}>
-          <FormattedMessage id="account.menu.venues" />
-
-          {data?.meCounts?.venues > 0 && (
-            <Badge
-              // showZero
-              className={classes.badge}
-              color="primary"
-              badgeContent={data?.meCounts?.venues || 0}
+              badgeContent={data?.myCounts?.posts || 0}
             />
           )}
         </Button>
@@ -107,17 +88,12 @@ const AccountMenu = () => {
       <Link to={SAVED}>
         <Button className={classes.menuButton}>
           <FormattedMessage id="account.menu.saved" />
-          {data?.meCounts?.saved?.jobs +
-            data?.meCounts?.saved?.venues >
-            0 && (
+          {data?.myCounts?.saved > 0 && (
             <Badge
               // showZero
               className={classes.badge}
               color="primary"
-              badgeContent={
-                data?.meCounts?.saved?.jobs +
-                  data?.meCounts?.saved?.venues || 0
-              }
+              badgeContent={data?.myCounts?.saved || 0}
             />
           )}
         </Button>

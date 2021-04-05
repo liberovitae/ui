@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 import {
   Typography,
@@ -24,7 +24,7 @@ import {
   UPDATE_ALERT,
   GET_ALERTS,
   GET_ALERT,
-  GET_ME_COUNTS,
+  GET_MY_COUNTS,
 } from './queries';
 import { isSafari } from 'react-device-detect';
 import {
@@ -37,9 +37,9 @@ import { subscribeUserToPush } from '../../../helpers/subscriptions';
 import { ALERTS } from '../../../constants/routes';
 import history from '../../../constants/history';
 import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
-
+import INITIAL_SEARCH_STATE from '../../../constants/initialSearch';
 const INITIAL_STATE = {
-  ...routeConfig().INITIAL_SEARCH_STATE,
+  ...INITIAL_SEARCH_STATE,
   id: '',
   alertType: routeConfig().type,
   title: '',
@@ -52,6 +52,7 @@ const INITIAL_STATE = {
 
 const AlertForm = ({ refetch }) => {
   const { slug } = useParams();
+
   const [state, setState] = useState(INITIAL_STATE);
   const {
     id,
@@ -82,10 +83,7 @@ const AlertForm = ({ refetch }) => {
         <FormattedMessage id="alert_form.hero.subtitle_create" />
       ),
     });
-    if (slug) {
-      getAlert({ variables: { slug: slug } });
-    }
-  }, [slug]);
+  }, []);
 
   useEffect(() => {
     routeConfig(ROUTE_CONFIGS[alertType]);
@@ -94,7 +92,7 @@ const AlertForm = ({ refetch }) => {
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const [mutateAlert, { data, error }] = useMutation(
+  const [mutateAlert] = useMutation(
     id ? UPDATE_ALERT : CREATE_ALERT,
     {
       variables: {
@@ -115,7 +113,7 @@ const AlertForm = ({ refetch }) => {
 
       refetchQueries: [
         { query: GET_ALERTS },
-        { query: GET_ME_COUNTS },
+        { query: GET_MY_COUNTS },
       ],
       onError: (err) =>
         enqueueSnackbar(err.message, {
@@ -138,7 +136,8 @@ const AlertForm = ({ refetch }) => {
     },
   );
 
-  const [getAlert, { loading }] = useLazyQuery(GET_ALERT, {
+  const { data, loading, error } = useQuery(GET_ALERT, {
+    skip: !slug,
     fetchPolicy: 'cache-and-network',
     onCompleted: ({ alert }) => {
       const {
@@ -181,7 +180,7 @@ const AlertForm = ({ refetch }) => {
   });
 
   const onChange = (e) => {
-    const { name, value } = event.target;
+    const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 

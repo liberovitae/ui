@@ -1,143 +1,88 @@
 import gql from 'graphql-tag.macro';
 
-export const GET_ME_JOBS = gql`
-  query {
-    meJobs {
+export const GET_MY_POSTS = gql`
+  query($type: String) {
+    myPosts(type: $type) {
       id
       title
-      types
-      slug
-      status
-      createdAt
-    }
-  }
-`;
-
-export const GET_ME_VENUES = gql`
-  query {
-    meVenues {
-      id
-      title
-      children {
-        id
-        title
-        slug
-        status
-        types
-        dates {
-          start
-          end
-        }
-      }
+      type
       types
       image
       slug
       status
+      dates {
+        start
+        end
+      }
       createdAt
+      children {
+        id
+        title
+        image
+        type
+        types
+        slug
+        status
+        dates {
+          start
+          end
+        }
+        createdAt
+      }
     }
   }
 `;
 
-export const GET_ME_EVENTS = gql`
-  query {
-    meEvents {
-      id
-      title
-      types
-      slug
-      status
-      createdAt
-    }
-  }
-`;
-
-export const DELETE_VENUE = gql`
+export const DELETE_POST = gql`
   mutation($id: ID!) {
-    deleteVenue(id: $id)
+    deletePost(id: $id)
   }
 `;
 
-export const DELETE_EVENT = gql`
-  mutation($id: ID!) {
-    deleteEvent(id: $id)
-  }
-`;
-
-export const SET_VENUE_STATUS = gql`
+export const SET_POST_STATUS = gql`
   mutation($id: ID!, $status: String!) {
-    setVenueStatus(id: $id, status: $status)
+    setPostStatus(id: $id, status: $status)
   }
 `;
 
-export const DELETE_JOB = gql`
+export const GET_MY_COUNTS = gql`
+  query {
+    myCounts {
+      alerts
+      posts
+      saved
+    }
+  }
+`;
+
+export const GET_SAVED_POSTS = gql`
+  query {
+    savedPosts {
+      post {
+        id
+        type
+        title
+        slug
+        createdAt
+        publishedAt
+        parent {
+          id
+          type
+          title
+          slug
+          createdAt
+          publishedAt
+        }
+      }
+      reminder
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_SAVED_POST = gql`
   mutation($id: ID!) {
-    deleteJob(id: $id)
-  }
-`;
-
-export const GET_ME_COUNTS = gql`
-  query {
-    meCounts {
-      alerts {
-        jobs
-        venues
-      }
-      jobs
-      venues
-      saved {
-        jobs
-        venues
-      }
-    }
-  }
-`;
-
-export const GET_SAVED_ITEMS = gql`
-  query {
-    savedItems {
-      jobs {
-        job {
-          id
-          title
-          parent {
-            title
-          }
-          slug
-          createdAt
-          publishedAt
-        }
-        reminder
-        createdAt
-      }
-      venues {
-        venue {
-          id
-          title
-          slug
-          createdAt
-          publishedAt
-        }
-        reminder
-        createdAt
-      }
-      events {
-        event {
-          id
-          title
-          slug
-          createdAt
-          publishedAt
-        }
-        reminder
-        createdAt
-      }
-    }
-  }
-`;
-
-export const DELETE_SAVED_ITEM = gql`
-  mutation($id: ID!, $itemType: String!) {
-    deleteSavedItem(id: $id, itemType: $itemType)
+    deleteSavedItem(id: $id)
   }
 `;
 
@@ -147,9 +92,9 @@ export const DELETE_USER = gql`
   }
 `;
 
-export const SAVE_ITEM = gql`
-  mutation($id: ID!, $itemType: String!, $reminder: Boolean) {
-    saveItem(id: $id, itemType: $itemType, reminder: $reminder)
+export const SAVE_POST = gql`
+  mutation($id: ID!, $reminder: Boolean) {
+    savePost(id: $id, reminder: $reminder)
   }
 `;
 
@@ -232,33 +177,13 @@ export const UPDATE_ALERT = gql`
 export const GET_ALERTS = gql`
   query {
     alerts {
-      venues {
-        id
-        alertType
-        title
-        slug
-        frequency
-        active
-        createdAt
-      }
-      jobs {
-        id
-        alertType
-        title
-        slug
-        frequency
-        active
-        createdAt
-      }
-      events {
-        id
-        alertType
-        title
-        slug
-        frequency
-        active
-        createdAt
-      }
+      id
+      alertType
+      title
+      slug
+      frequency
+      active
+      createdAt
     }
   }
 `;
@@ -290,11 +215,5 @@ export const GET_ALERT = gql`
       email
       notification
     }
-  }
-`;
-
-export const SET_JOB_STATUS = gql`
-  mutation($id: ID!, $status: String!) {
-    setJobStatus(id: $id, status: $status)
   }
 `;

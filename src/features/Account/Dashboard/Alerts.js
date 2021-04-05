@@ -19,9 +19,10 @@ import { useQuery, useMutation } from '@apollo/client';
 import {
   GET_ALERTS,
   DELETE_ALERT,
-  GET_ME_COUNTS,
+  GET_MY_COUNTS,
   TOGGLE_ACTIVATE,
 } from './queries';
+import { ALERT_CREATE } from '../../../constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -59,9 +60,9 @@ const Alerts = ({ refetch, session }) => {
   const { data, loading, error } = useQuery(GET_ALERTS);
 
   const [deleteAlert] = useMutation(DELETE_ALERT, {
-    refetchQueries: [{ query: GET_ALERTS }, { query: GET_ME_COUNTS }],
-    onCompleted: (data) =>
-      data.deleteAlert
+    refetchQueries: [{ query: GET_ALERTS }, { query: GET_MY_COUNTS }],
+    onCompleted: ({ deleteAlert }) =>
+      deleteAlert
         ? enqueueSnackbar(
             <FormattedMessage id="alerts.delete.success_snackbar" />,
             {
@@ -80,8 +81,8 @@ const Alerts = ({ refetch, session }) => {
 
   const [toggleActivate] = useMutation(TOGGLE_ACTIVATE, {
     refetchQueries: [{ query: GET_ALERTS }],
-    onCompleted: (data) => {
-      data.toggleActivate
+    onCompleted: ({ toggleActivate }) => {
+      toggleActivate
         ? enqueueSnackbar(
             <FormattedMessage id="alerts.activate.success_snackbar" />,
             {
@@ -118,144 +119,140 @@ const Alerts = ({ refetch, session }) => {
     });
   }, []);
 
-  let combinedItems;
-
   if (data) {
-    combinedItems = [...data?.alerts?.jobs, ...data?.alerts?.venues];
+    const { alerts } = data;
 
-    combinedItems = combinedItems.sort((a, b) => {
-      if (a.createdAt < b.createdAt) return 1;
-      if (a.createdAt > b.createdAt) return -1;
-    });
-  }
-
-  return (
-    <Fade in>
-      <div>
-        <div className={classes.description}>
-          <Typography paragraph>
-            <FormattedMessage
-              id="alerts.description"
-              values={{
-                venueIcon: (
-                  <HomeWorkOutlined
-                    fontSize="small"
-                    className={classes.icon}
-                  />
-                ),
-                jobIcon: (
-                  <WorkOutlineOutlined
-                    fontSize="small"
-                    className={classes.icon}
-                  />
-                ),
-              }}
-            />{' '}
-            <strong>{session.me.email}</strong>{' '}
-          </Typography>
-
-          <Link to={'/alert/post'}>
-            <Button variant="outlined" color="primary">
-              <FormattedMessage id="alerts.create_button" />
-            </Button>
-          </Link>
-        </div>
-        <Divider className={classes.divider} />
-
-        {combinedItems?.map((alert) => (
-          <Grid container key={alert.id} spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="h6" gutterBottom>
-                {alert.alertType === 'venue' && (
-                  <HomeWorkOutlined className={classes.listIcon} />
-                )}
-                {alert.alertType === 'job' && (
-                  <WorkOutlineOutlined className={classes.listIcon} />
-                )}
-                {alert.name}
-              </Typography>
-            </Grid>
-            <Grid item className={classes.alignRight} xs={8}>
-              <Link
-                to={{
-                  pathname: `/alert/view/${alert.slug}`,
-                  state: { search: true },
+    return (
+      <Fade in>
+        <div>
+          <div className={classes.description}>
+            <Typography paragraph>
+              <FormattedMessage
+                id="alerts.description"
+                values={{
+                  venueIcon: (
+                    <HomeWorkOutlined
+                      fontSize="small"
+                      className={classes.icon}
+                    />
+                  ),
+                  jobIcon: (
+                    <WorkOutlineOutlined
+                      fontSize="small"
+                      className={classes.icon}
+                    />
+                  ),
                 }}
-              >
-                <Button
-                  className={classes.button}
-                  variant="outlined"
-                  color="primary"
-                >
-                  <FormattedMessage id="alerts.show_results_button" />
-                </Button>
-              </Link>
-              <Link to={`/alert/post/${alert.slug}`}>
-                <Button
-                  className={classes.button}
-                  variant="outlined"
-                  color="primary"
-                >
-                  <FormattedMessage id="alerts.edit_button" />
-                </Button>
-              </Link>
-              <Button
-                onClick={() =>
-                  toggleActivate({ variables: { id: alert.id } })
-                }
-                className={classes.button}
-                variant="outlined"
-                color="primary"
-              >
-                {alert.active ? (
-                  <FormattedMessage id="alerts.deactivate_button" />
-                ) : (
-                  <FormattedMessage id="alerts.activate_button" />
-                )}
-              </Button>
-              <Button
-                onClick={() => confirmDelete(alert.id)}
-                className={classes.button}
-                variant="outlined"
-                color="secondary"
-              >
-                <FormattedMessage id="alerts.delete_button" />
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography>
-                <FormattedMessage id="alerts.status" />:{' '}
-                <strong>
-                  {alert.active ? (
-                    <FormattedMessage id="alerts.active" />
-                  ) : (
-                    <FormattedMessage id="alerts.inactive" />
-                  )}
-                </strong>
-              </Typography>
-            </Grid>
-            <Grid className={classes.flexEnd} item xs={8}>
-              <Typography>
-                <FormattedMessage id="alerts.frequency" />:{' '}
-                <strong className={classes.alertFrequency}>
-                  {alert.frequency}
-                </strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider className={classes.divider} />
-            </Grid>
-          </Grid>
-        ))}
+              />{' '}
+              <strong>{session.me.email}</strong>{' '}
+            </Typography>
 
-        {!combinedItems?.length && (
-          <Typography align="center">
-            <FormattedMessage id="alerts.none_found" />
-          </Typography>
-        )}
-      </div>
-    </Fade>
-  );
+            <Link to={ALERT_CREATE}>
+              <Button variant="outlined" color="primary">
+                <FormattedMessage id="alerts.create_button" />
+              </Button>
+            </Link>
+          </div>
+          <Divider className={classes.divider} />
+
+          {alerts.map((alert) => (
+            <Grid container key={alert.id} spacing={2}>
+              <Grid item xs={4}>
+                <Typography variant="h6" gutterBottom>
+                  {alert.alertType === 'venue' && (
+                    <HomeWorkOutlined className={classes.listIcon} />
+                  )}
+                  {alert.alertType === 'job' && (
+                    <WorkOutlineOutlined
+                      className={classes.listIcon}
+                    />
+                  )}
+                  {alert.name}
+                </Typography>
+              </Grid>
+              <Grid item className={classes.alignRight} xs={8}>
+                <Link
+                  to={{
+                    pathname: `/alert/view/${alert.slug}`,
+                    state: { search: true },
+                  }}
+                >
+                  <Button
+                    className={classes.button}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    <FormattedMessage id="alerts.show_results_button" />
+                  </Button>
+                </Link>
+                <Link to={`/alert/create/${alert.slug}`}>
+                  <Button
+                    className={classes.button}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    <FormattedMessage id="alerts.edit_button" />
+                  </Button>
+                </Link>
+                <Button
+                  onClick={() =>
+                    toggleActivate({ variables: { id: alert.id } })
+                  }
+                  className={classes.button}
+                  variant="outlined"
+                  color="primary"
+                >
+                  {alert.active ? (
+                    <FormattedMessage id="alerts.deactivate_button" />
+                  ) : (
+                    <FormattedMessage id="alerts.activate_button" />
+                  )}
+                </Button>
+                <Button
+                  onClick={() => confirmDelete(alert.id)}
+                  className={classes.button}
+                  variant="outlined"
+                  color="secondary"
+                >
+                  <FormattedMessage id="alerts.delete_button" />
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography>
+                  <FormattedMessage id="alerts.status" />:{' '}
+                  <strong>
+                    {alert.active ? (
+                      <FormattedMessage id="alerts.active" />
+                    ) : (
+                      <FormattedMessage id="alerts.inactive" />
+                    )}
+                  </strong>
+                </Typography>
+              </Grid>
+              <Grid className={classes.flexEnd} item xs={8}>
+                <Typography>
+                  <FormattedMessage id="alerts.frequency" />:{' '}
+                  <strong className={classes.alertFrequency}>
+                    {alert.frequency}
+                  </strong>
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Divider className={classes.divider} />
+              </Grid>
+            </Grid>
+          ))}
+
+          {!alerts.length && (
+            <Typography align="center">
+              <FormattedMessage id="alerts.none_found" />
+            </Typography>
+          )}
+        </div>
+      </Fade>
+    );
+  }
+  return '';
 };
 
 export default Alerts;
