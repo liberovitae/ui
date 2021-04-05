@@ -9,14 +9,6 @@ export const GET_ME = gql`
       secondaryEmail
       role
       verified
-      venues {
-        id
-        title
-      }
-      company {
-        id
-        title
-      }
     }
   }
 `;
