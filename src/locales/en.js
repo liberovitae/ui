@@ -12,7 +12,7 @@ export default {
     'Your go-to source for events - free & simple.',
 
   // search
-  'search.not_found': 'No items found matching your search',
+  'search.not_found': 'No posts found matching your search',
 
   // jobTypes
   'jobTypes.full': 'Full Time',
@@ -118,14 +118,9 @@ export default {
 
   //Menu
   'account.menu.dashboard': 'Dashboard',
-  'account.menu.jobs': 'Jobs',
-  'account.menu.venues': 'Venues',
+  'account.menu.posts': 'Posts',
   'account.menu.alerts': 'Alerts',
-  'account.menu.events': 'Events',
-  'account.menu.job_ads': 'Job ads',
-  'account.menu.company': 'Company',
   'account.menu.saved': 'Saved',
-  'account.menu.saved_venues': 'Saved venues',
   'account.menu.settings': 'Settings',
   'account.menu.logout': 'Log out',
 
@@ -246,20 +241,20 @@ export default {
   'account.delete.confirm_text':
     'This action cannot be undone. Are you really sure?',
 
-  // Save item
-  'account.save_item.hero.title': 'Save {type}',
-  'account.save_item.hero.subtitle': 'Create a saved {type}',
-  'account.save_item.save_success_snackbar':
+  // Save post
+  'account.save_post.hero.title': 'Save {type}',
+  'account.save_post.hero.subtitle': 'Create a saved {type}',
+  'account.save_post.save_success_snackbar':
     'Successfully saved listing',
-  'account.save_item.save_failure_snackbar': 'Failed to save {type}',
-  'account.save_item.save_duplicate_snackbar':
-    'The item you selected has already been added to your saved listings',
-  'account.save_item.save_text': 'Save this {type} for later',
-  'account.save_item.save_reminder_label': 'Send email reminder',
-  'account.save_item.save_reminder_helperText':
+  'account.save_post.save_failure_snackbar': 'Failed to save {type}',
+  'account.save_post.save_duplicate_snackbar':
+    'The post you selected has already been added to your saved listings',
+  'account.save_post.save_text': 'Save this {type} for later',
+  'account.save_post.save_reminder_label': 'Send email reminder',
+  'account.save_post.save_reminder_helperText':
     'Select this option if you like to get a reminder email for this {type} 7 days from now',
 
-  // Saved items
+  // Saved posts
   'account.saved.hero.title': 'Saved',
   'account.saved.hero.subtitle': 'Manage your saved jobs & venues',
   'account.saved.description':
@@ -272,7 +267,7 @@ export default {
     'Failed to remove saved listing',
   'account.saved.confirm_delete':
     'Are you sure you want to delete this saved listing?',
-  'account.saved.view_item_button': 'View',
+  'account.saved.view_post_button': 'View',
   'account.saved.none_found': 'No saved listings found',
 
   // Alerts
@@ -299,7 +294,7 @@ export default {
     'Successfully activated alert',
   'alerts.confirm_delete':
     'Are you sure you wanted to delete this alert?',
-  'alerts.none_found': 'No alert found',
+  'alerts.none_found': 'No alerts found',
 
   // Alert form
   'alert_form.hero.subtitle_create': 'Create your alert',
@@ -346,9 +341,9 @@ export default {
     'To apply for this job please send your application via email to {url}',
 
   // Items list
-  'items_list.no_jobs':
-    'There are no items yet ... be the first to post one!',
-  'items_list.load_more_button': 'Load more',
+  'posts_list.no_jobs':
+    'There are no posts yet ... be the first to post one!',
+  'posts_list.load_more_button': 'Load more',
 
   // Company
   'company_form.hero.title': 'Company',
@@ -385,8 +380,8 @@ company per user account can be created and edited.`,
   'post_form.location.input_placeholder': `e.g. "London, GB" or "San Francisco, CA, US"`,
   'post_form.location.input_helperText':
     'If this is a remote {type} just enter "Remote" or e.g. "Remote, GB" if country/timezone restrictions apply.',
-  'post_form.description.input_label': 'Description',
-  'post_form.description.input_helperText':
+  'post_form.text.input_label': 'Description',
+  'post_form.text.input_helperText':
     'Tell us more about your {type}.',
   'post_form.tags.input_label': '{type} tags',
   'post_form.tags.input_helperText':
@@ -404,7 +399,7 @@ company per user account can be created and edited.`,
     'Successfully published {type}.',
   'preview.hero.title': 'Post a new {type}',
   'preview.hero.subtitle': 'Preview your {type}',
-  'preview.edit_item_button': 'Edit {type}',
+  'preview.edit_post_button': 'Edit {type}',
   'preview.edit_venue_button': 'Edit {type}',
   'preview.save_draft_button': 'Save draft',
   'preview.publish_button': 'Publish',
@@ -415,18 +410,17 @@ company per user account can be created and edited.`,
   'preview.confirm_text': 'Looks good?',
   'preview.change_button': `No, let's change it`,
 
-  // Account Venues
-  'account.venues.hero.title': 'Venues',
-  'account.venues.hero.subtitle': 'Manage your venues & events',
-  'account.venues.description':
-    'Your published venues & events are shown below.',
-  'account.venues.create_new_button': 'New venue',
-  'account.venues.none_found': 'No venues found',
-  'account.venues.remove_success_snackbar':
-    'Successfully removed venue',
-  'account.venues.remove_failure_snackbar': 'Failed to remove venue',
-  'account.venues.confirm_delete':
-    'Are you sure you want to delete this venue?',
+  // Account Posts
+  'account.posts.hero.title': 'Posts',
+  'account.posts.hero.subtitle': 'Manage your posts & events',
+  'account.posts.description': 'Your posts are shown below.',
+  'account.posts.create_new_button': 'Create new »',
+  'account.posts.none_found': 'No posts found',
+  'account.posts.remove_success_snackbar':
+    'Successfully removed post',
+  'account.posts.remove_failure_snackbar': 'Failed to remove post',
+  'account.posts.confirm_delete':
+    'Are you sure you want to delete this post?',
 
   // Account events
   'account.events.create_new_button': 'New event',
@@ -437,11 +431,11 @@ company per user account can be created and edited.`,
     'Are you sure you want to delete this event?',
 
   // Item detail
-  'item_detail.contact_button': 'Contact {type}',
-  'item_detail.visit_button': 'Visit website',
-  'item_detail.save_later_button': 'Add to saved {type}s',
-  'item_detail.share_buttons.text': 'Share',
-  'item_detail.contact_button_tooltip':
+  'post_detail.contact_button': 'Contact {type}',
+  'post_detail.visit_button': 'Visit website',
+  'post_detail.save_later_button': 'Add to saved {type}s',
+  'post_detail.share_buttons.text': 'Share',
+  'post_detail.contact_button_tooltip':
     'To contact this {type} please send your an email to {url}',
 
   // Filter
