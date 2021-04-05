@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import { GET_NEAREST_CITY } from './queries';
+import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
 import {
   routeConfig,
   backdrop,
@@ -33,7 +34,7 @@ import {
   DatePicker,
 } from '@material-ui/pickers';
 import DateDayJSUtils from '@date-io/dayjs';
-import { ALERT_POST } from '../../constants/routes';
+import { ALERT_CREATE } from '../../constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   buttons: {
-    marginTop: '0.25rem',
+    // marginTop: '0.25rem',
     display: 'flex',
     justifyContent: 'flex-end',
     padding: '0 !important',
@@ -67,14 +68,12 @@ const Filter = React.memo(
     const reactiveSearch = useReactiveVar(
       reactiveRouteConfig.searchVar,
     );
-    const { searchVar } = reactiveRouteConfig;
+    const { searchVar, type } = reactiveRouteConfig;
 
     // const [nearMe, setNearMe] = useState(false);
     const [searchFilter, setSearchFilter] = useState({
       ...reactiveSearch,
     });
-
-    const { INITIAL_SEARCH_STATE, type } = reactiveRouteConfig;
 
     useEffect(() => {
       quickSearch({ show: false });
@@ -144,7 +143,7 @@ const Filter = React.memo(
               container
               spacing={1}
               className={classes.container}
-              justify="space-around"
+              justify="space-between"
               alignItems="center"
             >
               <Grid item className={classes.input} xs={6}>
@@ -201,14 +200,16 @@ const Filter = React.memo(
 
               {type === 'event' && (
                 <MuiPickersUtilsProvider utils={DateDayJSUtils}>
-                  <Grid style={{ textAlign: 'center' }} item xs={5}>
+                  <Grid item xs={5}>
                     <DatePicker
                       animateYearScrolling
                       ampm={false}
                       autoOk
                       required
+                      fullWidth
                       name="dateStart"
                       variant="inline"
+                      inputVariant="outlined"
                       disableToolbar
                       label="Start date"
                       InputProps={{
@@ -218,21 +219,35 @@ const Filter = React.memo(
                       onChange={(e) => handleDates(e, 'start')}
                     />
                   </Grid>
-                  <DoubleArrowOutlined
-                    fontSize="small"
-                    color="primary"
+                  <Grid
+                    item
+                    xs={1}
                     style={{
-                      opacity: 0.7,
-                      marginTop: '1rem',
+                      display: 'flex',
+                      justifyContent: 'center',
                     }}
-                  />
-                  <Grid style={{ textAlign: 'center' }} item xs={5}>
+                  >
+                    <DoubleArrowOutlined
+                      fontSize="small"
+                      color="primary"
+                    />
+                  </Grid>
+                  <Grid
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                    }}
+                    item
+                    xs={5}
+                  >
                     <DatePicker
                       animateYearScrolling
                       ampm={false}
                       autoOk
+                      fullWidth
                       required
                       name="dateEnd"
+                      inputVariant="outlined"
                       variant="inline"
                       disableToolbar
                       label="End date"
@@ -252,7 +267,7 @@ const Filter = React.memo(
                 >
                   <Link
                     to={{
-                      pathname: ALERT_POST,
+                      pathname: ALERT_CREATE,
                       query: searchFilter,
                     }}
                   >
