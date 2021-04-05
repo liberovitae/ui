@@ -3,12 +3,12 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Typography, Grid, Box, Button } from '@material-ui/core';
 import {
-  JOB_POST,
+  // JOB_POST,
   DONATE,
   LANDING,
   TERMS,
-  MY_JOBS,
-  VENUE_POST,
+  // MY_JOBS,
+  // VENUE_POST,
 } from '../../../constants/routes';
 import { hero } from '../../../constants/globalVars';
 
@@ -30,8 +30,8 @@ const FAQ = ({}) => {
           <Typography paragraph>
             We provide featured listings for those kind enough to
             support us through donations. If you want your post listed
-            as featured, <Link to={JOB_POST}>create a job ad</Link> or{' '}
-            <Link to={VENUE_POST}>a venue</Link>, then make a{' '}
+            as featured, <Link to={'#'}>create a job ad</Link> or{' '}
+            <Link to={'#'}>a venue</Link>, then make a{' '}
             <Link to={DONATE}>donation</Link> and send an email to{' '}
             <a href="mailto:mail@liberovitae.com">
               mail@liberovitae.com
