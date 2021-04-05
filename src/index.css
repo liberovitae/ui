@@ -193,3 +193,23 @@ a {
 .ck-editor__main {
   margin-bottom: 0;
 }
+
+.cd-0 {
+  border-left: 3px solid #2b90d9;
+}
+
+.cd-1 {
+  border-left: 3px solid #5f2bd9;
+}
+
+.cd-2 {
+  border-left: 3px solid #df7b1d;
+}
+
+.cd-3 {
+  border-left: 3px solid #19aa20;
+}
+
+.cd-4 {
+  border-left: 3px solid #d92b2b;
+}
