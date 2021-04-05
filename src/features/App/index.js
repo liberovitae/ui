@@ -21,86 +21,72 @@ import themePicker from './Themes/ThemePicker';
 import Quicksearch from '../Navigation/Quicksearch';
 import { SnackbarProvider } from 'notistack';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-const NotFoundPage = React.lazy(() => import('../Shared/404'));
 
-const App = React.memo(
-  ({ session, refetch }) => {
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('xs'));
-    const routeList = routes({ refetch, session, history, location });
+const App = ({ session, refetch }) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+  const routeList = routes({ refetch, session, history, location });
 
-    return (
-      <AnalyticsProvider instance={analytics}>
-        <MuiThemeProvider theme={themePicker()}>
-          <SnackbarProvider
-            anchorOrigin={{
-              vertical: matches ? 'top' : 'bottom',
-              horizontal: 'left',
-            }}
-            maxSnack={3}
-          >
-            <CssBaseline />
+  return (
+    <AnalyticsProvider instance={analytics}>
+      <MuiThemeProvider theme={themePicker()}>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: matches ? 'top' : 'bottom',
+            horizontal: 'left',
+          }}
+          maxSnack={3}
+        >
+          <CssBaseline />
 
-            <Hero />
-            <Quicksearch />
-            <Backdrop />
+          <Hero />
+          <Quicksearch />
+          <Backdrop />
 
-            <Router history={history}>
-              <LastLocationProvider>
-                <Navigation
-                  history={history}
-                  refetch={refetch}
-                  session={session}
-                />
-                <Sidebar navLinks={NavLinks(session)} />
-                <BoxTemplate>
-                  <Switch location={location}>
-                    {routeList.map((route, index) => {
-                      const {
-                        Component,
-                        props,
-                        path,
-                        exact,
-                        suspense,
-                      } = route;
-                      if (suspense) {
-                        return (
-                          <Route
-                            key={index}
-                            exact={exact}
-                            path={path}
-                          >
-                            <Suspense fallback={<Loading />}>
-                              <Component {...props} />
-                            </Suspense>
-                          </Route>
-                        );
-                      }
+          <Router history={history}>
+            <LastLocationProvider>
+              <Navigation
+                history={history}
+                refetch={refetch}
+                session={session}
+              />
+              <Sidebar navLinks={NavLinks(session)} />
+              <BoxTemplate>
+                <Switch location={location}>
+                  {routeList.map((route, index) => {
+                    const {
+                      Component,
+                      props,
+                      path,
+                      exact,
+                      suspense,
+                    } = route;
+                    if (suspense) {
                       return (
                         <Route key={index} exact={exact} path={path}>
-                          <Component {...props} />
+                          <Suspense fallback={<Loading />}>
+                            <Component {...props} />
+                          </Suspense>
                         </Route>
                       );
-                    })}
+                    }
+                    return (
+                      <Route key={index} exact={exact} path={path}>
+                        <Component {...props} />
+                      </Route>
+                    );
+                  })}
+                </Switch>
+                <FAB history={history} />
+              </BoxTemplate>
+            </LastLocationProvider>
 
-                    <Route>
-                      <Suspense fallback={<Loading />}>
-                        <NotFoundPage />
-                      </Suspense>
-                    </Route>
-                  </Switch>
-                  <FAB history={history} />
-                </BoxTemplate>
-              </LastLocationProvider>
-
-              <Footer />
-            </Router>
-          </SnackbarProvider>
-        </MuiThemeProvider>
-      </AnalyticsProvider>
-    );
-  },
-  (prevProps, nextProps) => {},
-);
+            <Footer />
+          </Router>
+        </SnackbarProvider>
+      </MuiThemeProvider>
+    </AnalyticsProvider>
+  );
+};
 
 export default withSession(App);

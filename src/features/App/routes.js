@@ -2,23 +2,19 @@ import React from 'react';
 import LandingPage from '../Landing';
 import {
   LANDING,
-  JOBS,
-  VENUES,
+  POSTS,
   REGISTER,
   LOGIN,
   ACCOUNT,
-  MY_JOBS,
-  MY_VENUES,
-  COMPANY_EDIT,
-  COMPANY_POST,
-  ITEM_SAVE,
+  MY_POSTS,
+  POST_SAVE,
   SAVED,
   SETTINGS,
   ALERTS,
-  ALERT_POST,
-  ITEM_PREVIEW,
-  ITEM_POST,
-  ITEM_PAGE,
+  ALERT_CREATE,
+  POST_PREVIEW,
+  POST_CREATE,
+  POST_PAGE,
   ALERT_VIEW,
   ACCOUNT_DELETE,
   ACCOUNT_EDIT,
@@ -29,15 +25,12 @@ import {
   ADMIN,
   ADMIN_BLOGS,
   ADMIN_USERS,
-  BLOG_POST,
   ABOUT,
   DONATE,
   TERMS,
   PRIVACY,
   NEWSLETTER,
   FAQ,
-  BLOG_PAGE,
-  EVENTS,
 } from '../../constants/routes';
 
 const RegisterPage = React.lazy(() => import('../Account/Register'));
@@ -45,10 +38,7 @@ const LoginPage = React.lazy(() => import('../Account/Login'));
 const AccountPage = React.lazy(() => import('../Account'));
 const AboutPage = React.lazy(() => import('../Pages/About'));
 const DonatePage = React.lazy(() => import('../Pages/Donate'));
-const CompanyForm = React.lazy(() =>
-  import('../Company/CompanyForm'),
-);
-const ItemForm = React.lazy(() => import('../Item/ItemForm'));
+
 const PasswordReset = React.lazy(() =>
   import('../Account/PasswordReset'),
 );
@@ -63,46 +53,34 @@ const NewsletterPage = React.lazy(() =>
   import('../Pages/Newsletter'),
 );
 const FAQPage = React.lazy(() => import('../Pages/FAQ'));
-const BlogPage = React.lazy(() => import('../Blog/BlogPage'));
-const ItemPreview = React.lazy(() => import('../Item/ItemPreview'));
-const ItemPage = React.lazy(() => import('../Item/ItemPage'));
+const PostPreview = React.lazy(() => import('../Post/PostPreview'));
+const PostPage = React.lazy(() => import('../Post/PostPage'));
+const PostForm = React.lazy(() => import('../Post/PostForm'));
+const NotFoundPage = React.lazy(() => import('../Shared/404'));
 
 export default ({ refetch, session, history, location }) => [
   {
-    path: [LANDING, ALERT_VIEW, JOBS, VENUES, EVENTS],
-    exact: true,
-    props: {
-      refetch: refetch,
-      session: session,
-      history: history,
-    },
-    suspense: false,
-    Component: LandingPage,
-  },
-  {
     path: REGISTER,
     exact: true,
-    props: { refetch: refetch },
+    props: { refetch },
     suspense: true,
     Component: RegisterPage,
   },
   {
     path: LOGIN,
     exact: true,
-    props: { refetch: refetch, session: session },
+    props: { refetch, session },
     suspense: true,
     Component: LoginPage,
   },
   {
     path: [
       ACCOUNT,
-      MY_JOBS,
-      MY_VENUES,
-      COMPANY_EDIT,
+      MY_POSTS,
       SAVED,
       SETTINGS,
-      ITEM_SAVE,
-      ALERT_POST,
+      POST_SAVE,
+      ALERT_CREATE,
       ALERTS,
       ACCOUNT_DELETE,
       ACCOUNT_EDIT,
@@ -110,10 +88,10 @@ export default ({ refetch, session, history, location }) => [
     ],
     exact: true,
     props: {
-      refetch: refetch,
-      session: session,
-      location: location,
-      history: history,
+      refetch,
+      session,
+      location,
+      history,
     },
     suspense: true,
     Component: AccountPage,
@@ -122,7 +100,7 @@ export default ({ refetch, session, history, location }) => [
     path: PASSWORD_RESET,
     exact: true,
     props: {
-      session: session,
+      session,
     },
     suspense: true,
     Component: PasswordReset,
@@ -131,7 +109,7 @@ export default ({ refetch, session, history, location }) => [
     path: SET_PASSWORD,
     exact: true,
     props: {
-      session: session,
+      session,
     },
     suspense: true,
     Component: NewPassword,
@@ -140,75 +118,66 @@ export default ({ refetch, session, history, location }) => [
     path: ACCOUNT_VERIFY,
     exact: false,
     props: {
-      session: session,
-      refetch: refetch,
+      session,
+      refetch,
     },
     suspense: true,
     Component: AccountVerify,
   },
   {
-    path: [ADMIN, BLOG_POST, ADMIN_BLOGS, ADMIN_USERS],
+    path: [ADMIN, ADMIN_BLOGS, ADMIN_USERS],
     exact: true,
     props: {
-      session: session,
-      history: history,
+      session,
+      history,
     },
     suspense: true,
     Component: AdminPage,
   },
   {
-    path: BLOG_PAGE,
+    path: [LANDING, ALERT_VIEW, POSTS],
     exact: true,
     props: {
-      session: session,
+      refetch,
+      session,
+      history,
     },
-    suspense: true,
-    Component: BlogPage,
+    suspense: false,
+    Component: LandingPage,
   },
   {
-    path: COMPANY_POST,
+    path: POST_PREVIEW,
     exact: true,
     props: {
-      session: session,
-      history: history,
-      refetch: refetch,
+      session,
+      history,
+      refetch,
     },
     suspense: true,
-    Component: CompanyForm,
-  },
-  {
-    path: ITEM_PREVIEW,
-    exact: true,
-    props: {
-      session: session,
-      history: history,
-      refetch: refetch,
-    },
-    suspense: true,
-    Component: ItemPreview,
+    Component: PostPreview,
   },
 
   {
-    path: `${ITEM_POST}/:slug?`,
+    path: `${POST_CREATE}/:slug?`,
     exact: true,
     props: {
-      session: session,
-      history: history,
-      refetch: refetch,
+      session,
+      history,
+      refetch,
     },
     suspense: true,
-    Component: ItemForm,
+    Component: PostForm,
   },
   {
-    path: ITEM_PAGE,
+    path: POST_PAGE,
     exact: true,
     props: {
-      session: session,
-      history: history,
-      refetch: refetch,
+      session,
+      history,
+      refetch,
     },
     suspense: true,
-    Component: ItemPage,
+    Component: PostPage,
   },
 
   {
@@ -252,5 +221,10 @@ export default ({ refetch, session, history, location }) => [
     props: {},
     suspense: true,
     Component: FAQPage,
+  },
+  {
+    props: {},
+    suspense: true,
+    Component: NotFoundPage,
   },
 ];
