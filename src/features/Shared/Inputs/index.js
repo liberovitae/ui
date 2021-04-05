@@ -9,7 +9,7 @@ import Location from './Location';
 import Radio from './Radio';
 import TextValidator from './TextValidator';
 import Upload from './Upload';
-import CalendarButton from './CalendarButton';
+import Calendar from './Calendar';
 
 export {
   AutoComplete,
@@ -23,5 +23,5 @@ export {
   Radio,
   Location,
   Upload,
-  CalendarButton,
+  Calendar,
 };

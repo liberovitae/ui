@@ -30,15 +30,15 @@ const RadioInput = ({ name, value, onChange }) => {
         value={value}
       >
         <FormControlLabel
-          value="venue"
-          control={<Radio color="primary" />}
-          label="Venue"
-          labelPlacement="end"
-        />
-        <FormControlLabel
           value="event"
           control={<Radio color="primary" />}
           label="Event"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value="venue"
+          control={<Radio color="primary" />}
+          label="Venue"
           labelPlacement="end"
         />
         <FormControlLabel

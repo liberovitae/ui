@@ -4,8 +4,8 @@ import { Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   LANDING,
-  JOB_POST,
-  MY_JOBS,
+  // JOB_POST,
+  // MY_JOBS,
   REGISTER,
   LOGIN,
 } from '../../../constants/routes';
@@ -65,12 +65,12 @@ const NotFound = React.memo(({}) => {
         <Typography>
           <Link to={LANDING}>Find a job</Link>
         </Typography>
-        <Typography>
+        {/* <Typography>
           <Link to={JOB_POST}>Post a job</Link>
         </Typography>
         <Typography>
           <Link to={MY_JOBS}> Manage your saved jobs</Link>
-        </Typography>
+        </Typography> */}
         <Typography>
           <Link to={REGISTER}>Sign up</Link> or{' '}
           <Link to={LOGIN}>log in</Link>

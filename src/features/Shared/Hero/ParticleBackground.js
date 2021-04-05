@@ -6,23 +6,24 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.down('xs')]: {
-      marginTop: 0,
+const useStyles = (props) =>
+  makeStyles((theme) => ({
+    root: {
+      [theme.breakpoints.down('xs')]: {
+        marginTop: 0,
+      },
+      marginTop: !props ? '5rem' : '3rem',
+      zIndex: -2,
+      top: 0,
+      left: 0,
+      position: 'absolute',
+      minHeight: '175px',
+      width: '100%',
     },
-    marginTop: '4rem',
-    zIndex: -2,
-    top: 0,
-    left: 0,
-    position: 'absolute',
-    minHeight: '200px',
-    width: '100%',
-  },
-}));
+  }));
 
-const ParticleBackground = ({ theme, routeConfig, heroRoot }) => {
-  const classes = useStyles();
+const ParticleBackground = ({ theme, isEmptySearch, heroRoot }) => {
+  const classes = useStyles(isEmptySearch)();
   return (
     <Particles
       className={classes.root}

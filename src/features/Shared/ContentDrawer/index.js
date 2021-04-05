@@ -1,10 +1,9 @@
 import React from 'react';
 import { useReactiveVar } from '@apollo/client';
-import Drawer from '@material-ui/core/Drawer';
+import { Box, Drawer } from '@material-ui/core';
 import { contentDrawer } from '../../../constants/globalVars';
 import BoxTemplate from '../Box';
 import { makeStyles } from '@material-ui/core/styles';
-
 const useStyles = makeStyles((theme) => ({
   drawer: {
     height: '100%',
@@ -39,7 +38,7 @@ const ContentDrawer = ({ children }) => {
       }}
     >
       <BoxTemplate>
-        <div className={classes.container}>{children}</div>
+        <Box className={classes.container}>{children}</Box>
       </BoxTemplate>
     </Drawer>
   );

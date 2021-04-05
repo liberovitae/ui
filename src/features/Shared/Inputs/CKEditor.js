@@ -124,19 +124,19 @@ const CKEditorInput = ({
           //
           themeSelect();
         }}
-        onChange={(event, editor) => {
+        onChange={(e, editor) => {
           const data = editor.getData();
-          event.target = {
+          e.target = {
             name: name,
             value: data,
           };
-          onChange(event);
+          onChange(e);
           //
         }}
-        onBlur={(event, editor) => {
+        onBlur={(e, editor) => {
           //
         }}
-        onFocus={(event, editor) => {
+        onFocus={(e, editor) => {
           //
         }}
       />

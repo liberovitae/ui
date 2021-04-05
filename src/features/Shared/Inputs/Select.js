@@ -35,12 +35,17 @@ const SelectInput = ({
 
   const [localValue, setLocalValue] = useState(false);
 
+  console.log(data);
+
   useEffect(() => {
+    console.log(name, value);
     // Work around loading value as default in material-ui select
     if (value) {
       onChange({ target: { name, value } });
       setLocalValue(value);
     }
+
+    console.log(localValue);
   }, [value, name]);
 
   return (
@@ -58,18 +63,16 @@ const SelectInput = ({
         value={localValue}
         name={name}
         onChange={(e) => {
+          console.log(e.target.value);
           onChange(e);
-          setLocalValue(e.target.value);
+          setLocalValue(e.target.value.id);
         }}
         required={required}
       >
         {data &&
           data.map((item) => (
-            <MenuItem
-              key={item.value || item.id}
-              value={item.value || item.id}
-            >
-              {item.label || item.title}
+            <MenuItem key={item.id} value={item.id}>
+              {item.title}
             </MenuItem>
           ))}
       </Select>

@@ -12,62 +12,63 @@ import { routeConfig, hero } from '../../../constants/globalVars';
 import { useReactiveVar } from '@apollo/client';
 import ParticleBackground from './ParticleBackground';
 import { objCompare } from '../../../helpers';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.down('xs')]: {
-      marginTop: 0,
+import INITIAL_SEARCH_STATE from '../../../constants/initialSearch';
+const useStyles = (props) =>
+  makeStyles((theme) => ({
+    root: {
+      [theme.breakpoints.down('xs')]: {
+        marginTop: 0,
+      },
+      marginTop: !props ? '5rem' : '3rem',
+      textAlign: 'center',
+      paddingTop: '2rem',
+      paddingLeft: '1rem',
+      paddingRight: '1rem',
+      minHeight: '175px',
+      display: 'flex',
+      justifyContent: 'center',
     },
-    marginTop: !objCompare(
-      routeConfig().searchVar(),
-      routeConfig().INITIAL_SEARCH_STATE,
-    )
-      ? '6rem'
-      : '4rem',
-    textAlign: 'center',
-    paddingTop: '2rem',
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    marginBottom: '2rem',
-    minHeight: '175px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  title: {
-    backgroundColor:
-      theme.palette.type === 'dark'
-        ? lighten(theme.palette.background.default, 0.06)
-        : darken(theme.palette.background.default, 0.01),
-  },
-  subtitle: {
-    backgroundColor:
-      theme.palette.type === 'dark'
-        ? lighten(theme.palette.background.default, 0.06)
-        : darken(theme.palette.background.default, 0.01),
-    fontSize: '1.3rem',
-    marginTop: '2rem',
-  },
-  flag: {
-    marginLeft: '0.5rem',
-    width: '2rem',
-    height: '2rem',
-    verticalAlign: 'bottom',
-  },
-  exploreIcon: {
-    verticalAlign: 'bottom',
-    height: '2rem',
-    width: '2rem',
-    marginLeft: '0.3rem',
-  },
-  container: {
-    zIndex: 10,
-  },
-}));
+    title: {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? lighten(theme.palette.background.default, 0.06)
+          : darken(theme.palette.background.default, 0.01),
+    },
+    subtitle: {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? lighten(theme.palette.background.default, 0.06)
+          : darken(theme.palette.background.default, 0.01),
+      fontSize: '1.3rem',
+      marginTop: '2rem',
+    },
+    flag: {
+      marginLeft: '0.5rem',
+      width: '2rem',
+      height: '2rem',
+      verticalAlign: 'bottom',
+    },
+    exploreIcon: {
+      verticalAlign: 'bottom',
+      height: '2rem',
+      width: '2rem',
+      marginLeft: '0.3rem',
+    },
+    container: {
+      zIndex: 10,
+    },
+  }));
 
 const Hero = React.memo(
   ({ title, subtitle, country }) => {
     const reactiveHero = useReactiveVar(hero);
-    const theme = useTheme();
-    const classes = useStyles();
+    const reactiveRouteConfig = useReactiveVar(routeConfig);
+    const theme = useTheme(reactiveRouteConfig);
+    const isEmptySearch = objCompare(
+      reactiveRouteConfig.searchVar(),
+      INITIAL_SEARCH_STATE,
+    );
+    const classes = useStyles(isEmptySearch)();
     const heroRoot = document.getElementById('heroRoot');
 
     if (title || reactiveHero?.title) {
@@ -78,6 +79,7 @@ const Hero = React.memo(
               routeConfig={routeConfig}
               theme={theme}
               heroRoot={heroRoot}
+              isEmptySearch={isEmptySearch}
             />
             <div className={classes.container}>
               <div className={classes.container}>
