@@ -9,6 +9,11 @@ export const GET_ME = gql`
       secondaryEmail
       role
       verified
+      posts {
+        id
+        title
+        type
+      }
     }
   }
 `;
