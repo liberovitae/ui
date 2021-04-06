@@ -65,7 +65,7 @@ const SelectInput = ({
         onChange={(e) => {
           console.log(e.target.value);
           onChange(e);
-          setLocalValue(e.target.value.id);
+          setLocalValue(e.target.value);
         }}
         required={required}
       >
