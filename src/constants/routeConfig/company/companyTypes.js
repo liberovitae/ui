@@ -4,12 +4,16 @@ const companyTypes = () => {
   const intl = useIntl();
 
   return [
-    intl.formatMessage({ id: 'venueTypes.retail' }),
-    intl.formatMessage({ id: 'venueTypes.hospitality' }),
-    intl.formatMessage({ id: 'venueTypes.services' }),
-    intl.formatMessage({ id: 'venueTypes.arts' }),
-    intl.formatMessage({ id: 'venueTypes.health' }),
-    intl.formatMessage({ id: 'venueTypes.misc' }),
+    intl.formatMessage({ id: 'companyTypes.hospitality' }),
+    intl.formatMessage({ id: 'companyTypes.trades' }),
+    intl.formatMessage({ id: 'companyTypes.services' }),
+    intl.formatMessage({ id: 'companyTypes.arts' }),
+    intl.formatMessage({ id: 'companyTypes.health' }),
+    intl.formatMessage({ id: 'companyTypes.management' }),
+    intl.formatMessage({ id: 'companyTypes.manufacturing' }),
+    intl.formatMessage({ id: 'companyTypes.engineering' }),
+    intl.formatMessage({ id: 'companyTypes.finance' }),
+    intl.formatMessage({ id: 'companyTypes.misc' }),
   ];
 };
 
