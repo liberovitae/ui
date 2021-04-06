@@ -2,7 +2,7 @@ import React from 'react';
 import { routeConfig } from '../../../constants/globalVars';
 import { Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import * as ROUTE_CONFIGS from '../../../constants/routeConfig';
 const useStyles = makeStyles((theme) => ({
   chip: {
     fontWeight: '600',
@@ -12,39 +12,41 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     display: 'inline-grid',
     '&:hover': {
-      backgroundColor:
-        theme.palette.type === 'light'
+      backgroundColor: (props) =>
+        props.type
+          ? ROUTE_CONFIGS[props.type]?.theme.light().palette.primary
+              .main
+          : theme.palette.type === 'light'
           ? theme.palette.primary.light
           : theme.palette.primary.dark,
-      color: 'white',
     },
   },
 }));
 
-const TypeChip = ({ type, featured }) => {
-  const classes = useStyles();
+const TypeChip = ({ text, type, featured }) => {
+  const classes = useStyles({ type });
   const { searchVar } = routeConfig();
 
   return (
     <Chip
-      onClick={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
         !featured &&
           searchVar({
             ...searchVar(),
             types: [
               ...searchVar().types.filter(
-                (prevType) => prevType !== type,
+                (prevType) => prevType !== text,
               ),
-              type,
+              text,
             ],
           });
       }}
       className={classes.chip}
-      key={type}
+      key={Text}
       size="small"
-      label={featured ? 'featured' : type}
+      label={featured ? 'featured' : text}
       clickable={!featured}
     />
   );
