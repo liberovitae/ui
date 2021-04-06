@@ -1,33 +1,15 @@
 import React, { useState } from 'react';
 import CommentForm from '../CommentForm';
 import Collapse from '@material-ui/core/Collapse';
-// import CommentList from '../Comments/CommentsList';
 import CommentActions from './CommentActions';
 import CommentContent from './CommentContent';
 import { withSnackbar } from 'notistack';
 import LazyLoad from 'react-lazyload';
 import { ClickAwayListener } from '@material-ui/core';
 
-// this.state = {
-//     replyOpen: false,
-//     reportOpen: false,
-//     editing: '',
-//     anchorEl: null,
-//     modalOpen: false,
-//     // Use slug for tracking replies collapse
-//     [this.props.comment.slug]: true,
-//   };
-
 const CommentItem = ({
   comment,
-  //   isCorrectUser,
-  //   isLoggedIn,
-  //   currentUserId,
-  newComment,
-  //   handleVote,
-  //   handleDeleteModal,
-  handleCopy,
-  //   postAuthor,
+  handleDelete,
   session,
   collapse,
   setCollapse,
@@ -52,14 +34,6 @@ const CommentItem = ({
     e.nativeEvent.stopImmediatePropagation();
   };
 
-  // const  componentDidMount() {
-  //     if (this.props.comment.children && this.props.collapse) {
-  //       this.setState({
-  //         [this.props.comment.slug]: false,
-  //       });
-  //     }
-  //   }
-
   const handleMenuClick = (e) => {
     stopPropagation(e);
     setState({ anchorEl: e.currentTarget });
@@ -72,7 +46,6 @@ const CommentItem = ({
 
   const handleClose = (e) => {
     e && stopPropagation(e);
-
     setState({ anchorEl: null });
   };
 
@@ -111,32 +84,26 @@ const CommentItem = ({
       <div className={`cd-${comcol}`}>
         <div onClick={comment.children && toggleReplies}>
           <CommentContent
-            //   postAuthor={postAuthor.username}
-            //   currentUserId={currentUserId}
             comment={comment}
             // toggleReplies={this.toggleReplies}
             editing={state.editing}
             // handleEdit={handleEdit}
-            //   stopPropagation={stopPropagation}
           />
 
           <div>
             <CommentActions
-              // handleCopy={handleCopy}
               repliesExpanded={repliesExpanded}
               toggleReplies={toggleReplies}
               handleReply={handleReply}
-              //   handleReport={handleReport}
               handleMenuClick={handleMenuClick}
               handleClose={handleClose}
+              handleDelete={handleDelete}
               //   handleEdit={initializeEditComment}
               menuOpen={menuOpen}
               comment={comment}
               anchorEl={anchorEl}
               session={session}
               collapse={collapse}
-              //   handleVote={handleVote}
-              //   handleDeleteModal={handleDeleteModal}
             />
           </div>
         </div>

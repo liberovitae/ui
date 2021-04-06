@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_PAGINATED_COMMENTS } from '../queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_PAGINATED_COMMENTS, DELETE_COMMENT } from '../queries';
 import CommentForm from '../CommentForm';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import AuthBlock from './AuthBlock';
 import Comment from '@material-ui/icons/Comment';
 import CommentList from './CommentsList';
-// import { getNestedChildren } from "../../../util/comments";
-// import DeleteModal from '../../shared/delete_modal';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -17,6 +15,15 @@ const Comments = ({ postId, session }) => {
   const { data, loading, error } = useQuery(GET_PAGINATED_COMMENTS, {
     skip: !postId,
     variables: { postId: postId, limit: 20 },
+  });
+
+  const [deleteComment, { client }] = useMutation(DELETE_COMMENT, {
+    refetchQueries: [
+      {
+        query: GET_PAGINATED_COMMENTS,
+        variables: { postId, limit: 20 },
+      },
+    ],
   });
 
   useEffect(() => {
@@ -31,31 +38,25 @@ const Comments = ({ postId, session }) => {
     }
   }, [data]);
 
-  //   const handleDeleteModal = (e, comment) => {
-  //     this.setState((state) => ({
-  //       modalOpen: !state.modalOpen,
-  //       comment: comment,
-  //     }));
-  //     // this.handleClose();
-  //   };
-
-  //   const handleReport = (e) => {
-  //     this.handleClose(e);
-  //     this.stopPropagation(e);
-  //   };
-
   //   const handleVote = (e, comment, val) => {
   //     e.preventDefault();
   //     this.stopPropagation(e);
   //     this.props.voteComment(comment.post_id, comment._id, val);
   //   };
 
-  //   const handleDelete = (e, id) => {
-  //     e.preventDefault();
-  //     this.props.deleteComment(id);
-  //     // this.handleClose();
-  //     this.setState({ modalOpen: false });
-  //   };
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    const r = window.confirm(
+      'Are you sure you want to delete this comment?',
+    );
+    if (r === true) {
+      deleteComment({
+        variables: { id },
+      });
+    } else {
+      return false;
+    }
+  };
 
   //   const handleEdit = (postId, comment_id, text) => {
   //     this.props.editComment(
@@ -66,24 +67,8 @@ const Comments = ({ postId, session }) => {
   //     this.setState({ editing: '' });
   //   };
 
-  //   const handleCopy = () => {
-  //     this.props.enqueueSnackbar('Copied URL to clipboard');
-  //   };
-
-  // Sort comments into hiearchy with children
-  // let commentsSorted = getNestedChildren(comments);
-
-  // Limit the amount of comments shown on card drop down and collapse child comments on render
-  // let collapse;
-  // if (limit) {
-  //   commentsSorted = commentsSorted.slice(0, 5);
-  //   collapse = true;
-  // }
-
   if (data) {
     const { comments } = data;
-
-    console.log(session);
 
     return (
       <>
@@ -104,43 +89,11 @@ const Comments = ({ postId, session }) => {
 
         <CardContent style={{ padding: 0 }}>
           <CommentList
-            //   postAuthor={post.author.username}
-            //   handleVote={handleVote}
-            //   handleDeleteModal={handleDeleteModal}
-            //   handleReport={handleReport}
-            // collapse={collapse}
-            //   deleteComment={this.props.deleteComment}
-            //   voteComment={this.props.voteComment}
-            // currentUserId={session?.me?.id}
+            handleDelete={handleDelete}
             session={session}
             comments={comments.edges}
-            //   isLoggedIn={currentUser.isAuthenticated}
-            //   handleCopy={handleCopy}
           />
-          {/* {commentCount !== 0 && limit && (
-          <div align="center">
-            <Link to={post.permalink}>
-              <Button>
-                <Typography variant="caption" color="textSecondary">
-                  Showing {comments.length} of {commentCount} comments
-                </Typography>
-              </Button>
-            </Link>
-          </div>
-        )} */}
         </CardContent>
-        {/* <DeleteModal
-        content={comment}
-        open={this.state.modalOpen}
-        handleDelete={handleDelete}
-        handleDeleteModal={handleDeleteModal}
-      /> */}
-        {/* //<Report
-        //   post={comment}
-        //   postType="comment"
-        //   handleReport={this.handleReport}
-        //   open={this.state.reportOpen}
-        // /> */}
       </>
     );
   }

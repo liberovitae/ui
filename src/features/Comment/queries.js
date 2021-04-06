@@ -76,42 +76,42 @@ export const GET_PAGINATED_COMMENTS = gql`
   }
 `;
 
-export const GET_COMMENT = gql`
-  query($slug: String!) {
-    event(slug: $slug) {
-      id
-      title
-      parent {
-        id
-        title
-        image
-      }
-      image
-      location {
-        name
-        lat
-        lon
-      }
-      description
-      status
-      types
-      tags
-      slug
-      url
-      publishedAt
-      dates {
-        start
-        end
-      }
-      createdAt
-      stats {
-        views
-        visits
-        saves
-      }
-    }
-  }
-`;
+// export const GET_COMMENT = gql`
+//   query($slug: String!) {
+//     comment(slug: $slug) {
+//       id
+//       title
+//       parent {
+//         id
+//         title
+//         image
+//       }
+//       image
+//       location {
+//         name
+//         lat
+//         lon
+//       }
+//       description
+//       status
+//       types
+//       tags
+//       slug
+//       url
+//       publishedAt
+//       dates {
+//         start
+//         end
+//       }
+//       createdAt
+//       stats {
+//         views
+//         visits
+//         saves
+//       }
+//     }
+//   }
+// `;
 
 export const CREATE_COMMENT = gql`
   mutation($input: CommentInput!, $postId: ID!, $parentId: ID) {
@@ -122,6 +122,7 @@ export const CREATE_COMMENT = gql`
     ) {
       id
       author {
+        id
         username
       }
       text
@@ -129,9 +130,15 @@ export const CREATE_COMMENT = gql`
   }
 `;
 
-export const UPDATE_EVENT = gql`
-  mutation($id: ID!, $input: EventInput!) {
-    updateEvent(id: $id, input: $input) {
+export const DELETE_COMMENT = gql`
+  mutation($id: ID!) {
+    deleteComment(id: $id)
+  }
+`;
+
+export const UPDATE_COMMENT = gql`
+  mutation($id: ID!, $input: CommentInput!) {
+    updateComment(id: $id, input: $input) {
       id
       title
       image

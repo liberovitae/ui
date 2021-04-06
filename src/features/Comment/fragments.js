@@ -6,6 +6,7 @@ export const COMMENT_CORE = gql`
     text
     depth
     author {
+      id
       username
     }
     slug

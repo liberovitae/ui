@@ -47,15 +47,11 @@ const CommentActions = ({
   classes,
   comment,
   session,
-  //   handleVote,
   toggleReplies,
-  repliesExpanded,
   handleReply,
   handleMenuClick,
-  //   handleDeleteModal,
+  handleDelete,
   handleClose,
-  //   handleCopy,
-  //   handleReport,
   anchorEl,
   menuOpen,
   collapse,
@@ -64,16 +60,15 @@ const CommentActions = ({
   <div align="right">
     {comment?.children?.length > 0 && (
       <span>
-        {repliesExpanded && (
+        {collapse[comment.slug] && (
           <Fade in timeout={300}>
-            <span>
-              <Typography
-                style={{ display: 'unset' }}
-                variant="caption"
-              >
-                Hiding {comment?.children?.length} replies
-              </Typography>
-            </span>
+            <Typography
+              style={{ display: 'unset' }}
+              variant="caption"
+              component="span"
+            >
+              Hiding {comment?.children?.length} replies
+            </Typography>
           </Fade>
         )}
         <Tooltip title="Show/hide replies">
@@ -90,7 +85,7 @@ const CommentActions = ({
         </Tooltip>
       </span>
     )}
-    {session && !comment.deleted && (
+    {session?.me && !comment.deleted && (
       <Tooltip
         title={`Reply to ${comment.author.username}'s comment`}
       >
@@ -99,27 +94,30 @@ const CommentActions = ({
         </IconButton>
       </Tooltip>
     )}
-    <Tooltip title="More">
-      <IconButton
-        aria-label="More"
-        aria-owns={menuOpen ? 'long-menu' : null}
-        aria-haspopup="true"
-        onClick={handleMenuClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-    </Tooltip>
-    <CommentMenu
-      //   handleReport={handleReport}
-      //   handleCopy={handleCopy}
-      //   handleEdit={handleEdit}
-      anchorEl={anchorEl}
-      menuOpen={menuOpen}
-      handleClose={handleClose}
-      session={session}
-      //   handleDeleteModal={handleDeleteModal}
-      comment={comment}
-    />
+
+    {session?.me && (
+      <>
+        <Tooltip title="More">
+          <IconButton
+            aria-label="More"
+            aria-owns={menuOpen ? 'comment-menu' : null}
+            aria-haspopup="true"
+            onClick={handleMenuClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </Tooltip>
+        <CommentMenu
+          //   handleEdit={handleEdit}
+          anchorEl={anchorEl}
+          menuOpen={menuOpen}
+          handleClose={handleClose}
+          session={session}
+          handleDelete={handleDelete}
+          comment={comment}
+        />
+      </>
+    )}
   </div>
 );
 

@@ -3,7 +3,7 @@ import CommentItem from '../CommentItem';
 import Fade from '@material-ui/core/Fade';
 import { Collapse } from '@material-ui/core';
 
-const CommentList = ({ comments, session }) => {
+const CommentList = ({ comments, session, handleDelete }) => {
   const [collapse, setCollapse] = useState({});
 
   return comments.map((comment) => {
@@ -13,6 +13,7 @@ const CommentList = ({ comments, session }) => {
           <CommentItem
             collapse={collapse}
             setCollapse={setCollapse}
+            handleDelete={handleDelete}
             session={session}
             comment={comment}
           />
@@ -23,11 +24,11 @@ const CommentList = ({ comments, session }) => {
               unmountOnExit
               key={comment.slug}
               in={!collapse[comment.slug]}
-              // in
             >
               <CommentList
                 collapse={collapse}
                 setCollapse={setCollapse}
+                handleDelete={handleDelete}
                 session={session}
                 comments={comment.children}
               />
