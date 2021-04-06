@@ -166,7 +166,7 @@ const PostPage = ({ session }) => {
             <ShareButtons title={title} />
           </Grid>
           {routeConfig().hasComments && commentsEnabled && (
-            <Grid id="comments" item xs={12}>
+            <Grid key={post.id} id="comments" item xs={12}>
               <Comments
                 comments={comments}
                 postId={post.id}
