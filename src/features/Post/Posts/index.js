@@ -103,40 +103,38 @@ const Posts = React.memo(
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-only',
         onCompleted: ({ posts }) => {
-          if (posts) {
-            if (posts.edges.length) {
-              const inputElem = document.getElementById('search');
-              inputElem && inputElem.blur();
+          if (posts.edges.length) {
+            const inputElem = document.getElementById('search');
+            inputElem && inputElem.blur();
 
-              if (!objCompare(reactiveSearch, INITIAL_SEARCH_STATE)) {
-                siteHeader(
-                  <>
-                    <CountUp
-                      duration={1}
-                      start={0}
-                      end={posts.pageInfo.totalDocs}
-                    />{' '}
-                    results
-                  </>,
-                );
-                scrollTop();
-                backdrop(false);
-
-                return;
-              } else {
-                scrollTop();
-                siteHeader(reactiveRouteConfig.defaultSiteHeader);
-                backdrop(false);
-                return;
-              }
-            }
-
-            if (!posts.edges.length) {
-              siteHeader(<FormattedMessage id="search.not_found" />);
+            if (!objCompare(reactiveSearch, INITIAL_SEARCH_STATE)) {
+              siteHeader(
+                <>
+                  <CountUp
+                    duration={1}
+                    start={0}
+                    end={posts.pageInfo.totalDocs}
+                  />{' '}
+                  results
+                </>,
+              );
+              scrollTop();
               backdrop(false);
+
+              return;
+            } else {
+              scrollTop();
+              siteHeader(reactiveRouteConfig.defaultSiteHeader);
+              backdrop(false);
+              return;
             }
-            useLocalCache(false);
           }
+
+          if (!posts.edges.length) {
+            siteHeader(<FormattedMessage id="search.not_found" />);
+            backdrop(false);
+          }
+          useLocalCache(false);
         },
         onError: (err) => {
           if (err.message === 'Error: NOCOUNT')
