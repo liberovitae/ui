@@ -91,10 +91,19 @@ module.exports = override(
           }),
         ],
         minimize: true,
+
         splitChunks: {
-          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              enforce: true,
+              chunks: 'all',
+              reuseExistingChunk: true,
+            },
+          },
         },
-        runtimeChunk: true,
+        mergeDuplicateChunks: true,
       };
       // config.module = {
       //   rules: [
