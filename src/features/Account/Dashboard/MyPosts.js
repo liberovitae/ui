@@ -206,16 +206,13 @@ const MyPosts = React.memo(({ refetch }) => {
           </Typography>
           <Grid container align="center">
             <Grid item xs={6}>
-              {/* <Link to={POST_CREATE}> */}
               <Button
                 variant="outlined"
-                // onMouseEnter={handleClick('right')}
                 onClick={handleClick('right')}
                 color="primary"
               >
                 <FormattedMessage id="account.posts.create_new_button" />
               </Button>
-              {/* </Link> */}
               <Popper
                 open={open}
                 anchorEl={anchorEl}

@@ -60,7 +60,6 @@ const AccountMenu = () => {
           <FormattedMessage id="account.menu.alerts" />
           {data?.myCounts?.alerts > 0 && (
             <Badge
-              // showZero
               className={classes.badge}
               color="primary"
               badgeContent={data?.myCounts?.alerts}
@@ -69,14 +68,11 @@ const AccountMenu = () => {
         </Button>
       </Link>
 
-      {console.log(data)}
-
       <Link to={MY_POSTS}>
         <Button className={classes.menuButton}>
           <FormattedMessage id="account.menu.posts" />
           {data?.myCounts?.posts > 0 && (
             <Badge
-              // showZero
               className={classes.badge}
               color="primary"
               badgeContent={data?.myCounts?.posts || 0}
@@ -90,7 +86,6 @@ const AccountMenu = () => {
           <FormattedMessage id="account.menu.saved" />
           {data?.myCounts?.saved > 0 && (
             <Badge
-              // showZero
               className={classes.badge}
               color="primary"
               badgeContent={data?.myCounts?.saved || 0}
