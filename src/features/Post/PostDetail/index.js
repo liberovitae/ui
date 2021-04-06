@@ -124,7 +124,7 @@ const PostDetail = React.memo(
                 <TypeChip featured={featured} />
               </span>
             )}
-            <TypeChip type={types[0]} />
+            <TypeChip text={types[0]} />
           </Grid>
           <Grid
             item
