@@ -4,16 +4,23 @@ import INITIAL_SEARCH_STATE from '../constants/initialSearch';
 
 export const queryParams = queryString.parse(window.location.search);
 
+const initialDates = {
+  dates: {
+    start: null,
+    end: null,
+  },
+};
+
 export const queryParamsTransObject = (queryParams) => {
   const dates =
-    queryParams.sd && queryParams.ed
+    queryParams?.sd && queryParams?.ed
       ? {
           dates: {
             start: new Date(queryParams.sd),
             end: new Date(queryParams.ed),
           },
         }
-      : null;
+      : initialDates;
 
   return {
     ...INITIAL_SEARCH_STATE,
@@ -36,14 +43,14 @@ export const queryParamGenerate = () => {
   const queryParams = queryString.parse(window.location.search);
 
   const dates =
-    queryParams.sd && queryParams.ed
+    queryParams?.sd && queryParams?.ed
       ? {
           dates: {
             start: new Date(queryParams.sd),
             end: new Date(queryParams.ed),
           },
         }
-      : null;
+      : initialDates;
 
   return {
     keywords: queryParams.k || INITIAL_SEARCH_STATE.keywords,
