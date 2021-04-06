@@ -22,6 +22,17 @@ export default {
   'jobTypes.freelance': 'Freelance',
   'jobTypes.volunteer': 'Volunteer',
 
+  'companyTypes.hospitality': 'Hospitality',
+  'companyTypes.trades': 'Trades',
+  'companyTypes.arts': 'Arts & Culture',
+  'companyTypes.health': 'Health',
+  'companyTypes.services': 'Sales & services',
+  'companyTypes.management': 'Management',
+  'companyTypes.manufacturing': 'Manufacturing',
+  'companyTypes.engineering': 'Engineering',
+  'companyTypes.finance': 'Finance',
+  'companyTypes.misc': 'Misc',
+
   // venueTypes
   'venueTypes.retail': 'Retail',
   'venueTypes.hospitality': 'Hospitality',
@@ -71,6 +82,7 @@ export default {
   'common.subtitle': 'Subtitle',
   'common.text': 'Text',
   'common.back': '« Back',
+  'common.view': 'View',
 
   // Navbar
   'navbar.post_job_button': 'Post a job',
@@ -168,22 +180,6 @@ export default {
   'account.new_password.success.hero.subtitle':
     'Password reset complete',
 
-  // Jobs
-  'account.job_ads.hero.title': 'Jobs',
-  'account.job_ads.hero.subtitle':
-    'Manage your listings, company info & saved jobs',
-  'account.job_ads.description':
-    'Your published, expired and filled job listings are shown below.',
-  'account.job_ads.create_new_button': 'New job ad',
-  'account.job_ads.none_found': 'No job ads found',
-  'account.job_ads.company_button': 'Edit company',
-  'account.job_ads.remove_success_snackbar':
-    'Successfully removed job ad',
-  'account.job_ads.remove_failure_snackbar':
-    'Failed to remove job ad',
-  'account.job_ads.confirm_delete':
-    'Are you sure you want to delete this listing?',
-
   // Account settings
   'account.settings.hero_title': 'Settings',
   'account.settings.hero_subtitle': 'View and edit your user data',
@@ -256,7 +252,7 @@ export default {
 
   // Saved posts
   'account.saved.hero.title': 'Saved',
-  'account.saved.hero.subtitle': 'Manage your saved jobs & venues',
+  'account.saved.hero.subtitle': 'Manage your saved post',
   'account.saved.description':
     'Your saved events ({eventIcon}), venues ({venueIcon}) & jobs ({jobIcon}) are shown below. Reminder emails will be sent to {email} for listings saved with the reminder option selected. (indicated by {icon} ).',
   'account.saved.reminder_title': 'Saved with reminder email',
@@ -340,33 +336,12 @@ export default {
   'job_detail.apply_button_tooltip':
     'To apply for this job please send your application via email to {url}',
 
-  // Items list
+  // Post list
   'posts_list.no_jobs':
     'There are no posts yet ... be the first to post one!',
   'posts_list.load_more_button': 'Load more',
 
-  // Company
-  'company_form.hero.title': 'Company',
-  'company_form.hero.subtitle': 'Edit your company data',
-  'company_form.update.success_snackbar':
-    'Your company info has been updated successfully.',
-  'company_form.update.failure_snackbar:':
-    'Your company info failed to update.',
-  'company_form.title': 'Company details',
-  'company_form.description': `Below you can edit the company information shown in your
-job ads. Changes will be applied immediately to all
-existing and future listings. At the moment only one
-company per user account can be created and edited.`,
-  'company_form.name_input_label': 'Company name',
-  'company_form.upload_input_label': 'Logo (optional)',
-  'company_form.website_input_label': 'Website (optional)',
-  'company_form.tagline_input_label': 'Tagline (optional)',
-  'company_form.twitter_input_label': 'Twitter (optional)',
-  'company_form.linkedin_input_label': 'LinkedIn (optional)',
-  'company_form.button_account': 'Save changes',
-  'company_form.button': 'Save changes and proceed',
-
-  // Item post form
+  // Post form
   'post_form.hero.title': 'Post a new {type}',
   'post_form.hero.subtitle': 'Edit your {type}',
   'post_form.header': '{type} details',
@@ -391,8 +366,8 @@ company per user account can be created and edited.`,
     'Enter the URL to your website or a contact email address',
   'post_form.button': 'Continue to preview',
   'post_form.load_failure_snackbar': 'Failed to load {type}',
-
-  // Item preview
+  'post_form.upload_input_label': 'Logo (optional)',
+  // Post preview
   'preview.draft_save.success_snackbar':
     'Successfully saved draft {type}',
   'preview.publish.success_snackbar':
@@ -412,7 +387,7 @@ company per user account can be created and edited.`,
 
   // Account Posts
   'account.posts.hero.title': 'Posts',
-  'account.posts.hero.subtitle': 'Manage your posts & events',
+  'account.posts.hero.subtitle': 'Manage your posts',
   'account.posts.description': 'Your posts are shown below.',
   'account.posts.create_new_button': 'Create new »',
   'account.posts.none_found': 'No posts found',
@@ -430,7 +405,7 @@ company per user account can be created and edited.`,
   'account.events.confirm_delete':
     'Are you sure you want to delete this event?',
 
-  // Item detail
+  // Post detail
   'post_detail.contact_button': 'Contact {type}',
   'post_detail.visit_button': 'Visit website',
   'post_detail.save_later_button': 'Add to saved {type}s',
