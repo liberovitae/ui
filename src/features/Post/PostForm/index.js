@@ -19,6 +19,7 @@ const PostCreate = React.memo(({ session, history }) => {
   const [parents, setParents] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
+  const [detailsAsParent, setDetailsAsParent] = useState(true);
 
   const { data } = useQuery(GET_POST, {
     skip: !slug,
@@ -43,9 +44,17 @@ const PostCreate = React.memo(({ session, history }) => {
     {
       skip: !routeConfig().requiresParent,
       variables: { type: routeConfig().parentType },
-      onCompleted: (data) => {
-        const key = Object.keys(data);
-        setParents(data[key]);
+      onCompleted: ({ myPosts }) => {
+        setParents(myPosts);
+        setPost({
+          ...post,
+          parent: myPosts[0].id,
+          image: myPosts[0].image,
+          location: { name: myPosts[0]?.location?.name },
+          url: myPosts[0].url,
+          tags: myPosts[0].tags,
+          detailsAsParent: true,
+        });
       },
       onError: () =>
         enqueueSnackbar(
@@ -74,28 +83,52 @@ const PostCreate = React.memo(({ session, history }) => {
       ),
     });
 
+    if (routeConfig().requiresParent) {
+      const parents = session?.me?.posts.filter(
+        (post) => post.type === routeConfig().parentType,
+      );
+
+      if (!parents.length) {
+        history.push(`/${routeConfig().parentType}/create`);
+        // routeConfig(ROUTE_CONFIGS[routeConfig().parentType]);
+        enqueueSnackbar(
+          `Create a ${routeConfig().parentType} first`,
+          {
+            variant: 'warning',
+          },
+        );
+        return;
+      }
+    }
+
     if (post) {
       setLoading(false);
     }
   }, [type]);
 
-  useEffect(() => {
-    if (
-      !parentLoading &&
-      routeConfig().requiresParent &&
-      !parents?.length
-    ) {
-      history.push(`/${routeConfig().parentType}/create`);
-      // routeConfig(ROUTE_CONFIGS[routeConfig().parentType]);
-      enqueueSnackbar(`Create a ${routeConfig().parentType} first`, {
-        variant: 'warning',
-      });
-      return;
-    }
-  }, [parents, window.location]);
-
   const handleChecked = (e) => {
     const { name, checked } = e.target;
+
+    setPost((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  };
+
+  const handleParentDetails = (e) => {
+    const { name, checked } = e.target;
+
+    const parent = parents.filter(
+      (parent) => parent.id === post.parent,
+    )[0];
+
+    setPost({
+      ...post,
+      image: parent.image,
+      location: { name: parent?.location?.name },
+      url: parent.url,
+      tags: parent.tags,
+    });
 
     setPost((prevState) => ({
       ...prevState,
@@ -139,8 +172,6 @@ const PostCreate = React.memo(({ session, history }) => {
     }
   };
 
-  console.log(post);
-
   if (!loading) {
     return (
       <PostForm
@@ -151,6 +182,7 @@ const PostCreate = React.memo(({ session, history }) => {
         onSubmit={onSubmit}
         userId={session.me.id}
         handleFile={handleFile}
+        handleParentDetails={handleParentDetails}
         handleChecked={handleChecked}
         handleDates={handleDates}
         session={session}

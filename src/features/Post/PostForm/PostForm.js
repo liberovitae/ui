@@ -15,6 +15,8 @@ import {
   Fade,
   Grid,
   Switch,
+  Grow,
+  FormHelperText,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
@@ -54,6 +56,7 @@ const PostForm = React.memo(
     parents,
     handleDates,
     handleChecked,
+    handleParentDetails,
     type,
   }) => {
     const {
@@ -67,6 +70,7 @@ const PostForm = React.memo(
       parent,
       dates,
       commentsEnabled,
+      detailsAsParent,
     } = post;
 
     const classes = useStyles();
@@ -131,6 +135,33 @@ const PostForm = React.memo(
                     onChange={onChange}
                   />
                 </Box>
+
+                {parent && routeConfig().requiresParent && (
+                  <Box
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                    }}
+                    pb={2}
+                  >
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={detailsAsParent}
+                          onChange={handleParentDetails}
+                          name="detailsAsParent"
+                          color="primary"
+                        />
+                      }
+                      label={`Details are the same as ${
+                        routeConfig().parentType
+                      }`}
+                    />
+                    <FormHelperText style={{ margin: 0 }}>
+                      (image, location, tags, url)
+                    </FormHelperText>
+                  </Box>
+                )}
 
                 {routeConfig().hasDates && (
                   <MuiPickersUtilsProvider utils={DateDayJSUtils}>
@@ -216,18 +247,20 @@ const PostForm = React.memo(
                   </MuiPickersUtilsProvider>
                 )}
 
-                {routeConfig().hasImage && (
-                  <Box pb={2}>
-                    <Upload
-                      name="image"
-                      id="image"
-                      label={
-                        <FormattedMessage id="company_form.upload_input_label" />
-                      }
-                      value={image}
-                      handleFile={handleFile}
-                    />
-                  </Box>
+                {routeConfig().hasImage && !detailsAsParent && (
+                  <Grow in>
+                    <Box pb={2}>
+                      <Upload
+                        name="image"
+                        id="image"
+                        label={
+                          <FormattedMessage id="post_form.upload_input_label" />
+                        }
+                        value={image}
+                        handleFile={handleFile}
+                      />
+                    </Box>
+                  </Grow>
                 )}
 
                 <Box pb={2}>
@@ -251,29 +284,34 @@ const PostForm = React.memo(
                     }
                   />
                 </Box>
-                <Box pb={2}>
-                  <Location
-                    label={
-                      <FormattedMessage
-                        id="post_form.location.input_label"
-                        values={{ type }}
+
+                {!detailsAsParent && (
+                  <Grow in>
+                    <Box pb={2}>
+                      <Location
+                        label={
+                          <FormattedMessage
+                            id="post_form.location.input_label"
+                            values={{ type }}
+                          />
+                        }
+                        onLocation={onLocation}
+                        location={location}
+                        onChange={onChange}
+                        required
+                        placeholder={intl.formatMessage({
+                          id: 'post_form.location.input_placeholder',
+                        })}
+                        helperText={
+                          <FormattedMessage
+                            id="post_form.location.input_helperText"
+                            values={{ type }}
+                          />
+                        }
                       />
-                    }
-                    onLocation={onLocation}
-                    location={location}
-                    onChange={onChange}
-                    required
-                    placeholder={intl.formatMessage({
-                      id: 'post_form.location.input_placeholder',
-                    })}
-                    helperText={
-                      <FormattedMessage
-                        id="post_form.location.input_helperText"
-                        values={{ type }}
-                      />
-                    }
-                  />
-                </Box>
+                    </Box>
+                  </Grow>
+                )}
 
                 <Box pb={2}>
                   <CKEditor
@@ -293,61 +331,68 @@ const PostForm = React.memo(
                     }
                   />
                 </Box>
-                <Box pb={2}>
-                  <AutoComplete
-                    data={[]}
-                    value={tags}
-                    onChange={onChange}
-                    name="tags"
-                    label={
-                      <FormattedMessage
-                        id="post_form.tags.input_label"
-                        values={{ type }}
-                      />
-                    }
-                    required
-                    helperText={
-                      <FormattedMessage
-                        id="post_form.tags.input_helperText"
-                        values={{ type }}
-                      />
-                    }
-                    freeSolo={tags.length <= 9 ? true : false}
-                    getOptionDisabled={(options) =>
-                      tags.length <= 9 ? true : false
-                    }
-                  />
-                </Box>
-                <Box pb={2}>
-                  <FormControl
-                    required
-                    style={{
-                      width: '100%',
-                      paddingTop: '0.5rem',
-                      paddingBottom: '0.5rem',
-                    }}
-                  >
-                    <FormLabel>
-                      <FormattedMessage id="post_form.url.input_label" />
-                    </FormLabel>
-                    <TextValidator
-                      fullWidth
-                      onChange={onChange}
-                      name="url"
-                      required
-                      variant="outlined"
-                      type="text"
-                      validators={['isEmailorURL']}
-                      errorMessages={[
-                        'Must be an email address or URL',
-                      ]}
-                      value={url}
-                      helperText={
-                        <FormattedMessage id="post_form.url.input_helperText" />
-                      }
-                    />
-                  </FormControl>
-                </Box>
+                {!detailsAsParent && (
+                  <Grow in>
+                    <div>
+                      <Box pb={2}>
+                        <AutoComplete
+                          data={[]}
+                          value={tags}
+                          onChange={onChange}
+                          name="tags"
+                          label={
+                            <FormattedMessage
+                              id="post_form.tags.input_label"
+                              values={{ type }}
+                            />
+                          }
+                          required
+                          helperText={
+                            <FormattedMessage
+                              id="post_form.tags.input_helperText"
+                              values={{ type }}
+                            />
+                          }
+                          freeSolo={tags.length <= 9 ? true : false}
+                          getOptionDisabled={(options) =>
+                            tags.length <= 9 ? true : false
+                          }
+                        />
+                      </Box>
+                      <Box pb={2}>
+                        <FormControl
+                          required
+                          style={{
+                            width: '100%',
+                            paddingTop: '0.5rem',
+                            paddingBottom: '0.5rem',
+                          }}
+                        >
+                          <FormLabel>
+                            <FormattedMessage id="post_form.url.input_label" />
+                          </FormLabel>
+                          <TextValidator
+                            fullWidth
+                            onChange={onChange}
+                            name="url"
+                            required
+                            variant="outlined"
+                            type="text"
+                            validators={['isEmailorURL']}
+                            errorMessages={[
+                              'Must be an email address or URL',
+                            ]}
+                            value={url}
+                            helperText={
+                              <FormattedMessage id="post_form.url.input_helperText" />
+                            }
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                  </Grow>
+                )}
+
                 {routeConfig().hasComments && (
                   <Box pb={2}>
                     <FormControlLabel
