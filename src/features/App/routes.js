@@ -135,52 +135,6 @@ export default ({ refetch, session, history, location }) => [
     Component: AdminPage,
   },
   {
-    path: [LANDING, ALERT_VIEW, POSTS],
-    exact: true,
-    props: {
-      refetch,
-      session,
-      history,
-    },
-    suspense: false,
-    Component: LandingPage,
-  },
-  {
-    path: POST_PREVIEW,
-    exact: true,
-    props: {
-      session,
-      history,
-      refetch,
-    },
-    suspense: true,
-    Component: PostPreview,
-  },
-
-  {
-    path: `${POST_CREATE}/:slug?`,
-    exact: true,
-    props: {
-      session,
-      history,
-      refetch,
-    },
-    suspense: true,
-    Component: PostForm,
-  },
-  {
-    path: POST_PAGE,
-    exact: true,
-    props: {
-      session,
-      history,
-      refetch,
-    },
-    suspense: true,
-    Component: PostPage,
-  },
-
-  {
     path: ABOUT,
     exact: true,
     props: {},
@@ -221,6 +175,50 @@ export default ({ refetch, session, history, location }) => [
     props: {},
     suspense: true,
     Component: FAQPage,
+  },
+  {
+    path: [LANDING, ALERT_VIEW, POSTS],
+    exact: true,
+    props: {
+      refetch,
+      session,
+      history,
+    },
+    suspense: false,
+    Component: LandingPage,
+  },
+  {
+    path: POST_PREVIEW,
+    exact: true,
+    props: {
+      session,
+      history,
+      refetch,
+    },
+    suspense: true,
+    Component: PostPreview,
+  },
+  {
+    path: `${POST_CREATE}/:slug?`,
+    exact: true,
+    props: {
+      session,
+      history,
+      refetch,
+    },
+    suspense: true,
+    Component: PostForm,
+  },
+  {
+    path: POST_PAGE,
+    exact: true,
+    props: {
+      session,
+      history,
+      refetch,
+    },
+    suspense: true,
+    Component: PostPage,
   },
   {
     props: {},
