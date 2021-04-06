@@ -12,12 +12,7 @@ const useStyles = (props) =>
       [theme.breakpoints.down('xs')]: {
         marginTop: 0,
       },
-      marginTop: !props ? '5rem' : '3rem',
-      zIndex: -2,
-      top: 0,
-      left: 0,
       position: 'absolute',
-      minHeight: '175px',
       width: '100%',
     },
   }));

@@ -16,17 +16,16 @@ import INITIAL_SEARCH_STATE from '../../../constants/initialSearch';
 const useStyles = (props) =>
   makeStyles((theme) => ({
     root: {
+      marginTop: !props ? '5rem' : '3rem',
       [theme.breakpoints.down('xs')]: {
         marginTop: 0,
       },
-      marginTop: !props ? '5rem' : '3rem',
+      padding: '1rem',
       textAlign: 'center',
-      paddingTop: '2rem',
-      paddingLeft: '1rem',
-      paddingRight: '1rem',
-      minHeight: '175px',
+      minHeight: '180px',
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
     },
     title: {
       backgroundColor:
@@ -68,6 +67,8 @@ const Hero = React.memo(
       reactiveRouteConfig.searchVar(),
       INITIAL_SEARCH_STATE,
     );
+
+    console.log(isEmptySearch);
     const classes = useStyles(isEmptySearch)();
     const heroRoot = document.getElementById('heroRoot');
 
@@ -79,7 +80,7 @@ const Hero = React.memo(
               routeConfig={routeConfig}
               theme={theme}
               heroRoot={heroRoot}
-              isEmptySearch={isEmptySearch}
+              style={classes.root}
             />
             <div className={classes.container}>
               <div className={classes.container}>
