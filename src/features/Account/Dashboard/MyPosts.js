@@ -50,7 +50,6 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-import { Children } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   itemControl: {
@@ -89,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   children: {
+    justifyContent: 'space-between',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor:
@@ -111,11 +111,12 @@ const useStyles = makeStyles((theme) => ({
 const MyPosts = React.memo(({ refetch }) => {
   const intl = useIntl();
   const classes = useStyles();
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState();
   const { enqueueSnackbar } = useSnackbar();
   const { data, loading, error } = useQuery(GET_MY_POSTS);
   const [expanded, setExpanded] = useState(false);
-
   const postCount = data?.myPosts?.length;
 
   const [deletePost, { client }] = useMutation(DELETE_POST, {
@@ -128,8 +129,6 @@ const MyPosts = React.memo(({ refetch }) => {
       },
     ],
   });
-
-  console.log(data);
 
   const handleExpandClick = (id) => {
     setExpanded((prevState) => ({ [id]: !prevState[id] }));
@@ -186,10 +185,6 @@ const MyPosts = React.memo(({ refetch }) => {
       subtitle: <FormattedMessage id="account.posts.hero.subtitle" />,
     });
   }, []);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState();
 
   const handleClick = (newPlacement) => (e) => {
     setAnchorEl(e.currentTarget);
@@ -304,7 +299,7 @@ const MyPosts = React.memo(({ refetch }) => {
                     <Icon style={{ marginRight: '0.25rem' }} />
                     <Typography variant="h6">{post.title}</Typography>
                   </span>
-                  <StatusChip status={post.status} />
+                  <StatusChip type={post.type} status={post.status} />
                 </Grid>
 
                 <Grid
@@ -315,7 +310,7 @@ const MyPosts = React.memo(({ refetch }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <TypeChip type={post.types[0]} />
+                  <TypeChip type={post.type} text={post.types[0]} />
                   <span>
                     <IconButton
                       onClick={() => confirmDelete(post.id)}
@@ -329,13 +324,35 @@ const MyPosts = React.memo(({ refetch }) => {
                           `/${post.type}/create/${post.slug}`,
                         )
                       }
-                      color="primary"
+                      style={{
+                        color: ROUTE_CONFIGS[post.type].theme.light()
+                          .palette.primary.main,
+                      }}
                     >
                       <Edit
-                        style={{ marginRight: '0.3rem' }}
+                        style={{
+                          marginRight: '0.3rem',
+                        }}
                         fontSize="small"
                       />
                       <FormattedMessage id="common.edit" />
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        history.push(`/${post.type}/${post.slug}`)
+                      }
+                      style={{
+                        color: ROUTE_CONFIGS[post.type].theme.light()
+                          .palette.primary.main,
+                      }}
+                    >
+                      <Visibility
+                        style={{
+                          marginRight: '0.3rem',
+                        }}
+                        fontSize="small"
+                      />
+                      <FormattedMessage id="common.view" />
                     </Button>
                     {postCount > 0 && (
                       <Button
@@ -361,7 +378,6 @@ const MyPosts = React.memo(({ refetch }) => {
                   unmountOnExit
                 >
                   {post.children?.map((child) => {
-                    console.log(child);
                     return (
                       <Grid
                         className={classes.children}
@@ -380,21 +396,17 @@ const MyPosts = React.memo(({ refetch }) => {
                             <TimelineConnector />
                           </TimelineSeparator>
                         </TimelineItem>
-                        <Grid
-                          style={{
-                            paddingLeft: '0.5rem',
-                          }}
-                          sm={10}
-                          xs={8}
-                          item
-                        >
+                        <Grid sm={10} xs={8} item>
                           <Typography variant="h6">
                             {child.title}
                           </Typography>
                           {child.dates?.start && child.dates?.end && (
                             <Date listItem dates={child.dates} />
                           )}
-                          <TypeChip type={child.types[0]} />
+                          <TypeChip
+                            type={child.type}
+                            text={child.types[0]}
+                          />
                         </Grid>
 
                         <Grid
@@ -407,7 +419,10 @@ const MyPosts = React.memo(({ refetch }) => {
                             textAlign: 'right',
                           }}
                         >
-                          <StatusChip status={child.status} />
+                          <StatusChip
+                            type={child.type}
+                            status={child.status}
+                          />
                           <br />
                           <IconButton
                             onClick={() => confirmDelete(child.id)}
@@ -422,6 +437,11 @@ const MyPosts = React.memo(({ refetch }) => {
                             to={`/${child.type}/create/${child.slug}`}
                           >
                             <IconButton
+                              style={{
+                                color: ROUTE_CONFIGS[
+                                  child.type
+                                ].theme.light().palette.primary.main,
+                              }}
                               className={classes.buttonSmall}
                             >
                               <Edit fontSize="small" />

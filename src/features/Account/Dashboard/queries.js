@@ -9,6 +9,11 @@ export const GET_MY_POSTS = gql`
       types
       image
       slug
+      tags
+      location {
+        name
+      }
+      url
       status
       dates {
         start

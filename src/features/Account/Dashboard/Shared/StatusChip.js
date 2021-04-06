@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import * as ROUTE_CONFIGS from '../../../../constants/routeConfig';
 
 const useStyles = makeStyles((theme) => ({
   statusChip: {
@@ -10,15 +11,18 @@ const useStyles = makeStyles((theme) => ({
       props.status === 'filled'
         ? '#D9534F'
         : props.status === 'published'
-        ? theme.palette.primary.main
+        ? ROUTE_CONFIGS[props.type].theme.light().palette.primary.main
         : '#666',
     margin: '0.25rem',
     textTransform: 'capitalize',
+    '&:hover': {
+      color: 'black',
+    },
   },
 }));
 
-const StatusChip = ({ status }) => {
-  const classes = useStyles({ status });
+const StatusChip = ({ status, type }) => {
+  const classes = useStyles({ status, type });
 
   return (
     <Chip
@@ -26,7 +30,6 @@ const StatusChip = ({ status }) => {
       size="small"
       label={status}
       component="a"
-      href="#chip"
       clickable
     />
   );
