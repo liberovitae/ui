@@ -26,7 +26,7 @@ const PostListSkeleton = React.memo(() => {
           />
         </Grid>
 
-        <Grid item xs={9}>
+        <Grid item xs={9} sm={10}>
           <Skeleton
             animation="wave"
             variant="text"
@@ -52,7 +52,12 @@ const PostListSkeleton = React.memo(() => {
           />
         </Grid>
 
-        <Grid item xs={1} style={{ transform: 'rotateY(180deg)' }}>
+        <Grid
+          item
+          xs={1}
+          sm={1}
+          style={{ transform: 'rotateY(180deg)' }}
+        >
           <Skeleton animation="wave" variant="text" />
 
           <Skeleton

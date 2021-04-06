@@ -76,8 +76,6 @@ const PostListItem = ({ post, preview, session }) => {
     dates,
   } = post;
 
-  console.log(post);
-
   const { type, routes } = routeConfig();
 
   return (
@@ -91,7 +89,7 @@ const PostListItem = ({ post, preview, session }) => {
             `${routes.base}/${slug}`,
           );
           !contentDrawer().show &&
-            contentDrawer({ show: true, slug: slug });
+            contentDrawer({ show: true, slug });
         }}
         className={classes.root}
         container
@@ -131,7 +129,7 @@ const PostListItem = ({ post, preview, session }) => {
                 <br />
               </>
             )}
-            <TypeChip type={types[0]} />
+            <TypeChip text={types[0]} />
           </Grid>
           <Grid item>
             {!preview && <PublishedTime time={publishedAt} />}
