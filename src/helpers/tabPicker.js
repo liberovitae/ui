@@ -1,28 +1,16 @@
-import {
-  VENUE_BASE,
-  JOB_BASE,
-  EVENT_BASE,
-  COMPANY_BASE,
-} from '../constants/routes';
 import history from '../constants/history';
-
-const { pathname } = history.location;
+import * as ROUTE_CONFIGS from '../constants/routeConfig';
 
 const tabPicker = () => {
-  if (pathname.startsWith(EVENT_BASE)) {
-    return 0;
-  }
+  const routesArr = Object.values(ROUTE_CONFIGS);
+  const { pathname } = history.location;
 
-  if (pathname.startsWith(VENUE_BASE)) {
-    return 1;
-  }
+  const route = routesArr.find((route) =>
+    pathname.startsWith(route.routes.base),
+  );
 
-  if (pathname.startsWith(JOB_BASE)) {
-    return 2;
-  }
-  if (pathname.startsWith(COMPANY_BASE)) {
-    return 2;
-  }
+  if (route) return route.tabIndex;
+
   return 0;
 };
 
