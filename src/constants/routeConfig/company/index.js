@@ -12,6 +12,7 @@ export default {
   tabIndex: 2,
   type: 'company',
   hasDates: false,
+  hasTab: false,
   requiresParent: false,
   hasLocation: true,
   hasImage: true,

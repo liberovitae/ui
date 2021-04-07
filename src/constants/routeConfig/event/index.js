@@ -16,6 +16,7 @@ export default {
   hasComments: true,
   hasLocation: true,
   nextPage: 2,
+  hasTab: true,
   requiresParent: true,
   hasImage: true,
   parentType: 'venue',

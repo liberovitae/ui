@@ -14,6 +14,7 @@ export default {
   hasDates: false,
   hasLocation: true,
   nextPage: 2,
+  hasTab: true,
   hasComments: true,
   requiresParent: false,
   childType: 'event',
