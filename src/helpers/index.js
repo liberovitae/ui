@@ -11,6 +11,7 @@ import handleReset from './handleReset';
 import handleRoutes from './handleRoutes';
 import routePicker from './routePicker';
 import tabPicker from './tabPicker';
+import { restoreScrollPosition } from './scrollPosition';
 
 export {
   isDetailSearch,
@@ -24,4 +25,5 @@ export {
   handleRoutes,
   routePicker,
   tabPicker,
+  restoreScrollPosition,
 };
