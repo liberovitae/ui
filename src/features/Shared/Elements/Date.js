@@ -17,7 +17,7 @@ const Date = ({ dates }) => {
       style={{ marginTop: '0.25rem' }}
       // alignItems="center"
     >
-      <Grid item>
+      <Grid item xs={12}>
         <Event
           fontSize="small"
           style={{
