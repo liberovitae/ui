@@ -1,37 +1,27 @@
 import React from 'react';
-import { Tooltip, Tabs, Tab } from '@material-ui/core';
-import { VENUES, JOBS, EVENTS } from '../../constants/routes';
+import { Tooltip, Tabs, Tab, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import history from '../../constants/history';
 import { contentDrawer, tabIndex } from '../../constants/globalVars';
-import { scrollTop } from '../Shared/ScrollTop';
-import {
-  WorkOutlineOutlined,
-  HomeWorkOutlined,
-  EventOutlined,
-} from '@material-ui/icons';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-const handleTabChange = (e, index) => {
-  if (tabIndex() === index) return;
-
-  if (index === 0) {
-    history.push(VENUES);
-  }
-
-  if (index === 1) {
-    history.push(EVENTS);
-  }
-
-  if (index === 2) {
-    history.push(JOBS);
-  }
-};
+import { scrollTop } from '../Shared';
+import * as ROUTE_CONFIGS from '../../constants/routeConfig';
 
 const AppBarTabs = React.memo(
   ({}) => {
+    const routesArr = Object.values(ROUTE_CONFIGS);
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
+    // Filter out routes without tabs & sort by index
+    const tabbedRoutes = routesArr
+      .filter((route) => route.hasTab === true)
+      .sort((a, b) => a.tabIndex - b.tabIndex);
+
+    const handleTabChange = (e, index) => {
+      if (tabIndex() === index) return;
+
+      history.push(tabbedRoutes[index].routes.landing);
+    };
 
     return (
       <Tabs
@@ -42,122 +32,54 @@ const AppBarTabs = React.memo(
         variant="scrollable"
         scrollButtons="off"
       >
-        <Tooltip title={matches ? 'Events' : ''}>
-          <Tab
-            onClick={(e) => {
-              e.stopPropagation();
+        {tabbedRoutes.map((route) => {
+          const { routes, Icon } = route;
+          return (
+            <Tooltip
+              key={route.tabIndex + route.type}
+              title={matches ? `${route.type}s` : ''}
+            >
+              <Tab
+                onClick={(e) => {
+                  e.stopPropagation();
 
-              if (history.location.pathname !== EVENTS)
-                return history.push(EVENTS);
+                  if (history.location.pathname !== routes.landing)
+                    return history.push(routes.landing);
 
-              if (
-                contentDrawer().show &&
-                window.location.pathname !== EVENTS
-              ) {
-                return history.goBack();
-              }
+                  if (
+                    contentDrawer().show &&
+                    window.location.pathname !== routes.landing
+                  ) {
+                    return history.goBack();
+                  }
 
-              if (history.location.pathname === EVENTS)
-                return scrollTop();
-            }}
-            label={
-              matches ? (
-                <EventOutlined />
-              ) : (
-                <span>
-                  <EventOutlined
-                    fontSize="small"
-                    style={{
-                      verticalAlign: 'sub',
-                      marginRight: '0.2rem',
-                    }}
-                  />{' '}
-                  Events
-                </span>
-              )
-            }
-          />
-        </Tooltip>
-        <Tooltip title={matches ? 'Venues' : ''}>
-          <Tab
-            onClick={(e) => {
-              e.stopPropagation();
-
-              if (history.location.pathname !== VENUES)
-                return history.push(VENUES);
-
-              if (
-                contentDrawer().show &&
-                window.location.pathname !== VENUES
-              ) {
-                return history.goBack();
-              }
-
-              if (history.location.pathname === VENUES)
-                return scrollTop();
-            }}
-            label={
-              matches ? (
-                <HomeWorkOutlined />
-              ) : (
-                <span>
-                  <HomeWorkOutlined
-                    fontSize="small"
-                    style={{
-                      verticalAlign: 'sub',
-                      marginRight: '0.2rem',
-                    }}
-                  />{' '}
-                  Venues
-                </span>
-              )
-            }
-          />
-        </Tooltip>
-
-        <Tooltip title={matches ? 'Jobs' : ''}>
-          <Tab
-            onClick={(e) => {
-              e.stopPropagation();
-
-              if (history.location.pathname !== JOBS)
-                return history.push(JOBS);
-
-              if (
-                contentDrawer().show &&
-                window.location.pathname !== JOBS
-              ) {
-                return history.goBack();
-              }
-
-              if (history.location.pathname === JOBS)
-                return scrollTop();
-            }}
-            label={
-              matches ? (
-                <WorkOutlineOutlined />
-              ) : (
-                <span>
-                  <WorkOutlineOutlined
-                    fontSize="small"
-                    style={{
-                      verticalAlign: 'sub',
-                      marginRight: '0.2rem',
-                    }}
-                  />{' '}
-                  Jobs
-                </span>
-              )
-            }
-          />
-        </Tooltip>
+                  if (history.location.pathname === routes.landing)
+                    return scrollTop();
+                }}
+                label={
+                  matches ? (
+                    <Icon />
+                  ) : (
+                    <span>
+                      <Icon
+                        fontSize="small"
+                        style={{
+                          verticalAlign: 'sub',
+                          marginRight: '0.2rem',
+                        }}
+                      />{' '}
+                      {route.type}s
+                    </span>
+                  )
+                }
+              />
+            </Tooltip>
+          );
+        })}
       </Tabs>
     );
   },
-  (prevProps, nextProps) => {
-    // if (prevProps.value !== nextProps.value) return false;
-    // return true;
-  },
+  (prevProps, nextProps) => {},
 );
 
 export default AppBarTabs;
