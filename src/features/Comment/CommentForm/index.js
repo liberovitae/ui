@@ -3,7 +3,6 @@ import CommentInput from './CommentInput';
 import JSEMOJI from 'emoji-js';
 import { useMutation } from '@apollo/client';
 import { CREATE_COMMENT, GET_PAGINATED_COMMENTS } from '../queries';
-import { GET_POST } from '../../Post/queries';
 //emoji set up
 let jsemoji = new JSEMOJI();
 // set the style to emojione (default - apple)
@@ -19,7 +18,6 @@ const CommentForm = ({
   placeholderText,
   handleReply,
 }) => {
-  console.log(parentId);
   const [state, setState] = useState({});
 
   const [createComment, { data, loading, error }] = useMutation(

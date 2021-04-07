@@ -1,6 +1,5 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { Paper, ClickAwayListener } from '@material-ui/core';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 const EmojiPicker = ({
@@ -9,14 +8,7 @@ const EmojiPicker = ({
   stopPropagation,
 }) => (
   <ClickAwayListener onClickAway={handleEmojiPicker}>
-    <Paper
-      elevation={10}
-      // style={{
-      //   position: 'absolute',
-      //   right: '5px',
-      //   zIndex: 1500
-      // }}
-    >
+    <Paper elevation={10}>
       <Picker
         emojiTooltip={true}
         emoji={false}

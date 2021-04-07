@@ -1,15 +1,15 @@
 import React from 'react';
-import Reply from '@material-ui/icons/Reply';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {
+  Typography,
+  Fade,
+  Tooltip,
+  IconButton,
+} from '@material-ui/core';
+import { ExpandMore, MoreVert, Reply } from '@material-ui/icons';
 import classnames from 'classnames';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/Fade';
 import VoteButtons from './CommentVoteButtons';
 import CommentMenu from './CommentMenu';
-import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = (theme) => ({
   card: {
@@ -30,7 +30,6 @@ const styles = (theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-    // marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
       marginRight: -8,
     },
@@ -80,7 +79,7 @@ const CommentActions = ({
             aria-expanded={collapse[comment.slug]}
             aria-label="Show/hide replies"
           >
-            <ExpandMoreIcon />
+            <ExpandMore />
           </IconButton>
         </Tooltip>
       </span>
@@ -104,7 +103,7 @@ const CommentActions = ({
             aria-haspopup="true"
             onClick={handleMenuClick}
           >
-            <MoreVertIcon />
+            <MoreVert />
           </IconButton>
         </Tooltip>
         <CommentMenu

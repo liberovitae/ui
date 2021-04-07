@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_PAGINATED_COMMENTS, DELETE_COMMENT } from '../queries';
-import CommentForm from '../CommentForm';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
+import { Typography, CardContent } from '@material-ui/core';
 import AuthBlock from './AuthBlock';
-import Comment from '@material-ui/icons/Comment';
+import { Comment } from '@material-ui/icons';
 import CommentList from './CommentsList';
-
-import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import CommentForm from '../CommentForm';
 
 const Comments = ({ postId, session }) => {
   const { data, loading, error } = useQuery(GET_PAGINATED_COMMENTS, {
@@ -28,15 +24,22 @@ const Comments = ({ postId, session }) => {
 
   useEffect(() => {
     if (window.location?.hash) {
+      const scroller =
+        document.getElementById('contentDrawer') || window;
+
       const element = document.querySelector(window.location.hash);
+
       const topPos =
         element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
+
+      console.log(topPos);
+
+      scroller.scrollTo({
         top: topPos, // scroll so that the element is at the top of the view
         behavior: 'smooth', // smooth scroll
       });
     }
-  }, [data]);
+  }, []);
 
   //   const handleVote = (e, comment, val) => {
   //     e.preventDefault();

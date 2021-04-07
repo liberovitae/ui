@@ -1,13 +1,14 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
-import Send from '@material-ui/icons/Send';
-import TagFaces from '@material-ui/icons/TagFaces';
+import {
+  IconButton,
+  Input,
+  InputAdornment,
+  Popper,
+  Tooltip,
+} from '@material-ui/core';
+import { Send, TagFaces } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 // import EmojiPicker from './emoji_picker';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Input from '@material-ui/core/Input';
-import Popper from '@material-ui/core/Popper';
-import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = (theme) => ({
   textField: {

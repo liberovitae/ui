@@ -1,9 +1,10 @@
 import React from 'react';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  ArrowUpward,
+  ArrowDownward,
+} from '@material-ui/icons/ArrowUpward';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = {
   activeUpvote: {

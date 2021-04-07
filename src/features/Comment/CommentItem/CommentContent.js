@@ -1,17 +1,15 @@
 import React from 'react';
-// import Moment from 'react-moment';
-import Fade from '@material-ui/core/Fade';
-import Tooltip from '@material-ui/core/Tooltip';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Link } from 'react-router-dom';
-import CardContent from '@material-ui/core/CardContent';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import {
+  Fade,
+  Tooltip,
+  ListItemText,
+  CardContent,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import CommentForm from '../CommentForm';
 import UserChip from './CommentUserChip';
-// import Hashtag from '../../misc/hashtag';
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import { PublishedTime } from '../../Shared/Elements';
-import EditIcon from '@material-ui/icons/Edit';
+import { Edit } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
@@ -33,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-    // marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
       marginRight: -8,
     },
@@ -46,10 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
   commentContent: {
     fontSize: '0.5rem !important',
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingRight: '0.25rem',
   },
   link: {
     '&:hover': {
-      //   color: theme.anchor.main,
       cursor: 'pointer',
     },
   },
@@ -76,8 +75,6 @@ const CommentContent = ({
   toggleReplies,
   editing,
   handleEdit,
-  currentUserId,
-  //   postAuthor,
 }) => {
   const classes = useStyles();
 

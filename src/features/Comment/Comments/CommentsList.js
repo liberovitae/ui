@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CommentItem from '../CommentItem';
-import Fade from '@material-ui/core/Fade';
+import { Fade } from '@material-ui/core';
 import { Collapse } from '@material-ui/core';
 
 const CommentList = ({ comments, session, handleDelete }) => {
