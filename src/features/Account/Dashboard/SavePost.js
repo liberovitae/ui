@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useQuery, useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
@@ -13,14 +14,11 @@ import {
 import { hero } from '../../../constants/globalVars';
 import { SAVED } from '../../../constants/routes';
 import { SAVE_POST, GET_MY_COUNTS, GET_SAVED_POSTS } from './queries';
-import { Redirect, useParams } from 'react-router-dom';
-import Loading from '../../Shared/Loading';
+import { Loading } from '../../Shared';
 import history from '../../../constants/history';
-import { routeConfig } from '../../../constants/globalVars';
 import { GET_POST } from '../../Post/queries';
-import { PostAdd } from '@material-ui/icons';
 
-const SaveItem = ({ session }) => {
+const SavePost = ({ session }) => {
   const { type, slug } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [reminder, setReminder] = useState(false);
@@ -30,7 +28,9 @@ const SaveItem = ({ session }) => {
       enqueueSnackbar(err.message, { variant: 'error' }),
     variables: { slug },
   });
-
+  const checkExisting = ({ post }) => {
+    return post.id === data.post.id;
+  };
   const { data: savedData } = useQuery(GET_SAVED_POSTS);
 
   useEffect(() => {
@@ -38,22 +38,33 @@ const SaveItem = ({ session }) => {
       title: (
         <FormattedMessage
           id="account.save_post.hero.title"
-          values={{ type: type }}
+          values={{ type }}
         />
       ),
       subtitle: (
         <FormattedMessage
           id="account.save_post.hero.subtitle"
-          values={{ type: type }}
+          values={{ type }}
         />
       ),
     });
+
+    if (savedData?.savedPosts?.some(checkExisting)) {
+      enqueueSnackbar(
+        <FormattedMessage
+          id="account.save_post.save_duplicate_snackbar"
+          values={{ type }}
+        />,
+        { variant: 'warning' },
+      );
+      history.push(SAVED);
+    }
   }, []);
 
-  const [saveItem] = useMutation(SAVE_POST, {
+  const [savePost] = useMutation(SAVE_POST, {
     onError: (err) =>
       enqueueSnackbar(err.message, { variant: 'error' }),
-    update(cache, { data: { saveItems } }) {},
+    update(cache, { data: { savePosts } }) {},
 
     refetchQueries: [
       { query: GET_MY_COUNTS },
@@ -63,38 +74,31 @@ const SaveItem = ({ session }) => {
 
   const onSavePost = (e, id) => {
     e.preventDefault();
-    saveItem({
+    savePost({
       variables: { id, reminder },
     }).then(({ data }) => {
-      data.saveItem
+      data.savePost
         ? (history.push(SAVED),
           enqueueSnackbar(
-            <FormattedMessage id="account.save_post.save_success_snackbar" />,
+            <FormattedMessage
+              id="account.save_post.save_success_snackbar"
+              values={{ type }}
+            />,
             {
               variant: 'success',
             },
           ))
         : enqueueSnackbar(
-            <FormattedMessage id="account.save_post.save_failure_snackbar" />,
+            <FormattedMessage
+              id="account.save_post.save_failure_snackbar"
+              values={{ type }}
+            />,
             {
               variant: 'error',
-              values: { type },
             },
           );
     });
   };
-
-  const checkExisting = ({ post }) => {
-    return post.id === data.post.id;
-  };
-
-  if (savedData?.savedPosts?.some(checkExisting)) {
-    enqueueSnackbar(
-      <FormattedMessage id="account.save_post.save_duplicate_snackbar" />,
-      { variant: 'warning' },
-    );
-    return <Redirect to={SAVED} />;
-  }
 
   if (data) {
     const { post } = data;
@@ -148,4 +152,4 @@ const SaveItem = ({ session }) => {
   return <Loading />;
 };
 
-export default SaveItem;
+export default SavePost;

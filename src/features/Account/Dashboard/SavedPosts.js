@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: 'sub',
   },
   listIcon: {
-    marginRight: '0.3em',
+    marginRight: '0.25rem',
+    marginLeft: '0.25rem',
     verticalAlign: 'sub',
   },
   divider: {
@@ -66,32 +67,41 @@ const SavedPosts = ({ session }) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  function confirmDelete(id, savedItem, itemType) {
+  function confirmDelete(id, type) {
     const r = window.confirm(
-      intl.formatMessage({
-        id: 'account.saved.confirm_delete',
-      }),
+      intl.formatMessage(
+        {
+          id: 'account.saved.confirm_delete',
+        },
+        { type },
+      ),
     );
     if (r === true) {
-      onSavedDelete(id);
+      onSavedDelete(id, type);
     } else {
       return;
     }
   }
 
-  const onSavedDelete = (id) => {
-    deleteSavedItem({
-      variables: { id: id },
-    }).then((res) =>
-      res.data.deleteSavedItem
+  const onSavedDelete = (id, type) => {
+    deleteSavedPost({
+      variables: { id },
+    }).then(({ data }) =>
+      data.deleteSavedPost
         ? enqueueSnackbar(
-            <FormattedMessage id="account.saved.remove_success_snackbar" />,
+            <FormattedMessage
+              id="account.saved.remove_success_snackbar"
+              values={{ type }}
+            />,
             {
               variant: 'success',
             },
           )
         : enqueueSnackbar(
-            <FormattedMessage id="account.saved.remove_failure_snackbar" />,
+            <FormattedMessage
+              id="account.saved.remove_failure_snackbar"
+              values={{ type }}
+            />,
             {
               variant: 'error',
             },
@@ -147,7 +157,9 @@ const SavedPosts = ({ session }) => {
           </Typography>
           <Divider className={classes.divider} />
           <Grid container>
-            {savedPosts?.map(({ post }) => {
+            {savedPosts?.map((data) => {
+              const { post, reminder } = data;
+
               const { Icon } = ROUTE_CONFIGS[post.type];
               return (
                 <Grid item xs={12} key={post.id}>
@@ -156,8 +168,11 @@ const SavedPosts = ({ session }) => {
 
                     {post.title}
                     {post.parent && ' @ ' + post.parent.title}
-                    {post.reminder && (
-                      <MailOutline className={classes.listIcon} />
+                    {reminder && (
+                      <MailOutline
+                        fontSize="small"
+                        className={classes.listIcon}
+                      />
                     )}
                   </Typography>
 
@@ -177,7 +192,7 @@ const SavedPosts = ({ session }) => {
                     </Link>
                     <Link
                       onClick={() =>
-                        confirmDelete(post.id, post.title, key)
+                        confirmDelete(post.id, post.type)
                       }
                       to={SAVED}
                     >
@@ -191,15 +206,15 @@ const SavedPosts = ({ session }) => {
               );
             })}
           </Grid>
-          {/* {!combinedItems?.length && (
-          <Typography
-            align="center"
-            paragraph
-            className={classes.notFoundText}
-          >
-            <FormattedMessage id="account.saved.not_found" />
-          </Typography>
-        )} */}
+          {!savedPosts.length && (
+            <Typography
+              align="center"
+              paragraph
+              className={classes.notFoundText}
+            >
+              <FormattedMessage id="account.saved.not_found" />
+            </Typography>
+          )}
         </div>
       </Fade>
     );
