@@ -83,7 +83,7 @@ const Settings = ({ session, refetch }) => {
           <FormattedMessage id="account.settings.info_title" />
         </Typography>
         <Grid container alignItems="center">
-          <Grid item xs={3}>
+          <Grid item className={classes.username} xs={3}>
             <strong>
               <FormattedMessage id="common.username" />
             </strong>
