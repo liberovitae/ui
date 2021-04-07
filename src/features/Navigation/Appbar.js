@@ -25,7 +25,7 @@ import Filter from '../Filter';
 import Breadcrumbs from './Breadcrumbs';
 import NavButtons from './NavButtons';
 import Logo from './Logo';
-import { scrollTop } from '../Shared/ScrollTop';
+import { scrollTop } from '../Shared';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
