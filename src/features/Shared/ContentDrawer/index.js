@@ -28,6 +28,9 @@ const ContentDrawer = ({ children }) => {
       SlideProps={{
         unmountOnExit: true,
       }}
+      PaperProps={{
+        id: 'contentDrawer',
+      }}
       style={{ zIndex: 0 }}
       anchor={'top'}
       className={classes.drawer}
