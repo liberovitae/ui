@@ -68,7 +68,6 @@ const Hero = React.memo(
       INITIAL_SEARCH_STATE,
     );
 
-    console.log(isEmptySearch);
     const classes = useStyles(isEmptySearch)();
     const heroRoot = document.getElementById('heroRoot');
 
