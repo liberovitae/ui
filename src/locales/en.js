@@ -13,6 +13,7 @@ export default {
 
   // search
   'search.not_found': 'No posts found matching your search',
+  'search.posts': 'Search {type}s',
 
   // jobTypes
   'jobTypes.full': 'Full Time',
@@ -85,16 +86,10 @@ export default {
   'common.view': 'View',
 
   // Navbar
-  'navbar.post_job_button': 'Post a job',
+  'navbar.create_post_button': 'Create {type}',
   'navbar.account_button': 'My account',
-  'navbar.saved_jobs': 'Saved jobs',
-  'navbar.saved_venues': 'Saved venues',
-  'navbar.saved_events': 'Saved events',
+  'navbar.saved_posts': 'Saved {type}s',
   'navbar.alerts': 'Alerts',
-  'navbar.post_venue_button': 'Post a venue',
-  'navbar.post_event_button': 'Post an event',
-  'navbar.search_jobs': 'Search jobs',
-  'navbar.search_venues': 'Search venues',
   'navbar.admin_button': 'Admin',
 
   // Account
@@ -241,10 +236,10 @@ export default {
   'account.save_post.hero.title': 'Save {type}',
   'account.save_post.hero.subtitle': 'Create a saved {type}',
   'account.save_post.save_success_snackbar':
-    'Successfully saved listing',
+    'Successfully saved {type}',
   'account.save_post.save_failure_snackbar': 'Failed to save {type}',
   'account.save_post.save_duplicate_snackbar':
-    'The post you selected has already been added to your saved listings',
+    'The post you selected has already been added to your saved {type}s',
   'account.save_post.save_text': 'Save this {type} for later',
   'account.save_post.save_reminder_label': 'Send email reminder',
   'account.save_post.save_reminder_helperText':
@@ -256,15 +251,15 @@ export default {
   'account.saved.description':
     'Your saved events ({eventIcon}), venues ({venueIcon}) & jobs ({jobIcon}) are shown below. Reminder emails will be sent to {email} for listings saved with the reminder option selected. (indicated by {icon} ).',
   'account.saved.reminder_title': 'Saved with reminder email',
-  'account.saved.not_found': 'No saved listings found',
+  'account.saved.not_found': 'No saved posts found',
   'account.saved.remove_success_snackbar':
-    'Successfully removed saved listing',
+    'Successfully removed saved {type}',
   'account.saved.remove_failure_snackbar':
-    'Failed to remove saved listing',
+    'Failed to remove saved {type}',
   'account.saved.confirm_delete':
-    'Are you sure you want to delete this saved listing?',
+    'Are you sure you want to delete this saved {type}?',
   'account.saved.view_post_button': 'View',
-  'account.saved.none_found': 'No saved listings found',
+  'account.saved.none_found': 'No saved posts found',
 
   // Alerts
   alerts: 'Alerts',
