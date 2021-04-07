@@ -6,6 +6,7 @@ import {
   getQueryString,
   objCompare,
   handleRoutes,
+  restoreScrollPosition,
 } from '../../helpers';
 import { useHotkeys } from 'react-hotkeys-hook';
 import INITIAL_SEARCH_STATE from '../../constants/initialSearch';
@@ -18,7 +19,6 @@ import {
   navSidebar,
   contentDrawer,
 } from '../../constants/globalVars';
-import { scrollTop } from '../Shared/ScrollTop';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import queryString from 'query-string';
 
@@ -69,6 +69,14 @@ const NavBar = React.memo(
       },
     );
 
+    const closeModals = () => {
+      quickSearch({ show: false });
+      contentDrawer({ ...contentDrawer(), show: false });
+      filterSearch({ show: false });
+      backdrop(false);
+      navSidebar(false);
+    };
+
     // Below lies the dragons of navigation, a bunch of conditionals/useEffects to
     // make sure that searching, scrolling and navigation behaves correctly.
     // This should and can be improved at some point.
@@ -84,10 +92,10 @@ const NavBar = React.memo(
           reactiveSearch,
         )
       ) {
-        quickSearch().show && quickSearch({ show: false });
-        contentDrawer().show &&
-          contentDrawer({ ...contentDrawer(), show: false });
+        // Close model overlays
+        closeModals();
 
+        // Update history pathname and querystring from reactiveSearch
         history.push({
           pathname: reactiveRouteConfig.routes.landing,
           search: queryStringNew,
@@ -97,95 +105,53 @@ const NavBar = React.memo(
 
     // useEffect for handling backwards/fowards navigation & search
     useEffect(() => {
-      if (
-        !contentDrawer().show &&
-        history.location.pathname === routeConfig().routes.landing &&
-        lastLocation?.search !== history.location.search
-      ) {
-        const queryParams = queryString.parse(window.location.search);
-        searchVar(
-          queryParamsTransObject(
-            queryParams,
-            reactiveRouteConfig.INITIAL_SEARCH_STATE,
-          ),
-        );
-      }
-
-      const savedScrollPosition = JSON.parse(
-        sessionStorage.getItem(
-          `${reactiveRouteConfig.type}${history.location.search}`,
-        ),
-      );
-
-      if (
-        savedScrollPosition &&
-        history.location.pathname === routeConfig().routes.landing
-      ) {
-        setTimeout(
-          () =>
-            window.scrollTo({
-              top: Math.abs(savedScrollPosition),
-              behavior: 'smooth',
-            }),
-          10,
-        );
-      }
+      restoreScrollPosition({
+        type: reactiveRouteConfig.type,
+        key: history.location.search,
+      });
     }, [reactiveRouteConfig]);
 
     // Listener for route handling saving and restoring scroll positions
     useEffect(() => {
       window.onpopstate = (e) => {
-        // Close all daialogs on navigation change
-        quickSearch({ show: false });
-        filterSearch({ show: false });
-        contentDrawer().show &&
-          contentDrawer({ ...contentDrawer(), show: false });
-        backdrop(false);
-        navSidebar(false);
+        // Close all modals on navigation change instead of navigating
+        closeModals();
+        return;
       };
 
-      contentDrawer().show &&
-        contentDrawer({ ...contentDrawer(), show: false });
+      const { routes } = reactiveRouteConfig;
 
-      const savedScrollPosition = JSON.parse(
-        sessionStorage.getItem(
-          `${routeConfig().type}${history.location.search}`,
-        ),
-      );
-
-      if (
-        savedScrollPosition < 0 &&
-        history.location.pathname === routeConfig().routes.landing
-      ) {
-        setTimeout(
-          () =>
-            window.scrollTo({
-              top: Math.abs(savedScrollPosition),
-              behavior: 'smooth',
-            }),
-          10,
-        );
+      if (history.location.pathname === routes.base) {
+        restoreScrollPosition({
+          type: reactiveRouteConfig.type,
+          key: history.location.search,
+        });
       }
 
       if (
-        lastLocation?.pathname ===
-          reactiveRouteConfig.routes.landing &&
-        window.location.pathname !== routeConfig().routes.base
+        lastLocation?.pathname === routes.landing &&
+        window.location.pathname !== routes.base
       )
         sessionStorage.setItem(
           `${reactiveRouteConfig.type}${history.location.search}`,
           scrollPosition,
         );
 
-      // Main route handler
-      handleRoutes({ lastLocation });
-
       if (
-        history.location.pathname !== routeConfig().routes.landing
+        lastLocation?.search !== history.location.search &&
+        lastLocation?.pathname === history.location.pathname
       ) {
-        scrollTop();
+        const queryParams = queryString.parse(window.location.search);
+        searchVar(
+          queryParamsTransObject(queryParams, INITIAL_SEARCH_STATE),
+        );
+
         return;
       }
+
+      closeModals();
+      // Main route handler
+      handleRoutes();
     }, [history.location]);
 
     return (

@@ -127,15 +127,10 @@ const NavButtons = ({ themeSnackbar, session }) => {
           to={routeConfig().routes.post}
         >
           <Button color="primary" variant="contained">
-            {type == 'job' && (
-              <FormattedMessage id="navbar.post_job_button" />
-            )}
-            {type == 'venue' && (
-              <FormattedMessage id="navbar.post_venue_button" />
-            )}
-            {type == 'event' && (
-              <FormattedMessage id="navbar.post_event_button" />
-            )}
+            <FormattedMessage
+              id="navbar.create_post_button"
+              values={{ type }}
+            />
           </Button>
         </Link>
         <span className={classes.accountButtons}>

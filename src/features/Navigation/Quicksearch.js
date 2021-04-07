@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 import { useReactiveVar } from '@apollo/client';
 import {
   routeConfig,
@@ -27,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Quicksearch = ({}) => {
+  const intl = useIntl();
   const reactiveRouteConfig = useReactiveVar(routeConfig);
   const reactiveSearch = reactiveRouteConfig.searchVar;
   const reactiveQuicksearch = useReactiveVar(quickSearch);
   const reactiveFilterSearch = useReactiveVar(filterSearch);
   const classes = useStyles();
-
+  const { type } = reactiveRouteConfig;
   let ref = React.createRef();
 
   useEffect(() => {
@@ -70,9 +72,14 @@ const Quicksearch = ({}) => {
             searchIcon={<Search className={classes.icon} />}
             value={reactiveSearch.keywords}
             onRequestSearch={handleSearch}
-            placeholder={`Search ${routeConfig().type}s`}
+            placeholder={intl.formatMessage(
+              {
+                id: 'search.posts',
+              },
+              { type },
+            )}
           />
-          {reactiveRouteConfig.hasDates && (
+          {reactiveRouteConfig?.hasDates && (
             <Calendar reactiveRouteConfig={reactiveRouteConfig} />
           )}
         </Grid>

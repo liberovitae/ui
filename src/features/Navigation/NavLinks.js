@@ -20,10 +20,9 @@ import {
 } from '../../constants/routes';
 
 const NavLinks = (session) => {
-  if (
-    routeConfig().type === 'job' ||
-    routeConfig().type === 'company'
-  ) {
+  const { type } = routeConfig();
+
+  if (type === 'job' || type === 'company') {
     return [
       {
         title: <FormattedMessage id="navbar.alerts" />,
@@ -31,12 +30,22 @@ const NavLinks = (session) => {
         icon: <NotificationsOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.saved_jobs" />,
+        title: (
+          <FormattedMessage
+            id="navbar.saved_posts"
+            values={{ type }}
+          />
+        ),
         path: SAVED,
         icon: <FavoriteBorderOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.post_job_button" />,
+        title: (
+          <FormattedMessage
+            id="navbar.create_post_button"
+            values={{ type }}
+          />
+        ),
         path: JOB_POST,
         icon: <PostAddOutlined />,
       },
@@ -63,7 +72,7 @@ const NavLinks = (session) => {
     ];
   }
 
-  if (routeConfig().type === 'venue') {
+  if (type === 'venue') {
     return [
       {
         title: <FormattedMessage id="navbar.alerts" />,
@@ -71,12 +80,22 @@ const NavLinks = (session) => {
         icon: <NotificationsOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.saved_venues" />,
+        title: (
+          <FormattedMessage
+            id="navbar.saved_posts"
+            values={{ type }}
+          />
+        ),
         path: SAVED,
         icon: <FavoriteBorderOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.post_venue_button" />,
+        title: (
+          <FormattedMessage
+            id="navbar.create_post_button"
+            values={{ type }}
+          />
+        ),
         path: VENUE_POST,
         icon: <PostAddOutlined />,
       },
@@ -102,7 +121,7 @@ const NavLinks = (session) => {
     ];
   }
 
-  if (routeConfig().type === 'event') {
+  if (type === 'event') {
     return [
       {
         title: <FormattedMessage id="navbar.alerts" />,
@@ -110,12 +129,22 @@ const NavLinks = (session) => {
         icon: <NotificationsOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.saved_events" />,
+        title: (
+          <FormattedMessage
+            id="navbar.saved_posts"
+            values={{ type }}
+          />
+        ),
         path: SAVED,
         icon: <FavoriteBorderOutlined />,
       },
       {
-        title: <FormattedMessage id="navbar.post_event_button" />,
+        title: (
+          <FormattedMessage
+            id="navbar.create_post_button"
+            values={{ type }}
+          />
+        ),
         path: EVENT_POST,
         icon: <PostAddOutlined />,
       },
