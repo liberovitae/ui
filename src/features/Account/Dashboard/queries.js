@@ -87,7 +87,7 @@ export const GET_SAVED_POSTS = gql`
 
 export const DELETE_SAVED_POST = gql`
   mutation($id: ID!) {
-    deleteSavedItem(id: $id)
+    deleteSavedPost(id: $id)
   }
 `;
 
