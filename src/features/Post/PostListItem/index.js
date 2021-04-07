@@ -78,19 +78,20 @@ const PostListItem = ({ post, preview, session }) => {
 
   const { type, routes } = routeConfig();
 
+  const openContentDrawer = (e, comments) => {
+    e.stopPropagation();
+    window.history.pushState(
+      null,
+      null,
+      `${routes.base}/${slug}${comments ? '#comments' : ''}`,
+    );
+    !contentDrawer().show && contentDrawer({ show: true, slug });
+  };
+
   return (
     <Fade in timeout={400}>
       <Grid
-        onClick={(e) => {
-          e.stopPropagation();
-          window.history.pushState(
-            null,
-            null,
-            `${routes.base}/${slug}`,
-          );
-          !contentDrawer().show &&
-            contentDrawer({ show: true, slug });
-        }}
+        onClick={openContentDrawer}
         className={classes.root}
         container
         spacing={1}
@@ -137,20 +138,14 @@ const PostListItem = ({ post, preview, session }) => {
             {preview && <Status status={status} />}
 
             {commentsEnabled && commentCount >= 0 && (
-              <Link
-                className={classes.comments}
-                onClick={(e) => e.stopPropagation()}
-                to={`/${type}/${slug}#comments`}
-              >
-                <Tooltip title={`${commentCount} comments`}>
-                  <div>
-                    <IconButton size="small">
-                      <Comment fontSize="small" />
-                    </IconButton>
-                    {commentCount}
-                  </div>
-                </Tooltip>
-              </Link>
+              <Tooltip title={`${commentCount} comments`}>
+                <div onClick={(e) => openContentDrawer(e, true)}>
+                  <IconButton size="small">
+                    <Comment fontSize="small" />
+                  </IconButton>
+                  {commentCount}
+                </div>
+              </Tooltip>
             )}
           </Grid>
         </Grid>
